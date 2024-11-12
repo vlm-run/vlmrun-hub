@@ -1,0 +1,38 @@
+ci:
+  autofix_prs: true
+  autoupdate_commit_msg: '[pre-commit.ci] pre-commit autofix suggestions'
+
+repos:
+  - repo: https://github.com/charliermarsh/ruff-pre-commit
+    rev: 'v0.5.5'
+    hooks:
+    - id: ruff
+      args: ['--fix', '--exit-non-zero-on-fix']
+
+  - repo: https://github.com/psf/black
+    rev: 24.3.0
+    hooks:
+    - id: black
+      exclude: ^frontend/|notebooks|^tests/test_data$
+      args: ['--config=./backend/pyproject.toml']
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v3.1.0
+    hooks:
+    - id: check-ast
+    - id: check-docstring-first
+    - id: check-json
+    - id: check-merge-conflict
+    - id: debug-statements
+    - id: detect-private-key
+    - id: end-of-file-fixer
+      exclude: ^frontend/|^vlm/tests/|^examples/generated|^vlm/infra/tests/evals/
+    - id: pretty-format-json
+      exclude: ^frontend/|^vlm/tests/|^docs|^examples|^notebooks|^vlm/infra/tests/evals/
+    - id: trailing-whitespace
+      exclude: ^frontend/|^examples/generated
+    - id: check-added-large-files
+      args: ['--maxkb=100']
+      exclude: ^vlm/tests|^notebooks
+    - id: requirements-txt-fixer
+      files: requirementts/requirements*\.txt$

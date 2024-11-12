@@ -5,19 +5,19 @@ from pydantic import BaseModel, Field
 
 
 class Address(BaseModel):
-    street: str = Field(..., description="Street address")
-    city: str = Field(..., description="City")
-    state: str = Field(..., description="State")
-    postal_code: str = Field(..., description="Postal code")
-    country: str = Field(..., description="Country")
+    street: str | None = Field(None, description="Street address")
+    city: str | None = Field(None, description="City")
+    state: str | None = Field(None, description="State")
+    postal_code: str | None = Field(None, description="Postal code")
+    country: str | None = Field(None, description="Country")
 
 
 class Item(BaseModel):
-    description: str = Field(..., description="Description or name of the item")
-    quantity: int | None = Field(..., description="Quantity of the item")
-    currency: str | None = Field(..., description="3-digit currency code")
-    unit_price: float | None = Field(..., description="Unit price of the item")
-    total_price: float | None = Field(..., description="Total price of the item")
+    description: str | None = Field(None, description="Description or name of the item")
+    quantity: int | None = Field(None, description="Quantity of the item")
+    currency: str | None = Field(None, description="3-digit currency code")
+    unit_price: float | None = Field(None, description="Unit price of the item")
+    total_price: float | None = Field(None, description="Total price of the item")
 
 
 class Invoice(BaseModel):
