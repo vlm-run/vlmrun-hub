@@ -13,8 +13,6 @@ repos:
     rev: 24.3.0
     hooks:
     - id: black
-      exclude: ^frontend/|notebooks|^tests/test_data$
-      args: ['--config=./backend/pyproject.toml']
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v3.1.0
@@ -26,13 +24,13 @@ repos:
     - id: debug-statements
     - id: detect-private-key
     - id: end-of-file-fixer
-      exclude: ^frontend/|^vlm/tests/|^examples/generated|^vlm/infra/tests/evals/
+      exclude: ^helpers/
     - id: pretty-format-json
-      exclude: ^frontend/|^vlm/tests/|^docs|^examples|^notebooks|^vlm/infra/tests/evals/
+      exclude: ^helpers/
     - id: trailing-whitespace
-      exclude: ^frontend/|^examples/generated
+      exclude: ^helpers/
     - id: check-added-large-files
       args: ['--maxkb=100']
       exclude: ^vlm/tests|^notebooks
     - id: requirements-txt-fixer
-      files: requirementts/requirements*\.txt$
+      files: requirements*\.txt$
