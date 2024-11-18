@@ -10,6 +10,8 @@ class AdIntelligence(BaseModel):
     logos_detected: list[str] = Field(..., description="List of logos identified in the ad.")
     text_detected: str = Field(..., description="Text extracted from the ad.")
     discount_percentage: str | None = Field(None, description="Discount percentage, if detected.")
+    actual_price: str | None = Field(None, description="Actual price, if detected.")
+    discounted_price: str | None = Field(None, description="Discounted price, if detected.")
     coupon_code: str | None = Field(None, description="Coupon code, if detected.")
     contact_information: str | None = Field(None, description="Contact information, if detected.")
     website_url: str | None = Field(None, description="Website URL, if detected.")
