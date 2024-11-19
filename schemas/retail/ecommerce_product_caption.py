@@ -5,7 +5,6 @@ from pydantic import BaseModel, Field
 class ProductImage(BaseModel):
     """Details about a product image including URL and display properties"""
 
-    url: str | None = Field(None, description="URL of the product image")
     alt_text: str | None = Field(None, description="Alternative text for accessibility")
     is_primary: bool | None = Field(None, description="Indicates if this is the main display image")
     dimensions: dict[str, int] | None = Field(None, description="Image dimensions in pixels (width, height)")
