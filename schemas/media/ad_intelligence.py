@@ -12,8 +12,6 @@ class AdIntelligence(BaseModel):
     price: str | None = Field(None, description="Price detected in the ad.")
     coupon_code: str | None = Field(None, description="Coupon code, if detected.")
     contact_information: str | None = Field(None, description="Contact information, if detected.")
-    website_url: str | None = Field(None, description="Website URL, if detected.")
-    engagement_metrics: dict | None = Field(None, description="Optional key engagement metrics (e.g., likes, shares, views).")
     industry: str | None = Field(None, description="Industry/category the ad belongs to (e.g., Automotive, Fashion).")
     objects: list[DetectedObject] | None = Field(None, description="List of objects detected in the ad.")
     tags: list[str] | None = Field(None, description="Tags describing the advertisement's themes or focus.")
