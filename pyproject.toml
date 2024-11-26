@@ -11,9 +11,9 @@ license = {text = "MIT"}
 authors = [
     {name = "VLM", email = "support@vlm.com"}
 ]
-dependencies = [
-   "pydantic>=2.5,<3"
-]
+
+[tool.setuptools.dynamic]
+dependencies = {file = ["requirements.txt"]}
 
 [project.optional-dependencies]
 hub = [
