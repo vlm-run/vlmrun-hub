@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hub"
+version = "0.1.0"
+description = "VLM Run Hub for various industry-specific schemas"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [
+    {name = "VLM", email = "support@vlm.com"}
+]
+dependencies = [
+   "pydantic>=2.5,<3"
+]
+
+[project.optional-dependencies]
+hub = [
+    # Dependencies required for the "hub" feature
+]
+
+[project.urls]
+homepage = "https://github.com/vlm-run/hub"
+repository = "https://github.com/vlm-run/hub"
+documentation = "https://github.com/vlm-run/hub"
+
+[tool.setuptools.packages.find]
+where = ["."]
