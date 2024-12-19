@@ -5,7 +5,6 @@ from vlmrun.hub.dataset import VLMRUN_HUB_DATASET
 from pydantic import BaseModel
 from typing import Type
 
-
 @pytest.mark.skipif(
     not importlib.util.find_spec("ollama"), reason="Ollama is not installed"
 )

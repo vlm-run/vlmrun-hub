@@ -1,11 +1,10 @@
 from dataclasses import dataclass
 from pathlib import Path
 from PIL import Image
+from vlmrun.hub.schemas.document.invoice import Invoice
 from vlmrun.hub.utils import remote_image
 from pydantic import BaseModel
 from typing import Type
-
-from vlmrun import hub
 
 
 @dataclass
@@ -34,7 +33,7 @@ class HubSample:
 VLMRUN_HUB_DATASET = {
     "document.invoice-extraction": HubSample(
         domain="document.invoice-extraction",
-        response_model=hub.schemas.document.invoice.Invoice,
+        response_model=Invoice,
         prompt="Extract the invoice in JSON format.",
         inputs=[
             "https://mintlify.s3.us-west-1.amazonaws.com/autonomiai/guides/doc-ai/images/sample-invoice.jpg",

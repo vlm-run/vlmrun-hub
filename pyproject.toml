@@ -24,20 +24,25 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
 ]
 license = {file = "LICENSE"}
-dynamic = ["version", "dependencies"]
+dynamic = ["version", "dependencies", "optional-dependencies"]
 
 [project.urls]
 homepage = "https://github.com/vlm-run/vlmrun-hub"
 repository = "https://github.com/vlm-run/vlmrun-hub"
 documentation = "https://docs.vlm.run/hub"
 
-[project.optional-dependencies]
-test = ["pytest"]
-build = ["twine", "build"]
+[pytest]
+log_cli = true
+log_cli_level = "INFO"
+
 
 [tool.setuptools.dynamic]
 version = {attr = "vlmrun.hub.version.__version__"}
 dependencies = {file = ["requirements/requirements.txt"]}
+
+    [tool.setuptools.dynamic.optional-dependencies]
+    test = {file = ["requirements/requirements.test.txt"]}
+    build = {file = ["requirements/requirements.build.txt"]}
 
 [tool.setuptools.packages.find]
 where = ["."]
