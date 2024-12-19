@@ -1,0 +1,10 @@
+pre-commit
+pytest
+twine
+tqdm
+instructor
+loguru
+requests
+openai
+ollama
+python-dotenv
