@@ -39,6 +39,9 @@ build = ["twine", "build"]
 version = {attr = "vlmrun.hub.version.__version__"}
 dependencies = {file = ["requirements/requirements.txt"]}
 
+[tool.setuptools.dynamic.optional-dependencies]
+test = {file = ["requirements/requirements.test.txt"]}
+
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["vlmrun.hub"]
