@@ -58,5 +58,9 @@ jobs:
         continue-on-error: true
 
       - name: Run tests
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          VLM_API_URL: ${{ vars.VLM_API_URL }}
+          VLM_API_KEY: ${{ secrets.VLM_API_KEY }}
         run: |
           make test
