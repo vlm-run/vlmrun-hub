@@ -23,7 +23,51 @@ for both across a variety of inputs, while being agnostic to the VLM provider so
 
 ## How do I run a particular schema on an input?
 
-### With OpenAI
+### With OpenAI/Instructor
+
+```python
+
+from vlmrun.hub.utils import encode_image
+from vlmrun.hub.dataset import VLMRUN_HUB_DATASET
+
+import instructor
+from openai import OpenAI
+
+from pydantic import BaseModel
+from typing import Type
+
+
+instructor_client = instructor.from_openai(
+    OpenAI(),
+    mode=instructor.Mode.MD_JSON,
+)
+
+image_url = 'YOUR_IMAGE_URL'
+response_model: Type[BaseModel] = response_model
+response = instructor_client.chat.completions.create(
+    model="gpt-4o-mini",
+    messages=[
+        {
+            "role": "user",
+            "content": [
+                {
+                    "type": "text",
+                    "text": sample.prompt,
+                },
+                {
+                    "type": "image_url",
+                    "image_url": {
+                        "url": encode_image(image_url, format="JPEG")
+                    },
+                    "detail": "auto",
+                }
+            ],
+        },
+    ],
+    response_model=response_model,
+    temperature=0,
+)
+```
 
 ### With VLM Run
 
