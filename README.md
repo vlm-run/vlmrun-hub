@@ -18,7 +18,7 @@ This is a repository of schemas for structured ETL on visual domains including:
 
 ## 💡 Motivation
 
-Frontier LLM APIs like GPT4 and Claude now support structured outputs (usually referred to as "JSON mode") in addition
+Frontier LLM APIs like GPT4 and Cl aude now support structured outputs (usually referred to as "JSON mode") in addition
 to more familiar chat completion. While generally used with text inputs, this approach is particularly powerful for visual
 data (especially documents) because it allows us to extract information in a declarative manner. I.e. we just list
 the fields we care about and let the VLM do the rest.
@@ -169,5 +169,5 @@ for a variety of visual inputs without needing to duplicate information for simi
 We'd love to hear from you if you have any questions or feedback!
 
 - [Twitter](https://x.com/vlmrun)
-- [Discord](https://discord.gg/3zWE3Qpp)
+- [Discord](https://discord.gg/nz8QZwTH)
 - [Email](mailto:hello@vlmrun.com)
