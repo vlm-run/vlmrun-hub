@@ -5,13 +5,13 @@ from loguru import logger
 from vlmrun.hub.dataset import VLMRUN_HUB_DATASET
 from pydantic import BaseModel
 from typing import Type
-import httpx
+import requests
 
 from dotenv import load_dotenv
 
 load_dotenv()
 
-ollama_server = os.getenv("OLLAMA_SERVER", "http://localhost:11434")
+ollama_base_url = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
 
 
 @pytest.mark.skipif(
@@ -22,8 +22,8 @@ def test_local_ollama():
     from vlmrun.hub.utils import encode_image
 
     try:
-        httpx.get(f"{ollama_server}/api/version")
-    except httpx.ConnectError:
+        requests.get(f"{ollama_base_url}/api/version")
+    except requests.exceptions.ConnectionError:
         pytest.skip("Ollama server is not running")
 
     for sample in VLMRUN_HUB_DATASET.values():
