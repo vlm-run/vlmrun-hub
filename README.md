@@ -18,17 +18,13 @@ This is a repository of schemas for structured ETL on visual domains including:
 
 ## 💡 Motivation
 
-Frontier LLM APIs like GPT4 and Cl aude now support structured outputs (usually referred to as "JSON mode") in addition
-to more familiar chat completion. While generally used with text inputs, this approach is particularly powerful for visual
-data (especially documents) because it allows us to extract information in a declarative manner. I.e. we just list
-the fields we care about and let the VLM do the rest.
+Frontier LLM APIs like GPT4 and Claude now support structured outputs (usually referred to as "JSON mode") in addition
+to the more familiar chat interface. This is particularly powerful for visual data (especially documents) because it allows us to extract information in a declarative manner (i.e. we just list the fields we care about and let the VLM do the rest).
 
-A schema is a type set of key-value pairs represented as a Pydantic class. Fields can be primitive types or nested TypeClasses and
-include a prompt indicating how that field should be populated from the input. They are a data structure that gets filled out
-by the VLM per your input and instructions.
+We represent schemas as a Pydantic class of typed key-value pairs. Fields can be primitives (`str`, `int`, etc.) or nested TypeClasses and include a prompt indicating how that field should be populated from the input. In short, they are a data structure that gets filled out by the VLM of your choosing based on your input and instructions.
 
-Good schemas are a product of 1. good data structure design and 2. good prompts. This repo is meant to be an authoritative source
-for both across a variety of inputs, while being agnostic to the VLM provider so it can be used with multiple models.
+Good schemas are a product of 1. a good hierarchy of types/fields and 2. good prompts. This repo is meant to be an authoritative source
+for both across a variety of input and use-cases, while being agnostic to the VLM provider so it can be used with multiple models.
 
 ## 🚀 Usage
 
