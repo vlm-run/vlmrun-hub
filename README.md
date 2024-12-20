@@ -2,17 +2,26 @@
 
 Structured extraction for VLMs.
 
-This is a repository of schemas for structured ETL on *visual* domains including:
+This is a repository of schemas for structured ETL on visual domains including:
 
-- **Documents**: PDF, Word, Excel, etc.
-- **Images**: JPG, PNG, etc.
-- **Videos**: coming soon!
+📄 Documents
+- SEC Filings
+- Earnings tables
+- Other PDFs
 
-## What is a schema?
+🖼️ Images
+- Satellite imagery
+- Product images
+- Sports
 
-Frontier LLM APIs like GPT4, Claude and Gemini now support structured outputs (sometimes referred to as "JSON mode"). While generally
-used with text inputs, this approach is particularly powerful for visual data where the goal is to extract information in a
-declarative manner.
+🎥 Videos (coming soon!)
+
+## 💡 Motivation
+
+Frontier LLM APIs like GPT4 and Claude now support structured outputs (usually referred to as "JSON mode") in addition
+to more familiar chat completion. While generally used with text inputs, this approach is particularly powerful for visual
+data (especially documents) because it allows us to extract information in a declarative manner. I.e. we just list
+the fields we care about and let the VLM do the rest.
 
 A schema is a type set of key-value pairs represented as a Pydantic class. Fields can be primitive types or nested TypeClasses and
 include a prompt indicating how that field should be populated from the input. They are a data structure that gets filled out
@@ -21,21 +30,18 @@ by the VLM per your input and instructions.
 Good schemas are a product of 1. good data structure design and 2. good prompts. This repo is meant to be an authoritative source
 for both across a variety of inputs, while being agnostic to the VLM provider so it can be used with multiple models.
 
-## How do I run a particular schema on an input?
+## 🚀 Usage
 
 ### With OpenAI/Instructor
 
 ```python
-
-from vlmrun.hub.utils import encode_image
-from vlmrun.hub.dataset import VLMRUN_HUB_DATASET
-
 import instructor
 from openai import OpenAI
-
 from pydantic import BaseModel
 from typing import Type
 
+from vlmrun.hub.utils import encode_image
+from vlmrun.hub.schemas.document.invoice import Invoice
 
 instructor_client = instructor.from_openai(
     OpenAI(),
@@ -43,7 +49,7 @@ instructor_client = instructor.from_openai(
 )
 
 image_url = 'YOUR_IMAGE_URL'
-response_model: Type[BaseModel] = response_model
+response_model = Invoice # or any other schema
 response = instructor_client.chat.completions.create(
     model="gpt-4o-mini",
     messages=[
@@ -71,14 +77,75 @@ response = instructor_client.chat.completions.create(
 
 ### With VLM Run
 
-### Locally
+```python
+import requests
+
+from vlmrun.hub.schemas.document.invoice import Invoice
+from vlmrun.hub.utils import encode_image, remote_image
+
+VLM_API_URL = "VLM_API_URL"
+VLM_API_KEY = "VLM_API_KEY"
+
+invoice_url = "YOUR_INVOICE_URL"
+invoice_image = remote_image(invoice_url)
+domain = "document.invoice"
+
+json_data = {
+    "file_id": invoice_url,
+    "image": encode_image(invoice_image, format="JPEG"),
+    "json_schema": Invoice.model_json_schema(),
+    "model": "vlm-1",
+    "domain": domain,
+}
+
+response = requests.post(
+    f"{VLM_API_URL}/v1/image/generate",
+    json=json_data,
+    headers={"Authorization": f"Bearer {VLM_API_KEY}"},
+)
+```
+
+### Locally with Ollama
+
+```python
+from pydantic import BaseModel
+from typing import Type
+from ollama import chat
+
+from vlmrun.hub.utils import encode_image
+from vlmrun.hub.schemas.document.invoice import Invoice
+
+response_model = Invoice
+prompt = "YOUR_PROMPT"
+
+chat_response = chat(
+    model="llama3.2-vision:11b",
+    format=response_model.model_json_schema(),
+    messages=[
+        {
+            "role": "user",
+            "content": prompt,
+            "images": [
+                encode_image(img, format="JPEG").split(",")[1]
+                for img in sample.images
+            ],
+        },
+    ],
+    options={
+        "temperature": 0
+    },
+)
+response: Type[BaseModel] = response_model.model_validate_json(
+    chat_response.message.content
+)
+```
 
 ## How is this repo organized?
 
 The hub is organized into a taxonomy of industries and domains, broken down into subcategories for more specific inputs. We hope to expand
 to more domains in the near future with the help of the developer community.
 
-## How can I contribute?
+## 🤝 How can I contribute?
 
 We welcome and encourage contributions from the developer community, and we have a few guidelines around writing good schemas:
 
@@ -97,10 +164,10 @@ If a field is a complex object, use a TypeClass to represent it.
 Try to place new schemas in the appropriate location and reuse other schemas as subtypes where possible. The goal is to provide a type system
 for a variety of visual inputs without needing to duplicate information for similar use cases.
 
-## Reach out
+## 📬 Reach out
 
 We'd love to hear from you if you have any questions or feedback!
 
 - [Twitter](https://x.com/vlmrun)
-- [Discord](https://discord.gg/vlmrun)
+- [Discord](https://discord.gg/3zWE3Qpp)
 - [Email](mailto:hello@vlmrun.com)
