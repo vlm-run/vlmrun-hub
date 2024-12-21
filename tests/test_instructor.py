@@ -26,21 +26,10 @@ def test_instructor(instructor_client):
             messages=[
                 {
                     "role": "user",
-                    "content": [
-                        {
-                            "type": "text",
-                            "text": sample.prompt,
-                        },
-                        *[
-                            {
-                                "type": "image_url",
-                                "image_url": {
-                                    "url": encode_image(image, format="JPEG")
-                                },
-                                "detail": "auto",
-                            }
-                            for image in sample.images
-                        ],
+                    "content": sample.prompt,
+                    "images": [
+                        encode_image(img, format="JPEG").split(",")[1]
+                        for img in sample.images
                     ],
                 },
             ],
