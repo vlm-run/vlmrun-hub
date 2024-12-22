@@ -1,15 +1,15 @@
 ## VLM Run Hub
 
-Welcome to **VLM Run Hub**, the ultimate repository of pre-defined [Pydantic](https://docs.pydantic.dev/latest/) schemas for extracting structured data from unstructured visual domains such as images, videos, and documents. Powered by [Vision Language Models (VLMs)](https://huggingface.co/blog/vlms) and optimized for real-world use cases, VLM Run Hub simplifies the integration of visual ETL into your workflows.
+Welcome to **VLM Run Hub**, the ultimate repository of pre-defined [Pydantic](https://docs.pydantic.dev/latest/) schemas for extracting structured data from unstructured visual domains such as images, videos, and documents. Designed for [Vision Language Models (VLMs)](https://huggingface.co/blog/vlms) and optimized for real-world use cases, VLM Run Hub simplifies the integration of visual ETL into your workflows.
 
 
 <p align="center">
-<a href="https://vlm.run"><b>Website</b></a> | <a href="https://docs.vlm.run/"><b>Docs</b></a> | <a href="https://docs.vlm.run/blog"><b>Blog</b></a> | <a href="https://discord.gg/4jgyECY4rq"><b>Discord</b></a>
+<a href="https://vlm.run"><b>Website</b></a> | <a href="https://docs.vlm.run/"><b>Docs</b></a> | <a href="https://docs.vlm.run/blog"><b>Blog</b></a> | <a href="https://discord.gg/CCY8cYNC"><b>Discord</b></a>
 </p>
 <p align="center">
 <a href="https://pypi.org/project/vlmrun-hub/"><img alt="PyPI Version" src="https://badge.fury.io/py/vlmrun-hub.svg"></a>
 <a href="https://pypi.org/project/vlmrun-hub/"><img alt="PyPI Version" src="https://img.shields.io/pypi/pyversions/vlmrun-hub"></a>
-<a href="https://www.pepy.tech/projects/vlmrun-hub"><img alt="PyPI Downloads" src="https://img.shields.io/pypi/dm/vlmrun-hub"></a>
+<a href="https://www.pepy.tech/projects/vlmrun-hub"><img alt="PyPI Downloads" src="https://img.shields.io/pypi/dm/vlmrun-hub"></a><br>
 <a href="https://github.com/vlm-run/vlmrun-hub/blob/main/LICENSE"><img alt="PyPi Downloads" src="https://img.shields.io/github/license/vlm-run/hub.svg"></a>
 <a href="https://discord.gg/4jgyECY4rq"><img alt="Discord" src="https://img.shields.io/badge/discord-chat-purple?color=%235765F2&label=discord&logo=discord"></a>
 <a href="https://twitter.com/vlmrun"><img alt="PyPi Version" src="https://img.shields.io/twitter/follow/vlmrun.svg?style=social&logo=twitter"></a>
@@ -17,11 +17,9 @@ Welcome to **VLM Run Hub**, the ultimate repository of pre-defined [Pydantic](ht
 
 ## 💡 Motivation
 
-While foundation vision models like OpenAI’s [GPT-4o](https://openai.com/index/hello-gpt-4o/) and Anthropic’s [Claude Vision](https://www.anthropic.com/claude) offer impressive capabilities such as question answering over visual inputs (i.e., "chat with images"), they often fall short in practical software workflows. Chat-based interfaces excel in exploratory tasks but are not ideal for automation or integration into existing systems, where developers need **strongly-typed**, **validated outputs** for seamless functionality.
+While vision models like OpenAI’s [GPT-4o](https://openai.com/index/hello-gpt-4o/) and Anthropic’s [Claude Vision](https://www.anthropic.com/claude) excel in exploratory tasks like "chat with images," they often lack practicality for automation and integration, where **strongly-typed**, **validated outputs** are crucial.
 
-**Structured Outputs API** (popularized by [GPT-4](https://openai.com/index/introducing-structured-outputs-in-the-api/), [Gemini](https://ai.google.dev/gemini-api/docs/structured-output)) is built on exactly this insight - instead of free-form text outputs, LLMs can be constrained to return data in precise, strongly-typed formats that are immediately usable in production systems. By defining strict JSON schemas, developers can ensure that model outputs conform to expected types and structures, eliminating the need for complex parsing and validation logic.
-
-The schemas defined can be arbitrarily nested, and can include lists, dictionaries, and other complex types that can richly capture the information contained in the input. This enables seamless integration with existing type systems and data models in your codebase, while maintaining the full analytical and reasoning capabilities of the underlying model.
+The **Structured Outputs API** (popularized by [GPT-4o](https://openai.com/index/introducing-structured-outputs-in-the-api/), [Gemini](https://ai.google.dev/gemini-api/docs/structured-output)) addresses this by constraining LLMs to return data in precise, strongly-typed formats such as Pydantic models. This eliminates complex parsing and validation, ensuring outputs conform to expected types and structures. These schemas can be nested and include complex types like lists and dictionaries, enabling seamless integration with existing systems while leveraging the full capabilities of the model.
 
 ### Why use this repo / pre-defined Pydantic schemas?
 
@@ -118,34 +116,34 @@ response = response_model.model_validate_json(
 )
 ```
 
-## How is this repo organized?
+## 📂 Directory Structure
 
-The hub is organized into a taxonomy of industries and domains, broken down into subcategories for more specific inputs. We hope to expand
-to more domains in the near future with the help of the developer community.
+Schemas are organized by industry for easy navigation:
 
-## 🤝 How can I contribute?
+```bash
+vlmrun
+└── hub
+    ├── schemas
+    |   ├── <industry>
+    |   |   ├── <use-case-1>.py
+    |   |   ├── <use-case-2>.py
+    |   |   └── ...
+    │   ├── aerospace
+    │   │   └── remote_sensing.py
+    │   ├── document
+    │   │   └── invoice.py
+    │   ├── healthcare
+    │   │   └── medical_insurance_card.py
+    │   └── retail
+    │       └── ecommerce_product_caption.py
+    └── version.py
+```
 
-We welcome and encourage contributions from the developer community, and we have a few guidelines around writing good schemas:
+## ✨ How to Contribute
 
-### Be as specific as possible without being verbose
+We’re building this hub for the community, and contributions are always welcome! Follow the [SCHEMA-GUIDELINES.md](docs/SCHEMA-GUIDELINES.md) to get started.
 
-Be specific about the name, type and prompt for each field. The clearer the relationship between the input and the field, the
-better the result tends to be. Prompts should be concise (1-2 sentences) and to the point. Longer prompts can lead to slower
-inference times.
+## 🔗  Quick Links
 
-### Use nested schemas where appropriate
-
-If a field is a complex object, use a TypeClass to represent it.
-
-### DRY: Don't repeat yourself
-
-Try to place new schemas in the appropriate location and reuse other schemas as subtypes where possible. The goal is to provide a type system
-for a variety of visual inputs without needing to duplicate information for similar use cases.
-
-## 📬 Reach out
-
-We'd love to hear from you if you have any questions or feedback!
-
-- [Twitter](https://x.com/vlmrun)
-- [Discord](https://discord.gg/nz8QZwTH)
-- [Email](mailto:hello@vlmrun.com)
+* 💬 Send us an email at [support@vlm.run](mailto:support@vlm.run) or join our [Discord](https://discord.gg/CCY8cYNC) for help.
+* 📣 Follow us on [Twitter](https://x.com/vlmrun), and [LinkedIn](https://www.linkedin.com/company/vlm-run) to keep up-to-date on our products.
