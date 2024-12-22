@@ -1,126 +1,108 @@
-# VLM Run Hub
+## VLM Run Hub
 
-Structured extraction for VLMs.
+Welcome to **VLM Run Hub**, the ultimate repository of pre-defined [Pydantic](https://docs.pydantic.dev/latest/) schemas for extracting structured data from unstructured visual domains such as images, videos, and documents. Powered by [Vision Language Models (VLMs)](https://huggingface.co/blog/vlms) and optimized for real-world use cases, VLM Run Hub simplifies the integration of visual ETL into your workflows.
 
-This is a repository of schemas for structured ETL on visual domains including:
 
-📄 Documents
-- SEC Filings
-- Earnings tables
-- Other PDFs
-
-🖼️ Images
-- Satellite imagery
-- Product images
-- Sports
-
-🎥 Videos (coming soon!)
+<p align="center">
+<a href="https://vlm.run"><b>Website</b></a> | <a href="https://docs.vlm.run/"><b>Docs</b></a> | <a href="https://docs.vlm.run/blog"><b>Blog</b></a> | <a href="https://discord.gg/4jgyECY4rq"><b>Discord</b></a>
+</p>
+<p align="center">
+<a href="https://pypi.org/project/vlmrun-hub/"><img alt="PyPI Version" src="https://badge.fury.io/py/vlmrun-hub.svg"></a>
+<a href="https://pypi.org/project/vlmrun-hub/"><img alt="PyPI Version" src="https://img.shields.io/pypi/pyversions/vlmrun-hub"></a>
+<a href="https://www.pepy.tech/projects/vlmrun-hub"><img alt="PyPI Downloads" src="https://img.shields.io/pypi/dm/vlmrun-hub"></a>
+<a href="https://github.com/vlm-run/vlmrun-hub/blob/main/LICENSE"><img alt="PyPi Downloads" src="https://img.shields.io/github/license/vlm-run/hub.svg"></a>
+<a href="https://discord.gg/4jgyECY4rq"><img alt="Discord" src="https://img.shields.io/badge/discord-chat-purple?color=%235765F2&label=discord&logo=discord"></a>
+<a href="https://twitter.com/vlmrun"><img alt="PyPi Version" src="https://img.shields.io/twitter/follow/vlmrun.svg?style=social&logo=twitter"></a>
+</p>
 
 ## 💡 Motivation
 
-Frontier LLM APIs like GPT4 and Claude now support structured outputs (usually referred to as "JSON mode") in addition
-to the more familiar chat interface. This is particularly powerful for visual data (especially documents) because it allows us to extract information in a declarative manner (i.e. we just list the fields we care about and let the VLM do the rest).
+While foundation vision models like OpenAI’s [GPT-4o](https://openai.com/index/hello-gpt-4o/) and Anthropic’s [Claude Vision](https://www.anthropic.com/claude) offer impressive capabilities such as question answering over visual inputs (i.e., "chat with images"), they often fall short in practical software workflows. Chat-based interfaces excel in exploratory tasks but are not ideal for automation or integration into existing systems, where developers need **strongly-typed**, **validated outputs** for seamless functionality.
 
-We represent schemas as a Pydantic class of typed key-value pairs. Fields can be primitives (`str`, `int`, etc.) or nested TypeClasses and include a prompt indicating how that field should be populated from the input. In short, they are a data structure that gets filled out by the VLM of your choosing based on your input and instructions.
+**Structured Outputs API** (popularized by [GPT-4](https://openai.com/index/introducing-structured-outputs-in-the-api/), [Gemini](https://ai.google.dev/gemini-api/docs/structured-output)) is built on exactly this insight - instead of free-form text outputs, LLMs can be constrained to return data in precise, strongly-typed formats that are immediately usable in production systems. By defining strict JSON schemas, developers can ensure that model outputs conform to expected types and structures, eliminating the need for complex parsing and validation logic.
 
-Good schemas are a product of 1. a good hierarchy of types/fields and 2. good prompts. This repo is meant to be an authoritative source
-for both across a variety of input and use-cases, while being agnostic to the VLM provider so it can be used with multiple models.
+The schemas defined can be arbitrarily nested, and can include lists, dictionaries, and other complex types that can richly capture the information contained in the input. This enables seamless integration with existing type systems and data models in your codebase, while maintaining the full analytical and reasoning capabilities of the underlying model.
 
-## 🚀 Usage
+### Why use this repo / pre-defined Pydantic schemas?
 
-### With OpenAI/Instructor
+- 📚 **Easy to use:** Pydantic is a well-understood and battle-tested data model for structured data.
+- 🔋 **Batteries included:**  Each schema in this repo has been validated across real-world industry use cases—from healthcare to finance to media—saving you weeks of development effort.
+- 🔍 **Automatic Data-validation:** Built-in [Pydantic](https://docs.pydantic.dev/latest/) validation ensures your extracted data is clean, accurate, and reliable, reducing errors and simplifying downstream workflows.
+- 🔌 **Type-safety:** With [Pydantic’s](https://docs.pydantic.dev/latest/) type-safety and compatibility with tools like `mypy` and `pyright`, you can build composable, modular systems that are robust and maintainable.
+- 🧰 **Model-agnostic:** Use the same schema with multiple VLM providers, no need to rewrite prompts for different VLMs.
+- 🚀 **Optimized for Visual ETL:** Purpose-built for extracting structured data from images, videos, and documents, this repo bridges the gap between unstructured data and actionable insights.
+
+
+## 🚀 Getting Started
+
+Let's say we want to extract invoice metadata from an [invoice image](https://mintlify.s3.us-west-1.amazonaws.com/autonomiai/guides/doc-ai/images/sample-invoice.jpg). You can readily use our `Invoice` schema we have defined under `vlmrun.hub.schemas.document.invoice` and use it with any VLM of your choosing.
+
+### With OpenAI / [Instructor](https://github.com/jxnl/instructor)
 
 ```python
 import instructor
 from openai import OpenAI
-from pydantic import BaseModel
-from typing import Type
 
-from vlmrun.hub.utils import encode_image
 from vlmrun.hub.schemas.document.invoice import Invoice
 
-instructor_client = instructor.from_openai(
-    OpenAI(),
-    mode=instructor.Mode.MD_JSON,
-)
+IMAGE_URL = "https://mintlify.s3.us-west-1.amazonaws.com/autonomiai/guides/doc-ai/images/sample-invoice.jpg"
 
-image_url = 'YOUR_IMAGE_URL'
-response_model = Invoice # or any other schema
-response = instructor_client.chat.completions.create(
+client = instructor.from_openai(
+    OpenAI(), mode=instructor.Mode.MD_JSON
+)
+response = client.chat.completions.create(
     model="gpt-4o-mini",
     messages=[
-        {
-            "role": "user",
-            "content": [
-                {
-                    "type": "text",
-                    "text": sample.prompt,
-                },
-                {
-                    "type": "image_url",
-                    "image_url": {
-                        "url": encode_image(image_url, format="JPEG")
-                    },
-                    "detail": "auto",
-                }
-            ],
-        },
+        { "role": "user", "content": [
+            {"type": "text", "text": "Extract the invoice in JSON."},
+            {"type": "image_url", "image_url": {"url": IMAGE_URL}, "detail": "auto"}
+        ]}
     ],
-    response_model=response_model,
+    response_model=Invoice,
     temperature=0,
 )
 ```
 
-### With VLM Run
+### With [VLM Run](https://vlm.run)
 
 ```python
 import requests
 
 from vlmrun.hub.schemas.document.invoice import Invoice
-from vlmrun.hub.utils import encode_image, remote_image
 
-VLM_API_URL = "VLM_API_URL"
-VLM_API_KEY = "VLM_API_KEY"
 
-invoice_url = "YOUR_INVOICE_URL"
-invoice_image = remote_image(invoice_url)
-domain = "document.invoice"
+IMAGE_URL = "https://mintlify.s3.us-west-1.amazonaws.com/autonomiai/guides/doc-ai/images/sample-invoice.jpg"
+VLM_API_KEY = "<your-api-key>"
 
 json_data = {
-    "file_id": invoice_url,
-    "image": encode_image(invoice_image, format="JPEG"),
-    "json_schema": Invoice.model_json_schema(),
+    "image": IMAGE_URL,
     "model": "vlm-1",
-    "domain": domain,
+    "domain": "document.invoice",
+    "prompt": "Extract the invoice in JSON.",
+    "json_schema": Invoice.model_json_schema(),
 }
-
 response = requests.post(
-    f"{VLM_API_URL}/v1/image/generate",
-    json=json_data,
+    f"https://api.vlm.run/v1/image/generate",
     headers={"Authorization": f"Bearer {VLM_API_KEY}"},
+    json=json_data,
 )
 ```
 
-### Locally with Ollama
+### Locally with [Ollama](https://ollama.com)
 
 ```python
-from pydantic import BaseModel
-from typing import Type
 from ollama import chat
 
-from vlmrun.hub.utils import encode_image
 from vlmrun.hub.schemas.document.invoice import Invoice
-
-response_model = Invoice
-prompt = "YOUR_PROMPT"
+from vlmrun.hub.utils import encode_image
 
 chat_response = chat(
     model="llama3.2-vision:11b",
-    format=response_model.model_json_schema(),
+    format=Invoice.model_json_schema(),
     messages=[
         {
             "role": "user",
-            "content": prompt,
+            "content": "Extract the invoice in JSON.",
             "images": [
                 encode_image(img, format="JPEG").split(",")[1]
                 for img in sample.images
@@ -131,7 +113,7 @@ chat_response = chat(
         "temperature": 0
     },
 )
-response: Type[BaseModel] = response_model.model_validate_json(
+response = response_model.model_validate_json(
     chat_response.message.content
 )
 ```
