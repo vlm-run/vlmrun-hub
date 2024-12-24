@@ -4,6 +4,8 @@ on:
   push:
     tags:
       - "v*"
+    branches:
+      - main
 
 env:
   CACHE_NUMBER: 1 # increase to reset cache manually
@@ -73,6 +75,9 @@ jobs:
     steps:
       - name: Checkout git repo
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GH_TOKEN }}
 
       - uses: conda-incubator/setup-miniconda@v2
         with:
@@ -108,7 +113,17 @@ jobs:
           python -m pip install --upgrade pip
           pip install -e '.[test,build]'
 
+      - name: Build package
+        run: |
+          python -m build
+
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          password: ${{ secrets.PYPI_TOKEN }}
+
       - name: Bump version
+        if: success()
         run: |
           new_version=$(python scripts/bump_version.py vlmrun/hub/version.py patch)
 
@@ -120,12 +135,3 @@ jobs:
           git tag -a "v${new_version}" -m "Version ${new_version}"
           git push origin
           git push origin "v${new_version}"
-
-      - name: Build package
-        run: |
-          python -m build
-
-      - name: Publish to PyPI
-        uses: pypa/gh-action-pypi-publish@release/v1
-        with:
-          password: ${{ secrets.PYPI_TOKEN }}

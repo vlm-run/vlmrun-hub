@@ -40,7 +40,9 @@ def bump_version(version_file: str, bump_type: str = "patch") -> str:
     new_version = f"{major}.{minor}.{patch}"
 
     # Update the file
-    new_content = content.replace(f'__version__ = "{current_version}"', f'__version__ = "{new_version}"')
+    new_content = content.replace(
+        f'__version__ = "{current_version}"', f'__version__ = "{new_version}"'
+    )
     version_path.write_text(new_content)
 
     return new_version
