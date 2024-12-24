@@ -163,3 +163,4 @@ cython_debug/
 #.idea/
 /helpers
 *.env.*
+.DS_Store
