@@ -27,10 +27,7 @@ def test_instructor(instructor_client):
                 {
                     "role": "user",
                     "content": sample.prompt,
-                    "images": [
-                        encode_image(img, format="JPEG").split(",")[1]
-                        for img in sample.images
-                    ],
+                    "images": [encode_image(img, format="JPEG").split(",")[1] for img in sample.images],
                 },
             ],
             response_model=response_model,

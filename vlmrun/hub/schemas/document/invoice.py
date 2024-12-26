@@ -24,9 +24,7 @@ class Invoice(BaseModel):
     invoice_id: str | None = Field(None, description="Unique invoice identifier")
     period_start: date | None = Field(None, description="Invoice period start date")
     period_end: date | None = Field(None, description="Invoice period end date")
-    invoice_issue_date: date | None = Field(
-        None, description="Issue date of the invoice"
-    )
+    invoice_issue_date: date | None = Field(None, description="Issue date of the invoice")
     invoice_due_date: date | None = Field(None, description="Due date of the invoice")
 
     order_id: str | None = Field(None, description="Unique order identifier")
@@ -37,12 +35,8 @@ class Invoice(BaseModel):
     customer: str | None = Field(None, description="Recipient of the invoice")
     customer_email: str | None = Field(None, description="Recipient's email")
     customer_phone: str | None = Field(None, description="Recipient's phone")
-    customer_billing_address: Address | None = Field(
-        None, description="Recipient's billing address"
-    )
-    customer_shipping_address: Address | None = Field(
-        None, description="Recipient's shipping address"
-    )
+    customer_billing_address: Address | None = Field(None, description="Recipient's billing address")
+    customer_shipping_address: Address | None = Field(None, description="Recipient's shipping address")
 
     items: List[Item] | None = Field(None, description="Items in the invoice")
     subtotal: float | None = Field(None, description="Subtotal of the invoice")
