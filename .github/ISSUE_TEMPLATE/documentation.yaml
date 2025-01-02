@@ -1,0 +1,45 @@
+name: Documentation
+description: Report an issue or suggest improvements for VLM Run Hub documentation
+title: "DOC: <Please provide a clear title after the 'DOC: ' prefix>"
+labels: [documentation]
+
+body:
+- type: markdown
+  attributes:
+    value: >
+      Thank you for helping improve the VLM Run Hub documentation!
+
+      This template is specifically for:
+      - Reporting documentation errors or unclear content
+      - Suggesting new documentation topics
+      - Improving existing documentation
+
+      **Helpful Resources:**
+      - [Contribution Guide](./docs/CONTRIBUTING.md)
+
+- type: dropdown
+  id: doc_type
+  attributes:
+    label: Documentation Type
+    description: What type of documentation issue are you reporting?
+    options:
+      - General Improvements / Fixes
+      - Usage Guides / Examples
+      - Other
+  validations:
+    required: true
+
+- type: textarea
+  attributes:
+    label: Issue Description and Proposed Changes
+    description: >
+      Please describe the issue with the current documentation and your suggested changes. Include:
+    placeholder: |
+      E.g.:
+
+      In the CustomerInvoice schema documentation:
+      - The `status` field description is unclear about valid enum values
+      - Missing example for nested Item model
+
+  validations:
+    required: true

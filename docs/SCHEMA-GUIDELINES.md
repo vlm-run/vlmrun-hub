@@ -4,7 +4,6 @@ Thank you for contributing to the VLM Run Hub! To maintain consistency and adher
 
 
 ## ✏️ Guidelines for Writing a Schema
----
 
 1. **Use Pydantic’s BaseModel**: All schemas must inherit from Pydantic’s `BaseModel`.
    ```python
@@ -77,7 +76,6 @@ Thank you for contributing to the VLM Run Hub! To maintain consistency and adher
    ```
 
 ### ✅ Schema Review Checklist
----
 
 Before submitting your schema:
 
@@ -88,8 +86,7 @@ Before submitting your schema:
 - [ ] **Reusability**: Use nested models for complex types and avoid redundancy.
 - [ ] **Tests**: Provide unit tests to validate the schema against valid and invalid data.
 
-### Adding a New Schema to the Hub
----
+### 👩‍💻 Adding a New Schema to the Hub
 
 1. **Create a new schema file**: Create a new file in the `schemas/contrib` directory, under the appropriate industry and use case (e.g., `schemas/contrib/retail/ecommerce_product_caption.py`). Follow the [Schema Guidelines](#✏️-guidelines-for-writing-a-schema) to write the schema.
 

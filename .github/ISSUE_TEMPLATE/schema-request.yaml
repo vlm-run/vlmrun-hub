@@ -1,0 +1,62 @@
+name: Schema Request
+description: Request a new schema or suggest updates to an existing schema
+title: "[schema] New schema for `<industry>/<use_case>`"
+labels: [schema]
+
+body:
+- type: markdown
+  attributes:
+    value: >
+      Thank you for contributing to the VLM Run Hub schema!
+
+      This template is specifically for:
+      - Requesting new schemas
+      - Suggesting updates to existing schemas
+
+- type: dropdown
+  id: schema_action
+  attributes:
+    label: Schema Action
+    description: What action are you requesting?
+    options:
+      - New Schema
+      - Update Existing Schema
+  validations:
+    required: true
+
+- type: textarea
+  attributes:
+    label: Schema Motivation
+    description: >
+      Please provide a motivation for the new schema or the updates needed for an existing schema. Include:
+    placeholder: |
+      E.g.:
+
+      New Schema Request:
+      - Name: CustomerInvoice
+      - Fields: id, status, amount, date
+
+      Update Existing Schema:
+      - Schema: CustomerInvoice
+      - Changes: Add `due_date` field
+
+- type: url
+  attributes:
+    label: Sample Image
+    description: Link to an example image to run the schema on
+    placeholder: "https://example.com/image.png"
+    optional: true
+
+- type: textarea
+  attributes:
+    label: Sample JSON Output
+    description: The JSON output of the structured extraction from the sample image
+    placeholder: |
+      ```json
+      {
+        "id": "123",
+        "status": "paid",
+        "amount": 100,
+        "date": "2024-01-01"
+      }
+      ```

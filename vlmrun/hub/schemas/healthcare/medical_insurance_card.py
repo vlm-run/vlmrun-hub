@@ -20,8 +20,8 @@ class PharmacyPlan(BaseModel):
 
 
 class InsuranceProvider(BaseModel):
-    provider_name: str = Field(..., description="Provider name.")
-    network: str = Field(..., description="Network.")
+    provider_name: str | None = Field(None, description="Provider name.")
+    network: str | None = Field(None, description="Network.")
 
 
 class Coverage(BaseModel):
@@ -33,8 +33,8 @@ class Coverage(BaseModel):
 
 
 class MedicalInsuranceCard(BaseModel):
-    provider_service: ProviderService = Field(..., description="Provider service information.")
-    member_information: MemberInformation = Field(..., description="Member information.")
-    pharmacy_plan: PharmacyPlan = Field(..., description="Pharmacy plan information.")
-    insurance_provider: InsuranceProvider = Field(..., description="Insurance provider information.")
-    coverage: Coverage = Field(..., description="Coverage information.")
+    provider_service: ProviderService | None = Field(None, description="Provider service information.")
+    member_information: MemberInformation | None = Field(None, description="Member information.")
+    pharmacy_plan: PharmacyPlan | None = Field(None, description="Pharmacy plan information.")
+    insurance_provider: InsuranceProvider | None = Field(None, description="Insurance provider information.")
+    coverage: Coverage | None = Field(None, description="Coverage information.")

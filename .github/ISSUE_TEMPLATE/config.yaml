@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Schema Request
+    about: Suggest a schema or an idea
+    url: https://www.github.com/vlm-run/vlmrun-hub/discussions/categories/schema-request
+  - name: Documentation Request
+    about: Suggest a documentation improvement
+    url: https://www.github.com/vlm-run/vlmrun-hub/discussions/categories/documentation
