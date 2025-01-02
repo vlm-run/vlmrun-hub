@@ -48,15 +48,14 @@ class RemoteSensingCategory(str, Enum):
 
 
 class RemoteSensing(BaseModel):
-    description: str = Field(..., description="2-3 sentence description of the satellite image.")
-    objects: list[str] | None = Field(..., description="List of unique objects in the scene")
+    description: str | None = Field(None, description="2-3 sentence description of the satellite image.")
+    objects: list[str] | None = Field(None, description="List of unique objects in the scene")
     categories: list[RemoteSensingCategory] | None = Field(
-        ...,
+        None,
         description="List of (atmost 10) categories that pertain to the scene.",
         min_length=1,
         max_length=10,
     )
     is_visible: bool | None = Field(
-        ...,
-        description="Whether the land mass is visible from space, or if it is obscured by clouds.",
+        None, description="Whether the land mass is visible from space, or if it is obscured by clouds."
     )
