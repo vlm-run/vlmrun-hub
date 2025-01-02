@@ -1,11 +1,14 @@
 import os
+from typing import Type
+
 import pytest
 from loguru import logger
 from pydantic import BaseModel
-from typing import Type
 
+pytestmark = pytest.mark.skipif(
+    not os.getenv("OPENAI_API_KEY", False), reason="This test requires OPENAI_API_KEY to be set"
+)
 
-pytestmark = pytest.mark.skipif(not os.getenv("OPENAI_API_KEY", False), reason="This test requires OPENAI_API_KEY to be set")
 
 @pytest.fixture
 def instructor_client():
@@ -19,8 +22,8 @@ def instructor_client():
 
 
 def test_instructor(instructor_client):
-    from vlmrun.hub.utils import encode_image
     from vlmrun.hub.dataset import VLMRUN_HUB_DATASET
+    from vlmrun.hub.utils import encode_image
 
     for sample in VLMRUN_HUB_DATASET.values():
         response_model: Type[BaseModel] = sample.response_model

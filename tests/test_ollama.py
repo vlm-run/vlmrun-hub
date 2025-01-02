@@ -1,13 +1,14 @@
 import importlib.util
-import pytest
 import os
-from loguru import logger
-from vlmrun.hub.dataset import VLMRUN_HUB_DATASET
-from pydantic import BaseModel
 from typing import Type
-import requests
 
+import pytest
+import requests
 from dotenv import load_dotenv
+from loguru import logger
+from pydantic import BaseModel
+
+from vlmrun.hub.dataset import VLMRUN_HUB_DATASET
 
 load_dotenv()
 
@@ -17,6 +18,7 @@ OLLAMA_BASE_URL = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
 @pytest.mark.skipif(not importlib.util.find_spec("ollama"), reason="Ollama is not installed")
 def test_local_ollama():
     from ollama import chat
+
     from vlmrun.hub.utils import encode_image
 
     try:

@@ -50,3 +50,20 @@ include = ["vlmrun.hub"]
 
 [tool.black]
 line-length = 120
+
+[tool.ruff]
+# Enable pycodestyle (`E`) and Pyflakes (`F`) codes by default.
+lint.select = [
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
+    "F",  # pyflakes
+    "I",  # isort
+    "C",  # flake8-comprehensions
+    "B",  # flake8-bugbear
+]
+lint.ignore = [
+    "E501",  # E501: Line too long
+    "C901",  # C901: Function is too complex
+    "B008",  # do not perform function calls in argument defaults
+    "B904",  # B904: check for raise from None
+]

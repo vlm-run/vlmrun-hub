@@ -1,7 +1,8 @@
 import pytest
-from pydantic import BaseModel
-from vlmrun.hub.registry import Registry
 from loguru import logger
+from pydantic import BaseModel
+
+from vlmrun.hub.registry import Registry
 
 
 class SampleSchema(BaseModel):

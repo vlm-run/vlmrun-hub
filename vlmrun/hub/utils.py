@@ -1,10 +1,10 @@
+from base64 import b64encode
 from io import BytesIO
 from pathlib import Path
 from typing import Literal, Union
 
 import requests
 from PIL import Image
-from base64 import b64encode
 
 VLMRUN_CACHE_DIR = Path.home() / ".vlmrun" / "cache"
 VLMRUN_HUB_DIR = Path.home() / ".vlmrun" / "hub"

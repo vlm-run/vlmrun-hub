@@ -1,10 +1,10 @@
+import json
 import os
+
 import pytest
 import requests
-from loguru import logger
-import json
-
 from dotenv import load_dotenv
+from loguru import logger
 
 from vlmrun.hub.schemas.document.invoice import Invoice
 from vlmrun.hub.utils import encode_image, remote_image
