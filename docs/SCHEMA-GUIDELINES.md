@@ -1,112 +1,93 @@
 # Schema Guidelines
-## Schema Organization
 
-The schemas are organized in the following structure:
+Thank you for contributing to the VLM Run Hub! To maintain consistency and adhere to industry best practices, please follow these guidelines when creating a new schema.
 
-## Schema Design Principles
 
-1. **Pydantic Base Models**: All schemas are implemented using Pydantic BaseModel for robust type validation and serialization.
-2. **Optional Fields**: Most fields are optional (using `| None`) to accommodate varying data availability.
-3. **Field Descriptions**: Every field includes a descriptive comment explaining its purpose.
-4. **Nested Structures**: Complex data types are broken down into nested models for better organization.
+## ✏️ Guidelines for Writing a Schema
 
-## Industry Sectors
+1. **Use Pydantic’s BaseModel**: All schemas must inherit from Pydantic’s `BaseModel`.
+   ```python
+   from pydantic import BaseModel
 
-### Banking
+   class ExampleSchema(BaseModel):
+      ...
+   ```
 
-- Document verification schemas for KYC and compliance
+2. **Strongly-Typed Fields**: Define each field with precise, strongly-typed annotations (e.g., `str`, `int`, `float`, `list`, `dict`).
 
-### Document Processing
+3. **Optional Fields**: Use `| None` as the default for optional fields. This is critical as some fields may not be present in the data, and we don't want the Pydantic model to fail the schema validation when this happens.
 
-- ID extraction for identity documents
-- Invoice parsing and structuring
-- Presentation content extraction
+4. **Descriptive Field Names**: Use clear, descriptive, and `snake_case` field names, along with a short `description` field that explains the field's purpose. This is critical for the model to interpret the field to be mapped from.
 
-### Healthcare
+   Good example:
+   ```python
+   class CustomerInvoice(BaseModel):
+      invoice_number: str = Field(..., description="The invoice number, typically represented as a string of alphanumeric characters.")
+   ```
 
-- Medical insurance card information
-- Patient intake form processing
+   Bad example:
+   ```python
+   class CustomerInvoice(BaseModel):
+      invoice_number: str = Field(..., description="The invoice number.")
+   ```
 
-### Media
+5. **Field Metadata**:
+   - Use the `Field` class to provide:
+     - `default`: If applicable (e.g., `Field(None, ...)`).
+     - `description`: Include a short, clear explanation of the field’s purpose. (e.g., `Field(..., description="The invoice number, typically represented as a string of alphanumeric characters.")`)
+     - Other constraints: For validation (e.g., `max_length`, `regex`).
+     - Validation: Add custom validators where necessary to enforce domain-specific rules.
 
-- NBA game state tracking
-- NFL game state tracking
+6. **Nested Models**: Use nested Pydantic models for complex structures (e.g., lists of dictionaries).
 
-### Retail
+   ```python
+   class CustomerInvoice(BaseModel):
+      invoice_number: str = Field(..., description="The invoice number, typically represented as a string of alphanumeric characters.")
+      items: list[Item] = Field(..., description="A list of items in the invoice.")
+   ```
 
-- E-commerce product captioning and categorization
+7. **Enums**: Use enums or `Literal` for fixed choices.
 
-### Aerospace
+   Using `Enum`:
+   ```python
+   class Status(Enum):
+      pending = "pending"
+      paid = "paid"
+      cancelled = "cancelled"
 
-- Remote sensing image classification
+   class CustomerInvoice(BaseModel):
+      ...
+      status: Status = Field(..., description="The status of the invoice, which can be either 'pending', 'paid', or 'cancelled'.")
+   ```
 
-## Schema Validation
+   Using `Literal`:
+   ```python
+   class CustomerInvoice(BaseModel):
+      status: Literal["pending", "paid", "cancelled"] = Field(..., description="The status of the invoice, which can be either 'pending', 'paid', or 'cancelled'.")
+   ```
 
-All schemas include:
+8. **Examples**: Include a `Config.schema_extra` with example data for each schema.
 
-- Type validation
-- Optional/required field specifications
-- Nested model support
-- Enumerated types where applicable
-- Comprehensive field descriptions
+   ```python
+   class CustomerInvoice(BaseModel):
+      ...
 
-## Contributing
+   CustomerInvoice.model_json_schema(indent=2)
+   ```
 
-### Using LLMs to Generate New Schemas
+### ✅ Schema Review Checklist
 
-When creating new industry-specific schemas, you can leverage Large Language Models (LLMs) to help generate well-structured Pydantic models. Here's the recommended approach:
+Before submitting your schema:
 
-1. **Define the Domain**
+- [ ] **Field Types**: Ensure all fields are strongly-typed.
+- [ ] **Field Metadata**: Check that all fields include descriptions and constraints where applicable.
+- [ ] **Examples**: Include clear, complete examples in Config.schema_extra.
+- [ ] **Validation**: Add custom validators for domain-specific rules.
+- [ ] **Reusability**: Use nested models for complex types and avoid redundancy.
+- [ ] **Tests**: Provide unit tests to validate the schema against valid and invalid data.
 
-   - Identify the specific industry or use case
-   - List key data points that need to be captured
-   - Reference existing industry standards or documentation
+### 👩‍💻 Adding a New Schema to the Hub
 
-2. **Prompt Engineering**
-   Example prompt template: ```
-   Create a Pydantic schema for [industry/use-case] that:
+1. **Create a new schema file**: Create a new file in the `schemas/contrib` directory, under the appropriate industry and use case (e.g., `schemas/contrib/retail/ecommerce_product_caption.py`). Follow the [Schema Guidelines](#✏️-guidelines-for-writing-a-schema) to write the schema.
 
-   - Captures [key data points]
-   - Uses proper type hints
-   - Includes field descriptions
-   - Follows existing patterns from similar schemas
-   - Implements nested models where appropriate ```
-
-3. **Schema Structure Guidelines**
-   Follow these patterns from existing schemas:
-
-   - Use nested models for complex data (see `retail/ecommerce_product_caption.py`)
-   - Implement enums for fixed choices (see `aerospace/remote_sensing.py`)
-   - Make fields optional with `| None` (see `document/invoice.py`)
-   - Add comprehensive descriptions using `Field()` (see all schemas)
-   - Use appropriate data types (str, int, float, date, etc.)
-
-4. **Validation and Testing**
-
-   - Ensure the generated schema validates correctly
-   - Test with sample data
-   - Review field descriptions for clarity
-   - Check type hints and optional fields
-
-5. **Documentation**
-   - Add the schema to the appropriate section in this README
-   - Include example usage if helpful
-   - Document any special types or enums
-
-### Example Schema Generation
-
-Looking at existing schemas for inspiration:
-
-- For document processing, reference `document/id_extraction.py` for handling multiple related data points
-- For classification tasks, reference `aerospace/remote_sensing.py` for enum usage
-- For complex nested structures, reference `retail/ecommerce_product_caption.py`
-- For financial data, reference `banking/document_verification.py`
-
-### Best Practices
-
-1. Keep models focused and specific to the use case
-2. Use clear, descriptive field names
-3. Include comprehensive field descriptions
-4. Make fields optional unless absolutely required
-5. Use appropriate data types and validation
-6. Follow existing patterns for similar data structures
+2. **Add sample image, prompt, and test**: Add a sample image, text, or other data that the schema can be applied to and add a pytest test for the schema under `tests/test_schemas.py`.

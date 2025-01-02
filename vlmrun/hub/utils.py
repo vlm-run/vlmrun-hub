@@ -56,9 +56,7 @@ _HEADERS = {
 
 
 def remote_image(url: str | Path) -> Image.Image:
-    assert isinstance(
-        url, (str, Path)
-    ), f"Invalid type for url [url={url}, type={type(url)}]"
+    assert isinstance(url, (str, Path)), f"Invalid type for url [url={url}, type={type(url)}]"
     if url.startswith("http"):
         bytes = requests.get(url, headers=_HEADERS).content
         return Image.open(BytesIO(bytes)).convert("RGB")
