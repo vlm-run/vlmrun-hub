@@ -88,6 +88,6 @@ Before submitting your schema:
 
 ### 👩‍💻 Adding a New Schema to the Hub
 
-1. **Create a new schema file**: Create a new file in the `schemas/contrib` directory, under the appropriate industry and use case (e.g., `schemas/contrib/retail/ecommerce_product_caption.py`). Follow the [Schema Guidelines](#✏️-guidelines-for-writing-a-schema) to write the schema.
+1. **Create a new schema file**: Create a new file in the [`schemas/contrib`](../vlmrun/hub/schemas/contrib) directory, under the appropriate industry and use case (e.g., `schemas/contrib/retail/ecommerce_product_caption.py`). Follow the [Schema Guidelines](#✏️-guidelines-for-writing-a-schema) to write the schema.
 
 2. **Add sample image, prompt, and test**: Add a sample image, text, or other data that the schema can be applied to and add a pytest test for the schema under `tests/test_schemas.py`.

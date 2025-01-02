@@ -40,18 +40,13 @@ jobs:
           key: conda-py310-${{ hashFiles('requirements*.txt') }}-${{ hashFiles('pyproject.toml') }}-${{ env.CACHE_NUMBER }}
           restore-keys: |
             conda-py310-
-
-      - uses: actions/cache@v3
-        with:
-          path: ~/.cache/pip
-          key: pip-${{ hashFiles('requirements*.txt') }}-${{ hashFiles('pyproject.toml') }}-${{ env.CACHE_NUMBER }}
-          restore-keys: |
-            pip-
+          id: cache
 
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -e '.[test]'
+        if: steps.cache.outputs.cache-hit != 'true'
 
       - name: Quality Check
         uses: pre-commit/action@v3.0.1
@@ -60,7 +55,5 @@ jobs:
       - name: Run tests
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          VLM_API_URL: ${{ vars.VLM_API_URL }}
-          VLM_API_KEY: ${{ secrets.VLM_API_KEY }}
         run: |
           make test

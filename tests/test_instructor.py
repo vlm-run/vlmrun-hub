@@ -1,8 +1,11 @@
+import os
 import pytest
 from loguru import logger
 from pydantic import BaseModel
 from typing import Type
 
+
+pytestmark = pytest.mark.skipif(not os.getenv("OPENAI_API_KEY", False), reason="This test requires OPENAI_API_KEY to be set")
 
 @pytest.fixture
 def instructor_client():
