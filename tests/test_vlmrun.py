@@ -1,17 +1,21 @@
-import requests
-import os
-from loguru import logger
 import json
+import os
 
+import pytest
+import requests
 from dotenv import load_dotenv
+from loguru import logger
 
 from vlmrun.hub.schemas.document.invoice import Invoice
 from vlmrun.hub.utils import encode_image, remote_image
 
 load_dotenv()
 
-VLM_API_URL = os.getenv("VLM_API_URL")
-VLM_API_KEY = os.getenv("VLM_API_KEY")
+
+VLMRUN_API_KEY = os.getenv("VLMRUN_API_KEY", None)
+VLMRUN_BASE_URL = os.getenv("VLMRUN_BASE_URL", None)
+
+pytestmark = pytest.mark.skipif(not VLMRUN_API_KEY, reason="This test requires VLMRUN_API_KEY to be set")
 
 
 def test_vlmrun_invoice():
@@ -28,9 +32,9 @@ def test_vlmrun_invoice():
     }
 
     response = requests.post(
-        f"{VLM_API_URL}/v1/image/generate",
+        f"{VLMRUN_BASE_URL}/v1/image/generate",
         json=json_data,
-        headers={"Authorization": f"Bearer {VLM_API_KEY}"},
+        headers={"Authorization": f"Bearer {VLMRUN_API_KEY}"},
     )
     assert response.status_code == 200, f"Response failed: {response.text}"
     json_response = response.json()
