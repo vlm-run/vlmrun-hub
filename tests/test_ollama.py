@@ -15,6 +15,7 @@ load_dotenv()
 OLLAMA_BASE_URL = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
 
 
+@pytest.mark.benchmark
 @pytest.mark.skipif(not importlib.util.find_spec("ollama"), reason="Ollama is not installed")
 def test_local_ollama():
     from ollama import chat

@@ -21,7 +21,8 @@ def instructor_client():
     )
 
 
-def test_instructor(instructor_client):
+@pytest.mark.benchmark
+def test_instructor_hub_dataset(instructor_client):
     from vlmrun.hub.dataset import VLMRUN_HUB_DATASET
     from vlmrun.hub.utils import encode_image
 
@@ -32,8 +33,13 @@ def test_instructor(instructor_client):
             messages=[
                 {
                     "role": "user",
-                    "content": sample.prompt,
-                    "images": [encode_image(img, format="JPEG").split(",")[1] for img in sample.images],
+                    "content": [
+                        {"type": "text", "text": sample.prompt},
+                        *[
+                            {"type": "image_url", "image_url": {"url": encode_image(img, format="JPEG")}}
+                            for img in sample.images
+                        ],
+                    ],
                 },
             ],
             response_model=response_model,
