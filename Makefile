@@ -44,6 +44,9 @@ lint: ## Format source code automatically
 test: ## Basic CPU testing
 	pytest -sv tests
 
+test-benchmark: ## Benchmark testing
+	pytest -sv tests -m benchmark
+
 dist: clean ## builds source and wheel package
 	python -m build --sdist --wheel
 	ls -lh dist

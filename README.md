@@ -33,9 +33,9 @@ The **Structured Outputs API** (popularized by [GPT-4o](https://openai.com/index
 
 ## 🚀 Getting Started
 
-Let's say we want to extract invoice metadata from an [invoice image](https://mintlify.s3.us-west-1.amazonaws.com/autonomiai/guides/doc-ai/images/sample-invoice.jpg). You can readily use our `Invoice` schema we have defined under `vlmrun.hub.schemas.document.invoice` and use it with any VLM of your choosing.
+Let's say we want to extract invoice metadata from an [invoice image](https://storage.googleapis.com/vlm-data-public-prod/hub/examples/document.invoice-extraction/invoice_1.jpg). You can readily use our [`Invoice`](vlmrun/hub/schemas/document/invoice.py) schema we have defined under `vlmrun.hub.schemas.document.invoice` and use it with any VLM of your choosing.
 
-### With OpenAI / [Instructor](https://github.com/jxnl/instructor)
+### With [Instructor](https://github.com/jxnl/instructor) / OpenAI
 
 ```python
 import instructor
@@ -43,7 +43,7 @@ from openai import OpenAI
 
 from vlmrun.hub.schemas.document.invoice import Invoice
 
-IMAGE_URL = "https://mintlify.s3.us-west-1.amazonaws.com/autonomiai/guides/doc-ai/images/sample-invoice.jpg"
+IMAGE_URL = "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/document.invoice-extraction/invoice_1.jpg"
 
 client = instructor.from_openai(
     OpenAI(), mode=instructor.Mode.MD_JSON
@@ -61,6 +61,93 @@ response = client.chat.completions.create(
 )
 ```
 
+<details>
+<summary>JSON Response:</summary>
+
+<table>
+<tr>
+<td style="width: 40%;"> Image </td>
+<td> JSON Output 🔐 </td>
+</tr>
+
+<tr>
+<td style="width: 40%;">
+<img src="https://storage.googleapis.com/vlm-data-public-prod/hub/examples/document.invoice-extraction/invoice_1.jpg">
+</td>
+<td>
+
+```json
+{
+  "invoice_id": "9999999",
+  "period_start": null,
+  "period_end": null,
+  "invoice_issue_date": "2023-11-11",
+  "invoice_due_date": null,
+  "order_id": null,
+  "customer_id": null,
+  "issuer": "Anytown, USA",
+  "issuer_address": {
+    "street": "123 Main Street",
+    "city": "Anytown",
+    "state": "USA",
+    "postal_code": "01234",
+    "country": null
+  },
+  "customer": "Fred Davis",
+  "customer_email": "email@invoice.com",
+  "customer_phone": "(800) 123-4567",
+  "customer_billing_address": {
+    "street": "1335 Martin Luther King Jr Ave",
+    "city": "Dunedin",
+    "state": "FL",
+    "postal_code": "34698",
+    "country": null
+  },
+  "customer_shipping_address": {
+    "street": "249 Windward Passage",
+    "city": "Clearwater",
+    "state": "FL",
+    "postal_code": "33767",
+    "country": null
+  },
+  "items": [
+    {
+      "description": "Service",
+      "quantity": 1,
+      "currency": null,
+      "unit_price": 200.0,
+      "total_price": 200.0
+    },
+    {
+      "description": "Parts AAA",
+      "quantity": 1,
+      "currency": null,
+      "unit_price": 100.0,
+      "total_price": 100.0
+    },
+    {
+      "description": "Parts BBB",
+      "quantity": 2,
+      "currency": null,
+      "unit_price": 50.0,
+      "total_price": 100.0
+    }
+  ],
+  "subtotal": 400.0,
+  "tax": null,
+  "total": 400.0,
+  "currency": null,
+  "notes": "",
+  "others": null
+}
+```
+
+</td>
+</tr>
+</table>
+
+</details>
+
 ### With [VLM Run](https://vlm.run)
 
 ```python
@@ -69,8 +156,7 @@ import requests
 from vlmrun.hub.schemas.document.invoice import Invoice
 
 
-IMAGE_URL = "https://mintlify.s3.us-west-1.amazonaws.com/autonomiai/guides/doc-ai/images/sample-invoice.jpg"
-VLM_API_KEY = "<your-api-key>"
+IMAGE_URL = "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/document.invoice-extraction/invoice_1.jpg"
 
 json_data = {
     "image": IMAGE_URL,
@@ -80,10 +166,36 @@ json_data = {
 }
 response = requests.post(
     f"https://api.vlm.run/v1/image/generate",
-    headers={"Authorization": f"Bearer {VLM_API_KEY}"},
+    headers={"Authorization": f"Bearer <your-api-key>"},
     json=json_data,
 )
 ```
+
+### With [OpenAI Structured Outputs API](https://platform.openai.com/docs/guides/structured-outputs)
+
+```python
+import instructor
+from openai import OpenAI
+
+from vlmrun.hub.schemas.document.invoice import Invoice
+
+IMAGE_URL = "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/document.invoice-extraction/invoice_1.jpg"
+
+client = OpenAI()
+completion = client.beta.chat.completions.parse(
+    model="gpt-4o-mini",
+    messages=[
+        {"role": "user", "content": [
+            {"type": "text", "text": "Extract the invoice in JSON."},
+            {"type": "image_url", "image_url": {"url": IMAGE_URL}, "detail": "auto"}
+        ]},
+    ],
+    response_format=Invoice,
+    temperature=0,
+)
+```
+
+> When working with the OpenAI Structured Outputs API, you need to ensure that the `response_format` is a valid Pydantic model with the [supported types](https://platform.openai.com/docs/guides/structured-outputs#supported-schemas).
 
 ### Locally with [Ollama](https://ollama.com)
 
@@ -91,8 +203,11 @@ response = requests.post(
 from ollama import chat
 
 from vlmrun.hub.schemas.document.invoice import Invoice
-from vlmrun.hub.utils import encode_image
+from vlmrun.hub.utils import encode_image, remote_image
 
+IMAGE_URL = "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/document.invoice-extraction/invoice_1.jpg"
+
+img = remote_image(IMAGE_URL)
 chat_response = chat(
     model="llama3.2-vision:11b",
     format=Invoice.model_json_schema(),
@@ -100,17 +215,14 @@ chat_response = chat(
         {
             "role": "user",
             "content": "Extract the invoice in JSON.",
-            "images": [
-                encode_image(img, format="JPEG").split(",")[1]
-                for img in sample.images
-            ],
+            "images": [encode_image(img, format="JPEG").split(",")[1]],
         },
     ],
     options={
         "temperature": 0
     },
 )
-response = response_model.model_validate_json(
+response = Invoice.model_validate_json(
     chat_response.message.content
 )
 ```

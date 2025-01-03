@@ -38,7 +38,7 @@ VLMRUN_HUB_DATASET = {
         response_model=Invoice,
         prompt="Extract the invoice in JSON format.",
         inputs=[
-            "https://mintlify.s3.us-west-1.amazonaws.com/autonomiai/guides/doc-ai/images/sample-invoice.jpg",
+            "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/document.invoice-extraction/invoice_1.jpg",
         ],
     ),
 }

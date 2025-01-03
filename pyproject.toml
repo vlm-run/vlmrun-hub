@@ -35,6 +35,13 @@ documentation = "https://docs.vlm.run/hub"
 log_cli = true
 log_cli_level = "INFO"
 
+[tool.pytest.ini_options]
+addopts = "--show-capture=no -sv -m 'not (skip) and not (benchmark)' -p no:warnings"
+markers = [
+    "skip: Skip test",
+    "benchmark: Benchmark tests",
+]
+
 
 [tool.setuptools.dynamic]
 version = {attr = "vlmrun.hub.version.__version__"}
