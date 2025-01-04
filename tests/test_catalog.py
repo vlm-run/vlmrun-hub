@@ -1,13 +1,13 @@
 from pathlib import Path
 from typing import List
 
-import pytest
 from pydantic import BaseModel, Field
-from pydantic_yaml import YamlModel
+from pydantic_yaml import parse_yaml_raw_as
 
 
 class SchemaCatalogEntry(BaseModel):
     """Represents a single schema entry in the catalog."""
+
     domain: str = Field(..., description="Domain identifier for the schema")
     schema: str = Field(..., description="Fully qualified path to the schema class")
     response_model: str = Field(..., description="Fully qualified path to the response model")
@@ -18,8 +18,9 @@ class SchemaCatalogEntry(BaseModel):
     metadata: dict = Field(..., description="Additional metadata including tags")
 
 
-class CatalogYaml(YamlModel):
+class CatalogYaml(BaseModel):
     """Root model for the catalog.yaml file."""
+
     apiVersion: str = Field(..., description="API version of the catalog format")
     schemas: List[SchemaCatalogEntry] = Field(..., description="List of schema entries")
 
@@ -30,7 +31,7 @@ def test_catalog_yaml():
     assert catalog_path.exists(), "catalog.yaml file not found"
 
     with open(catalog_path, "r") as f:
-        catalog = CatalogYaml.parse_raw(f.read())
+        catalog = parse_yaml_raw_as(CatalogYaml, f.read())
 
     # Basic validation
     assert catalog.apiVersion == "v1", "API version must be v1"
@@ -45,15 +46,16 @@ def test_catalog_yaml():
 
         # Schema path validation
         assert entry.schema.startswith("vlmrun.hub.schemas."), "Schema must be in vlmrun.hub.schemas package"
-        
+
         # Version format validation (basic semver check)
         version_parts = entry.version.split(".")
         assert len(version_parts) == 3, "Version must follow semver format (X.Y.Z)"
         assert all(part.isdigit() for part in version_parts), "Version parts must be numeric"
 
         # Sample data URL validation
-        assert entry.sample_data.startswith("https://storage.googleapis.com/vlm-data-public-prod/"), \
-            "Sample data must be in Google Cloud Storage"
+        assert entry.sample_data.startswith(
+            "https://storage.googleapis.com/vlm-data-public-prod/"
+        ), "Sample data must be in Google Cloud Storage"
 
         # Metadata validation
         assert "tags" in entry.metadata, "Metadata must include tags"
