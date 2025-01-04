@@ -1,6 +1,8 @@
+import importlib
 from pathlib import Path
 from typing import List
 
+import pytest
 from pydantic import BaseModel, Field
 from pydantic_yaml import parse_yaml_raw_as
 
@@ -10,7 +12,6 @@ class SchemaCatalogEntry(BaseModel):
 
     domain: str = Field(..., description="Domain identifier for the schema")
     schema: str = Field(..., description="Fully qualified path to the schema class")
-    response_model: str = Field(..., description="Fully qualified path to the response model")
     prompt: str = Field(..., description="Task-specific prompt for the schema")
     description: str = Field(..., description="Detailed description of the schema's purpose")
     version: str = Field(..., description="Schema version in semver format")
@@ -66,3 +67,12 @@ def test_catalog_yaml():
         # Content validation
         assert len(entry.prompt) >= 10, "Prompt must be descriptive (min 10 chars)"
         assert len(entry.description) >= 20, "Description must be detailed (min 20 chars)"
+
+        # Dynamic schema validation
+        module_name, class_name = entry.schema.rsplit(".", 1)
+        try:
+            module = importlib.import_module(module_name)
+            schema_class = getattr(module, class_name)
+            assert issubclass(schema_class, BaseModel), f"Schema {entry.schema} must be a Pydantic model"
+        except (ImportError, AttributeError) as e:
+            pytest.fail(f"Unable to import {entry.schema}: {e}")

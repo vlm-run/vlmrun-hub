@@ -2,7 +2,6 @@ apiVersion: v1
 schemas:
   - domain: document.invoice
     schema: vlmrun.hub.schemas.document.invoice.Invoice
-    response_model: vlmrun.hub.schemas.document.invoice.Invoice
     prompt: "Extract detailed information from the invoice including invoice details, customer information, line items, and totals. Pay special attention to dates, amounts, and item descriptions."
     description: "Comprehensive invoice data extraction system that processes invoice images to extract structured information including invoice metadata, customer details, line items, and financial totals."
     version: "1.0.0"
@@ -12,7 +11,6 @@ schemas:
 
   - domain: aerospace.remote_sensing
     schema: vlmrun.hub.schemas.aerospace.remote_sensing.RemoteSensing
-    response_model: vlmrun.hub.schemas.aerospace.remote_sensing.RemoteSensing
     prompt: "Analyze this satellite image to identify and categorize land features, infrastructure, and environmental elements. Note any significant objects and assess visibility conditions."
     description: "Satellite image analysis system for identifying and categorizing geographical features, infrastructure, and environmental elements from aerial imagery."
     version: "1.0.0"
@@ -22,7 +20,6 @@ schemas:
 
   - domain: healthcare.medical_insurance_card
     schema: vlmrun.hub.schemas.healthcare.medical_insurance_card.MedicalInsuranceCard
-    response_model: vlmrun.hub.schemas.healthcare.medical_insurance_card.MedicalInsuranceCard
     prompt: "Extract all relevant information from this medical insurance card including provider details, member information, coverage details, and pharmacy plan information."
     description: "Medical insurance card information extraction system that processes insurance card images to extract comprehensive coverage details, member information, and provider data."
     version: "1.0.0"
