@@ -254,6 +254,18 @@ vlmrun
 
 We’re building this hub for the community, and contributions are always welcome! Follow the [SCHEMA-GUIDELINES.md](docs/SCHEMA-GUIDELINES.md) to get started.
 
+## 📖 Schema Catalog
+
+The VLM Run Hub maintains a comprehensive catalog of all available schemas in the `vlmrun/hub/catalog.yaml` file. This catalog provides:
+
+- Domain-specific schema references
+- Detailed descriptions and prompts
+- Sample data references
+- Version information
+- Metadata including relevant tags
+
+The catalog is automatically validated to ensure consistency and completeness of schema documentation.
+
 ## 🔗  Quick Links
 
 * 💬 Send us an email at [support@vlm.run](mailto:support@vlm.run) or join our [Discord](https://discord.gg/CCY8cYNC) for help.
