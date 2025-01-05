@@ -25,7 +25,9 @@ class Registry:
         return cls._instance
 
     @classmethod
-    def register(cls, name: str, schema: BaseModel):
+    def register(cls, name: str, schema: type[BaseModel]):
+        if not issubclass(schema, BaseModel):
+            raise ValueError(f"Schema {name} is not a subclass of BaseModel, type={type(schema)}")
         cls.get().schemas[name] = schema
 
     def __contains__(self, name: str) -> bool:

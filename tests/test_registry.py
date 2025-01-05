@@ -23,24 +23,14 @@ def test_register_schema():
     """Test registering a schema"""
     registry = Registry.get()
     schema_name = "SampleSchema"
-    sample_schema = SampleSchema(field1="test", field2=123)
-
-    registry.register(schema_name, sample_schema)
+    registry.register(schema_name, SampleSchema)
 
     assert schema_name in registry.schemas, "Schema should be registered"
-    assert registry[schema_name] == sample_schema, "Registered schema should match the input schema"
+    assert registry[schema_name] == SampleSchema, "Registered schema should match the input schema"
 
-
-def test_get_schema():
-    """Test retrieving a registered schema"""
-    registry = Registry.get()
-    schema_name = "SampleSchema"
-    sample_schema = SampleSchema(field1="test", field2=123)
-
-    registry.register(schema_name, sample_schema)
+    # Test getting the schema
     retrieved_schema = registry[schema_name]
-
-    assert retrieved_schema == sample_schema, "Retrieved schema should match the registered schema"
+    assert retrieved_schema == SampleSchema, "Retrieved schema should match the registered schema"
 
 
 def test_get_nonexistent_schema():
@@ -54,9 +44,8 @@ def test_list_schemas():
     """Test listing all registered schemas"""
     registry = Registry.get()
     schema_name = "SampleSchema"
-    sample_schema = SampleSchema(field1="test", field2=123)
 
-    registry.register(schema_name, sample_schema)
+    registry.register(schema_name, SampleSchema)
     assert schema_name in registry.list(), "Schema should be listed"
 
 
@@ -66,5 +55,6 @@ def test_registry_on_import():
 
     schemas.import_all()
     assert len(Registry.get().list()) > 0, "Registry should be populated on import"
-    for schema in Registry.get().list():
-        logger.debug(f"Schema: {schema}")
+    for domain in Registry.get().list():
+        logger.debug(f"Schema: {domain}")
+        assert issubclass(Registry.get()[domain], BaseModel), f"Schema {domain} is not a subclass of BaseModel"
