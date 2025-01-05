@@ -50,3 +50,6 @@ test-benchmark: ## Benchmark testing
 dist: clean ## builds source and wheel package
 	python -m build --sdist --wheel
 	ls -lh dist
+
+generate-benchmark-html:
+	pytest -sv tests/test_instructor.py -m benchmark

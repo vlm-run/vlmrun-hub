@@ -1,6 +1,7 @@
 instructor>=1.7.0
 loguru>=0.7.3
 openai>=1.58.1
+pandas>=2.1.1
 pre-commit>=4.0.1
 pytest>=8.3.4
 python-dotenv>=1.0.1

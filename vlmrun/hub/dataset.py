@@ -5,9 +5,9 @@ from typing import Type
 from PIL import Image
 from pydantic import BaseModel
 
-from vlmrun.hub.utils import remote_image
 from vlmrun.hub.constants import VLMRUN_HUB_CATALOG_PATH
 from vlmrun.hub.registry import SchemaCatalogYaml
+from vlmrun.hub.utils import remote_image
 
 
 @dataclass
@@ -46,4 +46,3 @@ VLMRUN_HUB_DATASET = {
     )
     for schema in catalog.schemas
 }
-
