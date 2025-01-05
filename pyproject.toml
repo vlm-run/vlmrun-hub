@@ -50,6 +50,7 @@ dependencies = {file = ["requirements/requirements.txt"]}
     [tool.setuptools.dynamic.optional-dependencies]
     test = {file = ["requirements/requirements.test.txt"]}
     build = {file = ["requirements/requirements.build.txt"]}
+    ollama = ["ollama>=0.4.4"]
 
 [tool.setuptools.packages.find]
 where = ["."]

@@ -1,6 +1,5 @@
 instructor>=1.7.0
 loguru>=0.7.3
-ollama>=0.4.4
 openai>=1.58.1
 pre-commit>=4.0.1
 pytest>=8.3.4
