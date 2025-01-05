@@ -6,44 +6,57 @@ on:
     branches: [main]
   workflow_call:
 
-env:
-  CACHE_NUMBER: 1 # increase to reset cache manually
-
 jobs:
   test:
     name: Test
     runs-on: ubuntu-latest
     timeout-minutes: 20
     environment: dev
+    defaults:
+      run:
+        shell: bash -el {0}
+    env:
+      CACHE_NUMBER: 1
+
     steps:
       - name: Checkout git repo
         uses: actions/checkout@v3
 
       - uses: conda-incubator/setup-miniconda@v2
         with:
-          miniforge-variant: Miniforge3
           miniforge-version: latest
-          auto-update-conda: true
-          activate-environment: vlm-py310
+          activate-environment: vlmrun-hub-py310
           python-version: "3.10"
           use-mamba: true
 
-      - name: Conda info
-        run: conda info
+      - name: Get Date
+        id: get-date
+        run: echo "::set-output name=today::$(/bin/date -u '+%Y%m%d')"
+        shell: bash
 
-      - name: Conda list
-        run: conda list
-
-      - uses: actions/cache@v3
+      # Cache conda env to speed up installation (refreshed daily)
+      - name: Cache Conda env
+        uses: actions/cache@v4
         with:
-          path: ~/.cache/envs/vlm-py310
-          key: conda-py310-${{ hashFiles('requirements*.txt') }}-${{ hashFiles('pyproject.toml') }}-${{ env.CACHE_NUMBER }}
+          path: ${{ env.CONDA }}/envs
+          key:
+            conda-py310-${{ hashFiles('requirements*.txt') }}-${{ hashFiles('pyproject.toml') }}-${{
+            steps.get-date.outputs.today }}--${{ env.CACHE_NUMBER }}
           restore-keys: |
             conda-py310-
-          id: cache
+        id: cache
+
+      # Cache pip packages to speed up installation
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: pip-${{ hashFiles('requirements/requirements*.txt') }}-${{ hashFiles('pyproject.toml') }}--${{ env.CACHE_NUMBER }}
+          restore-keys: |
+            pip-
 
       - name: Install dependencies
         run: |
+          which python
           python -m pip install --upgrade pip
           pip install -e '.[test]'
         if: steps.cache.outputs.cache-hit != 'true'
