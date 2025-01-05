@@ -4,25 +4,25 @@ schemas:
     schema: vlmrun.hub.schemas.document.invoice.Invoice
     prompt: "Extract detailed information from the invoice including invoice details, customer information, line items, and totals. Pay special attention to dates, amounts, and item descriptions."
     description: "Comprehensive invoice data extraction system that processes invoice images to extract structured information including invoice metadata, customer details, line items, and financial totals."
-    version: "1.0.0"
     sample_data: "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/document.invoice-extraction/invoice_1.jpg"
     metadata:
-      tags: ["invoice", "finance", "document-processing", "automation"]
+      supported_inputs: ["image", "document"]
+      tags: ["document", "finance"]
 
   - domain: aerospace.remote_sensing
     schema: vlmrun.hub.schemas.aerospace.remote_sensing.RemoteSensing
     prompt: "Analyze this satellite image to identify and categorize land features, infrastructure, and environmental elements. Note any significant objects and assess visibility conditions."
     description: "Satellite image analysis system for identifying and categorizing geographical features, infrastructure, and environmental elements from aerial imagery."
-    version: "1.0.0"
     sample_data: "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/aerospace.remote_sensing/remote_01.jpg"
     metadata:
-      tags: ["remote-sensing", "satellite", "geography", "infrastructure", "environmental"]
+      supported_inputs: ["image", "video"]
+      tags: ["aerospace", "image"]
 
   - domain: healthcare.medical_insurance_card
     schema: vlmrun.hub.schemas.healthcare.medical_insurance_card.MedicalInsuranceCard
     prompt: "Extract all relevant information from this medical insurance card including provider details, member information, coverage details, and pharmacy plan information."
     description: "Medical insurance card information extraction system that processes insurance card images to extract comprehensive coverage details, member information, and provider data."
-    version: "1.0.0"
     sample_data: "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/healthcare.medical_insurance/card_01.jpg"
     metadata:
-      tags: ["healthcare", "insurance", "medical", "document-processing"]
+      supported_inputs: ["image", "document"]
+      tags: ["healthcare", "medical"]
