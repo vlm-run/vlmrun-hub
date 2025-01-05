@@ -29,7 +29,7 @@ jobs:
       - uses: actions/cache@v4
         with:
           path: ~/.cache/pip
-          key: pip-${{ hashFiles('requirements/requirements*.txt') }}-${{ hashFiles('pyproject.toml') }}--${{ env.CACHE_NUMBER }}
+          key: pip-${{ hashFiles('requirements/requirements*.txt') }}-${{ hashFiles('pyproject.toml') }}-${{ hashFiles('MANIFEST.in') }}-${{ env.CACHE_NUMBER }}
           restore-keys: |
             pip-
 
