@@ -5,8 +5,9 @@ from typing import Type
 from PIL import Image
 from pydantic import BaseModel
 
-from vlmrun.hub.schemas.document.invoice import Invoice
 from vlmrun.hub.utils import remote_image
+from vlmrun.hub.constants import VLMRUN_HUB_CATALOG_PATH
+from vlmrun.hub.registry import SchemaCatalogYaml
 
 
 @dataclass
@@ -17,7 +18,7 @@ class HubSample:
     """The response model to use for the sample"""
     prompt: str
     """The prompt to use for the sample"""
-    inputs: list[str | Image.Image | Path]
+    data: str | Image.Image | Path
     """The images or image URLs associated with the sample"""
 
     def _handle_image(self, image: str | Image.Image | Path) -> Image.Image:
@@ -25,20 +26,24 @@ class HubSample:
             return Image.open(image)
         elif isinstance(image, str) and image.startswith("http"):
             return remote_image(image)
-        return image
+        elif isinstance(image, Image.Image):
+            return image
+        else:
+            raise ValueError(f"Invalid image type: {type(image)}")
 
     @property
-    def images(self) -> list[Image.Image]:
-        return [self._handle_image(image) for image in self.inputs]
+    def image(self) -> Image.Image:
+        return self._handle_image(self.data)
 
 
+catalog = SchemaCatalogYaml.from_yaml(VLMRUN_HUB_CATALOG_PATH)
 VLMRUN_HUB_DATASET = {
-    "document.invoice": HubSample(
-        domain="document.invoice",
-        response_model=Invoice,
-        prompt="Extract the invoice in JSON format.",
-        inputs=[
-            "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/document.invoice-extraction/invoice_1.jpg",
-        ],
-    ),
+    schema.domain: HubSample(
+        domain=schema.domain,
+        response_model=schema.schema_class,
+        prompt=schema.prompt,
+        data=schema.sample_data,
+    )
+    for schema in catalog.schemas
 }
+

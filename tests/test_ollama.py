@@ -36,7 +36,7 @@ def test_local_ollama():
                 {
                     "role": "user",
                     "content": sample.prompt,
-                    "images": [encode_image(img, format="JPEG").split(",")[1] for img in sample.images],
+                    "images": [encode_image(img, format="JPEG").split(",")[1] for img in [sample.image,]],
                 },
             ],
             options={"temperature": 0},  # Set temperature to 0 for more deterministic output

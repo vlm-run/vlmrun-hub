@@ -93,7 +93,7 @@ def test_openai_structured_outputs_hub_dataset(openai_client):
                         {"type": "text", "text": sample.prompt},
                         *[
                             {"type": "image_url", "image_url": {"url": encode_image(img, format="JPEG")}}
-                            for img in sample.images
+                            for img in [sample.image,]
                         ],
                     ],
                 },
