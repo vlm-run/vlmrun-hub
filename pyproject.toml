@@ -42,7 +42,6 @@ markers = [
     "benchmark: Benchmark tests",
 ]
 
-
 [tool.setuptools.dynamic]
 version = {attr = "vlmrun.hub.version.__version__"}
 dependencies = {file = ["requirements/requirements.txt"]}
@@ -50,6 +49,8 @@ dependencies = {file = ["requirements/requirements.txt"]}
     [tool.setuptools.dynamic.optional-dependencies]
     test = {file = ["requirements/requirements.test.txt"]}
     build = {file = ["requirements/requirements.build.txt"]}
+    extra = {file = ["requirements/requirements.extra.txt"]}
+    all = {file = ["requirements/requirements.test.txt", "requirements/requirements.build.txt", "requirements/requirements.extra.txt"]}
 
 [tool.setuptools.packages.find]
 where = ["."]

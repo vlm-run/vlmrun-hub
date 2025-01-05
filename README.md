@@ -4,7 +4,7 @@ Welcome to **VLM Run Hub**, the ultimate repository of pre-defined [Pydantic](ht
 
 
 <p align="center">
-<a href="https://vlm.run"><b>Website</b></a> | <a href="https://docs.vlm.run/"><b>Docs</b></a> | <a href="https://docs.vlm.run/blog"><b>Blog</b></a> | <a href="https://discord.gg/CCY8cYNC"><b>Discord</b></a>
+<a href="https://vlm.run"><b>Website</b></a> | <a href="https://docs.vlm.run/"><b>Docs</b></a> | <a href="https://docs.vlm.run/blog"><b>Blog</b></a> | <a href="https://discord.gg/CCY8cYNC"><b>Discord</b></a> | <a href="vlmrun/hub/catalog.yaml"><b>Schema Catalog</b></a>
 </p>
 <p align="center">
 <a href="https://pypi.org/project/vlmrun-hub/"><img alt="PyPI Version" src="https://badge.fury.io/py/vlmrun-hub.svg"></a>
@@ -13,6 +13,7 @@ Welcome to **VLM Run Hub**, the ultimate repository of pre-defined [Pydantic](ht
 <a href="https://github.com/vlm-run/vlmrun-hub/blob/main/LICENSE"><img alt="PyPi Downloads" src="https://img.shields.io/github/license/vlm-run/hub.svg"></a>
 <a href="https://discord.gg/4jgyECY4rq"><img alt="Discord" src="https://img.shields.io/badge/discord-chat-purple?color=%235765F2&label=discord&logo=discord"></a>
 <a href="https://twitter.com/vlmrun"><img alt="PyPi Version" src="https://img.shields.io/twitter/follow/vlmrun.svg?style=social&logo=twitter"></a>
+
 </p>
 
 ## 💡 Motivation
@@ -256,7 +257,7 @@ We’re building this hub for the community, and contributions are always welcom
 
 ## 📖 Schema Catalog
 
-The VLM Run Hub maintains a comprehensive catalog of all available schemas in the `vlmrun/hub/catalog.yaml` file. This catalog provides:
+The VLM Run Hub maintains a comprehensive catalog of all available schemas in the [`vlmrun/hub/catalog.yaml`](vlmrun/hub/catalog.yaml) file. This catalog provides:
 
 - Domain-specific schema references
 - Detailed descriptions and prompts
