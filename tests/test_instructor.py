@@ -27,6 +27,8 @@ def test_instructor_hub_dataset(instructor_client):
     from vlmrun.hub.utils import encode_image
 
     for sample in VLMRUN_HUB_DATASET.values():
+        logger.debug(f"Testing domain={sample.domain}, sample={sample}")
+        logger.debug(f"sample.image={sample.image}")
         response_model: Type[BaseModel] = sample.response_model
         response = instructor_client.chat.completions.create(
             model="gpt-4o-mini",
@@ -37,7 +39,7 @@ def test_instructor_hub_dataset(instructor_client):
                         {"type": "text", "text": sample.prompt},
                         *[
                             {"type": "image_url", "image_url": {"url": encode_image(img, format="JPEG")}}
-                            for img in sample.images
+                            for img in [sample.image,]
                         ],
                     ],
                 },
