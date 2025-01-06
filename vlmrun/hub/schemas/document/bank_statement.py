@@ -23,9 +23,9 @@ class BankTransaction(BaseModel):
 class BankStatement(BaseModel):
     account_number: str | None = Field(None, description="Bank account number")
     account_type: str | None = Field(None, description="Type of the bank account (e.g. Checking/Savings)")
-    bank_address: Address | None = Field(None, description="Structured address of the bank")
+    bank_address: Address | None = Field(None, description="Address of the bank")
     bank_name: str | None = Field(None, description="Name of the bank")
-    client_address: Address | None = Field(None, description="Structured address of the client")
+    client_address: Address | None = Field(None, description="Address of the client")
     client_name: str | None = Field(None, description="Name of the client")
     ending_balance: float | None = Field(None, description="Ending balance for the period")
     starting_balance: float | None = Field(None, description="Starting balance for the period")
