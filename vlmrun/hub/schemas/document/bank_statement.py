@@ -1,29 +1,36 @@
 from datetime import date
-from typing import List, Optional
+from typing import List
 
 from pydantic import BaseModel, Field
 
 
+class Address(BaseModel):
+    street: str = Field(..., description="Street address")
+    city: str = Field(..., description="City")
+    state: str = Field(..., description="State/Province code or name")
+    zip_code: str = Field(..., description="Postal code", min_length=5, max_length=10)
+
+
 class BankTransaction(BaseModel):
-    transaction_deposit: Optional[float] = Field(None, description="Deposit amount")
-    transaction_deposit_date: Optional[date] = Field(None, description="Date of the deposit")
-    transaction_deposit_description: Optional[str] = Field(None, description="Description of the deposit")
-    transaction_withdrawal: Optional[float] = Field(None, description="Withdrawal amount")
-    transaction_withdrawal_date: Optional[date] = Field(None, description="Date of the withdrawal")
-    transaction_withdrawal_description: Optional[str] = Field(None, description="Description of the withdrawal")
+    transaction_deposit: float | None = Field(None, description="Deposit amount")
+    transaction_deposit_date: date | None = Field(None, description="Date of the deposit")
+    transaction_deposit_description: str | None = Field(None, description="Description of the deposit")
+    transaction_withdrawal: float | None = Field(None, description="Withdrawal amount")
+    transaction_withdrawal_date: date | None = Field(None, description="Date of the withdrawal")
+    transaction_withdrawal_description: str | None = Field(None, description="Description of the withdrawal")
 
 
 class BankStatement(BaseModel):
-    account_number: Optional[str] = Field(None, description="Bank account number")
-    account_type: Optional[str] = Field(None, description="Type of the bank account (e.g. Checking/Savings)")
-    bank_address: Optional[str] = Field(None, description="Address of the bank")
-    bank_name: Optional[str] = Field(None, description="Name of the bank")
-    client_address: Optional[str] = Field(None, description="Address of the client")
-    client_name: Optional[str] = Field(None, description="Name of the client")
-    ending_balance: Optional[float] = Field(None, description="Ending balance for the period")
-    starting_balance: Optional[float] = Field(None, description="Starting balance for the period")
-    statement_date: Optional[date] = Field(None, description="Overall statement date if applicable")
-    statement_start_date: Optional[date] = Field(None, description="Start date of the bank statement")
-    statement_end_date: Optional[date] = Field(None, description="End date of the bank statement")
-    table_item: Optional[List[BankTransaction]] = Field(None, description="List of transactions in the statement")
-    others: Optional[dict] = Field(None, description="Any other additional data from the statement")
+    account_number: str | None = Field(None, description="Bank account number")
+    account_type: str | None = Field(None, description="Type of the bank account (e.g. Checking/Savings)")
+    bank_address: Address | None = Field(None, description="Structured address of the bank")
+    bank_name: str | None = Field(None, description="Name of the bank")
+    client_address: Address | None = Field(None, description="Structured address of the client")
+    client_name: str | None = Field(None, description="Name of the client")
+    ending_balance: float | None = Field(None, description="Ending balance for the period")
+    starting_balance: float | None = Field(None, description="Starting balance for the period")
+    statement_date: date | None = Field(None, description="Overall statement date if applicable")
+    statement_start_date: date | None = Field(None, description="Start date of the bank statement")
+    statement_end_date: date | None = Field(None, description="End date of the bank statement")
+    table_item: List[BankTransaction] | None = Field(None, description="List of transactions in the statement")
+    others: dict | None = Field(None, description="Any other additional data from the statement")
