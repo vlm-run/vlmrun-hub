@@ -1,6 +1,6 @@
 ## VLM Run Hub
 
-Welcome to **VLM Run Hub**, the ultimate repository of pre-defined [Pydantic](https://docs.pydantic.dev/latest/) schemas for extracting structured data from unstructured visual domains such as images, videos, and documents. Designed for [Vision Language Models (VLMs)](https://huggingface.co/blog/vlms) and optimized for real-world use cases, VLM Run Hub simplifies the integration of visual ETL into your workflows.
+Welcome to **VLM Run Hub**, a comprehensive repository of pre-defined [Pydantic](https://docs.pydantic.dev/latest/) schemas for extracting structured data from unstructured visual domains such as images, videos, and documents. Designed for [Vision Language Models (VLMs)](https://huggingface.co/blog/vlms) and optimized for real-world use cases, VLM Run Hub simplifies the integration of visual ETL into your workflows.
 
 
 <p align="center">
@@ -20,14 +20,14 @@ Welcome to **VLM Run Hub**, the ultimate repository of pre-defined [Pydantic](ht
 
 While vision models like OpenAI’s [GPT-4o](https://openai.com/index/hello-gpt-4o/) and Anthropic’s [Claude Vision](https://www.anthropic.com/claude) excel in exploratory tasks like "chat with images," they often lack practicality for automation and integration, where **strongly-typed**, **validated outputs** are crucial.
 
-The **Structured Outputs API** (popularized by [GPT-4o](https://openai.com/index/introducing-structured-outputs-in-the-api/), [Gemini](https://ai.google.dev/gemini-api/docs/structured-output)) addresses this by constraining LLMs to return data in precise, strongly-typed formats such as Pydantic models. This eliminates complex parsing and validation, ensuring outputs conform to expected types and structures. These schemas can be nested and include complex types like lists and dictionaries, enabling seamless integration with existing systems while leveraging the full capabilities of the model.
+The **Structured Outputs API** (popularized by [GPT-4o](https://openai.com/index/introducing-structured-outputs-in-the-api/), [Gemini](https://ai.google.dev/gemini-api/docs/structured-output)) addresses this by constraining LLMs to return data in precise, strongly-typed formats such as [Pydantic](https://docs.pydantic.dev/latest/) models. This eliminates complex parsing and validation, ensuring outputs conform to expected types and structures. These schemas can be nested and include complex types like lists and dictionaries, enabling seamless integration with existing systems while leveraging the full capabilities of the model.
 
 ### Why use this repo / pre-defined Pydantic schemas?
 
-- 📚 **Easy to use:** Pydantic is a well-understood and battle-tested data model for structured data.
+- 📚 **Easy to use:** [Pydantic](https://docs.pydantic.dev/latest/) is a well-understood and battle-tested data model for structured data.
 - 🔋 **Batteries included:**  Each schema in this repo has been validated across real-world industry use cases—from healthcare to finance to media—saving you weeks of development effort.
-- 🔍 **Automatic Data-validation:** Built-in [Pydantic](https://docs.pydantic.dev/latest/) validation ensures your extracted data is clean, accurate, and reliable, reducing errors and simplifying downstream workflows.
-- 🔌 **Type-safety:** With [Pydantic’s](https://docs.pydantic.dev/latest/) type-safety and compatibility with tools like `mypy` and `pyright`, you can build composable, modular systems that are robust and maintainable.
+- 🔍 **Automatic Data-validation:** Built-in [Pydantic validation](https://docs.pydantic.dev/latest/concepts/validators/) ensures your extracted data is clean, accurate, and reliable, reducing errors and simplifying downstream workflows.
+- 🔌 **Type-safety:** With [Pydantic’s type-safety](https://docs.pydantic.dev/latest/concepts/types/) and compatibility with tools like `mypy` and `pyright`, you can build composable, modular systems that are robust and maintainable.
 - 🧰 **Model-agnostic:** Use the same schema with multiple VLM providers, no need to rewrite prompts for different VLMs.
 - 🚀 **Optimized for Visual ETL:** Purpose-built for extracting structured data from images, videos, and documents, this repo bridges the gap between unstructured data and actionable insights.
 
@@ -228,6 +228,27 @@ response = Invoice.model_validate_json(
 )
 ```
 
+## 📖 Schema Catalog
+
+The VLM Run Hub maintains a comprehensive catalog of all available schemas in the [`vlmrun/hub/catalog.yaml`](vlmrun/hub/catalog.yaml) file. This catalog provides:
+
+- Domain-specific schema references
+- Detailed descriptions and prompts
+- Sample data references
+- Version information
+- Metadata including relevant tags
+
+The catalog is automatically validated to ensure consistency and completeness of schema documentation. We refer the developer to the [catalog-spec.yaml](docs/catalog-spec.yaml) for the full YAML specification.
+
+
+## 📖 Qualitative Results
+
+We periodically run popular VLMs on each of the examples & schemas in the [catalog.yaml](vlmrun/hub/catalog.yaml) file and publish the results in the [benchmarks](tests/benchmarks/) directory.
+| Provider | Model | Date | Results |
+| --- | --- | --- | --- |
+| OpenAI + [Instructor](https://github.com/jxnl/instructor) | gpt-4o-2024-11-20 | 2025-01-06 | [link](tests/benchmarks/2025-01-06-gpt-4o-mini-2024-07-18-instructor-results.md) |
+
+
 ## 📂 Directory Structure
 
 Schemas are organized by industry for easy navigation:
@@ -259,20 +280,8 @@ vlmrun
 
 We’re building this hub for the community, and contributions are always welcome! Follow the [SCHEMA-GUIDELINES.md](docs/SCHEMA-GUIDELINES.md) to get started.
 
-## 📖 Schema Catalog
-
-The VLM Run Hub maintains a comprehensive catalog of all available schemas in the [`vlmrun/hub/catalog.yaml`](vlmrun/hub/catalog.yaml) file. This catalog provides:
-
-- Domain-specific schema references
-- Detailed descriptions and prompts
-- Sample data references
-- Version information
-- Metadata including relevant tags
-
-The catalog is automatically validated to ensure consistency and completeness of schema documentation. We refer the developer to the [catalog-spec.yaml](docs/catalog-spec.yaml) for the full YAML specification.
-
 
 ## 🔗  Quick Links
 
-* 💬 Send us an email at [support@vlm.run](mailto:support@vlm.run) or join our [Discord](https://discord.gg/CCY8cYNC) for help.
+* 💬 Send us an email at [support@vlm.run](mailto:support@vlm.run) or join our [Discord](https://discord.gg/4jgyECY4rq) for help.
 * 📣 Follow us on [Twitter](https://x.com/vlmrun), and [LinkedIn](https://www.linkedin.com/company/vlm-run) to keep up-to-date on our products.
