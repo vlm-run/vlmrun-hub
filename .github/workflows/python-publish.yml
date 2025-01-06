@@ -88,8 +88,6 @@ jobs:
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
 
-          git add vlmrun/hub/version.py
-          git commit -m "Bump version to ${version} [skip ci]"
           git tag -a "v${version}" -m "Version ${version}"
           git push origin main
           git push origin "v${version}"
