@@ -1,5 +1,6 @@
 apiVersion: v1
 schemas:
+  # Document domains
   - domain: document.invoice
     schema: vlmrun.hub.schemas.document.invoice.Invoice
     prompt: "You are a detail-oriented invoice analyst. Extract all the relevant information from the candidate's invoice as accurately as possible."
@@ -9,23 +10,14 @@ schemas:
       supported_inputs: ["image", "document"]
       tags: ["document", "finance"]
 
-  - domain: aerospace.remote_sensing
-    schema: vlmrun.hub.schemas.aerospace.remote_sensing.RemoteSensing
-    prompt: "You are a detail-oriented remote sensing analyst. Analyze this satellite image to identify and categorize land features, infrastructure, and environmental elements. Note any significant objects and assess visibility conditions as accurately as possible."
-    description: "Satellite image analysis system for identifying and categorizing geographical features, infrastructure, and environmental elements from aerial imagery."
-    sample_data: "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/aerospace.remote-sensing/planet_labs_port.jpg"
-    metadata:
-      supported_inputs: ["image", "video"]
-      tags: ["aerospace", "image"]
-
-  - domain: healthcare.medical_insurance_card
-    schema: vlmrun.hub.schemas.healthcare.medical_insurance_card.MedicalInsuranceCard
-    prompt: "You are a detail-oriented document analyst. Extract all the relevant information from the candidate's medical insurance card as accurately as possible."
-    description: "Medical insurance card information extraction system that processes insurance card images to extract comprehensive coverage details, member information, and provider data."
-    sample_data: "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/healthcare.medical-insurance-card/blue_cross_example.jpg"
+  - domain: document.receipt
+    schema: vlmrun.hub.schemas.document.receipt.Receipt
+    prompt: "You are a detail-oriented receipt analyst. Extract all the relevant information from the receipt as accurately as possible."
+    description: "Receipt data extraction system that processes receipt images to extract structured information including transaction details, merchant information, and financial totals."
+    sample_data: "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/document.receipt/sample_receipt.webp"
     metadata:
       supported_inputs: ["image", "document"]
-      tags: ["healthcare", "medical"]
+      tags: ["document", "finance"]
 
   - domain: document.resume
     schema: vlmrun.hub.schemas.document.resume.Resume
@@ -36,11 +28,41 @@ schemas:
       supported_inputs: ["image", "document"]
       tags: ["document", "resume"]
 
-  - domain: document.receipt
-    schema: vlmrun.hub.schemas.document.receipt.Receipt
-    prompt: "You are a detail-oriented receipt analyst. Extract all the relevant information from the receipt as accurately as possible."
-    description: "Receipt data extraction system that processes receipt images to extract structured information including transaction details, merchant information, and financial totals."
-    sample_data: "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/document.receipt/sample_receipt.webp"
+  - domain: document.us-drivers-license
+    schema: vlmrun.hub.schemas.document.us_drivers_license.USDriversLicense
+    prompt: "You are a detail-oriented document analyst. Extract all the relevant information from the candidate's driver's license as accurately as possible."
+    description: "Driver's license information extraction system that processes driver's license images to extract structured information including name, address, date of birth, and license details."
+    sample_data: "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/document.us-drivers-license/dl3.jpg"
+    metadata:
+      supported_inputs: ["image", "document"]
+      tags: ["document", "identity"]
+
+  - domain: document.utility-bill
+    schema: vlmrun.hub.schemas.document.utility_bill.UtilityBill
+    prompt: "You are a detail-oriented utility bill analyst. Extract all the relevant information from the utility bill as accurately as possible."
+    description: "Utility bill data extraction system that processes utility bill images to extract structured information including account details, billing period, charges, and payment information."
+    sample_data: "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/document.utility-bill/utility-bill-example.webp"
     metadata:
       supported_inputs: ["image", "document"]
       tags: ["document", "finance"]
+
+  # Industry-specific domains
+  # aerospace
+  - domain: aerospace.remote-sensing
+    schema: vlmrun.hub.schemas.aerospace.remote_sensing.RemoteSensing
+    prompt: "You are a detail-oriented remote sensing analyst. Analyze this satellite image to identify and categorize land features, infrastructure, and environmental elements. Note any significant objects and assess visibility conditions as accurately as possible."
+    description: "Satellite image analysis system for identifying and categorizing geographical features, infrastructure, and environmental elements from aerial imagery."
+    sample_data: "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/aerospace.remote-sensing/planet_labs_port.jpg"
+    metadata:
+      supported_inputs: ["image", "video"]
+      tags: ["aerospace", "image"]
+
+  # healthcare
+  - domain: healthcare.medical-insurance-card
+    schema: vlmrun.hub.schemas.healthcare.medical_insurance_card.MedicalInsuranceCard
+    prompt: "You are a detail-oriented document analyst. Extract all the relevant information from the candidate's medical insurance card as accurately as possible."
+    description: "Medical insurance card information extraction system that processes insurance card images to extract comprehensive coverage details, member information, and provider data."
+    sample_data: "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/healthcare.medical-insurance-card/blue_cross_example.jpg"
+    metadata:
+      supported_inputs: ["image", "document"]
+      tags: ["healthcare", "medical"]

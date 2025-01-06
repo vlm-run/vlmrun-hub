@@ -1,0 +1,35 @@
+# Catalog Specification Guidelines
+
+# Define the API version for the catalog
+apiVersion: v1
+
+# List of schemas to be included in the catalog
+schemas:
+  # Each schema entry should define a unique domain, typically hyphenated
+  # The format is <input-type>.<use-case> or <industry>.<use-case> for industry-specific schemas
+  - domain: # Specify the domain name, e.g., document.utility-bill
+
+    # Define the schema path using the format: vlmrun.hub.schemas.<category>.<name>.<ClassName>
+    # Note that this is the fully qualified path to the schema class, and contains underscores instead of hyphens
+    schema: # e.g., vlmrun.hub.schemas.document.utility_bill.UtilityBill
+
+    # Provide a prompt that describes the full prompt to use for the call into the VLM.
+    prompt: # e.g., "You are a detail-oriented invoice analyst..."
+
+    # Give a brief description or motivation for the schema
+    description: # e.g., "Comprehensive invoice data extraction system..."
+
+    # Provide a publicly accessible URL to sample data for testing and reference
+    sample_data: # e.g., "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/document.invoice-extraction/invoice_1.jpg"
+
+    # Metadata section for additional information
+    metadata:
+      # List the types of inputs supported by the schema
+      # Currently, only `image`, `video`, and `document` are supported.
+      supported_inputs: # e.g., ["image", "document"]
+
+      # Add relevant tags for categorization and searchability in the catalog
+      tags: # e.g., ["document", "finance"]
+
+# Note: Ensure each schema entry is complete and follows the structure above.
+# Use consistent naming conventions and provide meaningful descriptions.

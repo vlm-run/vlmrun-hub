@@ -242,12 +242,16 @@ vlmrun
     |   |   └── ...
     │   ├── aerospace
     │   │   └── remote_sensing.py
-    │   ├── document
-    │   │   └── invoice.py
+    │   ├── document  # all document schemas are here
+    |   |   ├── invoice.py
+    |   |   ├── us_drivers_license.py
+    |   |   └── ...
     │   ├── healthcare
     │   │   └── medical_insurance_card.py
     │   └── retail
-    │       └── ecommerce_product_caption.py
+    │   │   └── ecommerce_product_caption.py
+    │   └── contrib  # all contributions are welcome here!
+    │       └── <schema-name>.py
     └── version.py
 ```
 
@@ -265,7 +269,8 @@ The VLM Run Hub maintains a comprehensive catalog of all available schemas in th
 - Version information
 - Metadata including relevant tags
 
-The catalog is automatically validated to ensure consistency and completeness of schema documentation.
+The catalog is automatically validated to ensure consistency and completeness of schema documentation. We refer the developer to the [catalog-spec.yaml](docs/catalog-spec.yaml) for the full YAML specification.
+
 
 ## 🔗  Quick Links
 
