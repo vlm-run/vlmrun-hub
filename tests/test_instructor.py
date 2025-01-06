@@ -3,6 +3,9 @@ import os
 import pytest
 from loguru import logger
 
+from vlmrun.hub.dataset import VLMRUN_HUB_DATASET, HubSample
+from vlmrun.hub.utils import encode_image
+
 pytestmark = pytest.mark.skipif(
     not os.getenv("OPENAI_API_KEY", False), reason="This test requires OPENAI_API_KEY to be set"
 )
@@ -19,6 +22,37 @@ def instructor_client():
     )
 
 
+def _process_sample(client, sample: HubSample, model: str):
+    return client.chat.completions.create(
+        model=model,
+        messages=[
+            {
+                "role": "user",
+                "content": [
+                    {"type": "text", "text": sample.prompt},
+                    *[
+                        {"type": "image_url", "image_url": {"url": encode_image(img, format="JPEG")}}
+                        for img in [
+                            sample.image,
+                        ]
+                    ],
+                ],
+            },
+        ],
+        response_model=sample.response_model,
+        temperature=0,
+    )
+
+
+def test_instructor_hub_sample(instructor_client, domain_arg: str):
+    sample = VLMRUN_HUB_DATASET[domain_arg]
+    logger.debug(f"Testing domain={sample.domain}, sample={sample}")
+    logger.debug(f"sample.image={sample.image}")
+    response = _process_sample(instructor_client, sample, model="gpt-4o-mini-2024-07-18")
+    logger.debug(response.model_dump_json(indent=2))
+    assert response is not None
+
+
 # @pytest.mark.parametrize("model", ["gpt-4o-mini-2024-07-18", "gpt-4o-2024-11-20"])
 @pytest.mark.benchmark
 def test_instructor_hub_dataset(instructor_client):
@@ -27,32 +61,7 @@ def test_instructor_hub_dataset(instructor_client):
 
     import pandas as pd
 
-    from vlmrun.hub.dataset import VLMRUN_HUB_DATASET
-    from vlmrun.hub.utils import encode_image
-
     MODEL = "gpt-4o-mini-2024-07-18"
-
-    def process_sample(sample):
-        response = instructor_client.chat.completions.create(
-            model=MODEL,
-            messages=[
-                {
-                    "role": "user",
-                    "content": [
-                        {"type": "text", "text": sample.prompt},
-                        *[
-                            {"type": "image_url", "image_url": {"url": encode_image(img, format="JPEG")}}
-                            for img in [
-                                sample.image,
-                            ]
-                        ],
-                    ],
-                },
-            ],
-            response_model=sample.response_model,
-            temperature=0,
-        )
-        return response
 
     # Process all samples
     results = []
@@ -62,7 +71,7 @@ def test_instructor_hub_dataset(instructor_client):
 
         # Try to process the sample
         try:
-            response = process_sample(sample)
+            response = _process_sample(instructor_client, sample, model=MODEL)
         except Exception as e:
             response = None
             logger.error(f"Error processing sample {sample.domain}: {e}")
@@ -76,7 +85,7 @@ def test_instructor_hub_dataset(instructor_client):
             }
         )
         if response:
-            logger.info(response.model_dump_json(indent=2))
+            logger.debug(response.model_dump_json(indent=2))
 
     # Write the results to a pandas dataframe -> HTML
     # render the data_url in a new column
@@ -93,3 +102,4 @@ def test_instructor_hub_dataset(instructor_client):
     # Write the results to a pandas dataframe -> HTML
     pd.set_option("display.max_colwidth", 80)
     df.to_html(BENCHMARK_DIR / f"{date_str}-{MODEL}-instructor-results.html", index=False, escape=False)
+    logger.debug(f"Results written to {BENCHMARK_DIR / f'{date_str}-{MODEL}-instructor-results.html'}")

@@ -53,6 +53,6 @@ dist: clean ## builds source and wheel package
 
 bump-version:
 	python scripts/bump_version.py vlmrun/hub/version.py patch
-	
+
 generate-benchmark-html:
 	pytest -sv tests/test_instructor.py -m benchmark
