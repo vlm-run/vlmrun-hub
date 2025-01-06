@@ -51,5 +51,8 @@ dist: clean ## builds source and wheel package
 	python -m build --sdist --wheel
 	ls -lh dist
 
+bump-version:
+	python scripts/bump_version.py vlmrun/hub/version.py patch
+	
 generate-benchmark-html:
 	pytest -sv tests/test_instructor.py -m benchmark
