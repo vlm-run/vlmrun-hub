@@ -59,8 +59,6 @@ def test_instructor_hub_dataset(instructor_client):
     from datetime import datetime
     from pathlib import Path
 
-    import pandas as pd
-
     MODEL = "gpt-4o-mini-2024-07-18"
 
     # Process all samples
@@ -92,14 +90,27 @@ def test_instructor_hub_dataset(instructor_client):
     BENCHMARK_DIR = Path(__file__).parent / "benchmarks"
     BENCHMARK_DIR.mkdir(parents=True, exist_ok=True)
     date_str = datetime.now().strftime("%Y-%m-%d")
+    benchmark_path = BENCHMARK_DIR / f"{date_str}-{MODEL}-instructor-results.md"
 
-    # Render the results in a pandas dataframe
-    df = pd.DataFrame(results)
-    # Render the response_json in a <pre> tag with line breaks
-    df["response_json"] = df["response_json"].apply(lambda x: "<pre>{x}</pre>".format(x=x.replace("\n", "<br>")))
-    # Render the sample in a <img> tag
-    df["sample"] = df["sample"].apply(lambda x: f'<img src="{x}" width="100%" />')
-    # Write the results to a pandas dataframe -> HTML
-    pd.set_option("display.max_colwidth", 80)
-    df.to_html(BENCHMARK_DIR / f"{date_str}-{MODEL}-instructor-results.html", index=False, escape=False)
-    logger.debug(f"Results written to {BENCHMARK_DIR / f'{date_str}-{MODEL}-instructor-results.html'}")
+    # Render the results in markdown
+    markdown_str = f"## Benchmark Results (model={MODEL}, date={date_str})\n\n"
+    markdown_str += """<table>
+<tr>
+<td width='5%'> Domain </td>
+<td width='5%'> Response Model </td>
+<td width='40%'> Sample </td>
+<td width='50%'> Response JSON </td>
+</tr>
+    """
+    for result in results:
+        markdown_str += "<tr>"
+        markdown_str += f"<td> <kbd>{result['domain']}</kbd> </td>\n"
+        markdown_str += f"<td> <kbd>{result['response_model']}</kbd> </td>\n"
+        markdown_str += f"<td> <img src='{result['sample']}' width='100%' /> </td>\n"
+        markdown_str += "<td> <pre>{x}</pre> </td>\n".format(x=result["response_json"].replace("\n", "<br>"))
+        markdown_str += "</tr>"
+    markdown_str += "\n</table>"
+
+    with open(benchmark_path, "w") as f:
+        f.write(markdown_str)
+    logger.debug(f"Results written to {benchmark_path}")
