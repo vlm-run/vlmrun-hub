@@ -1,4 +1,5 @@
 import os
+from typing import Literal
 
 import pytest
 from loguru import logger
@@ -6,23 +7,41 @@ from loguru import logger
 from vlmrun.hub.dataset import VLMRUN_HUB_DATASET, HubSample
 from vlmrun.hub.utils import encode_image
 
-pytestmark = pytest.mark.skipif(
-    not os.getenv("OPENAI_API_KEY", False), reason="This test requires OPENAI_API_KEY to be set"
-)
 
-
-@pytest.fixture
-def instructor_client():
+def get_instructor_client(provider: Literal["openai", "gemini", "fireworks", "ollama"] = "openai"):
     import instructor
     from openai import OpenAI
 
+    client = None
+    match provider:
+        case "openai":
+            client = OpenAI()
+        case "gemini":
+            api_key = os.getenv("GEMINI_API_KEY", None)
+            if not api_key:
+                raise ValueError("GEMINI_API_KEY is not set")
+            client = OpenAI(api_key=api_key, base_url="https://generativelanguage.googleapis.com/v1beta/openai/")
+        case "fireworks":
+            api_key = os.getenv("FIREWORKS_API_KEY", None)
+            if not api_key:
+                raise ValueError("FIREWORKS_API_KEY is not set")
+            client = OpenAI(
+                api_key=api_key,
+                base_url="https://api.fireworks.ai/inference/v1",
+            )
+        case "ollama":
+            client = OpenAI(api_key="ollama", base_url="http://localhost:11434/v1/")
+            client.models.list()  # check if ollama is running, otherwise raise an error
+        case _:
+            raise ValueError(f"Invalid provider: {provider}")
+
     return instructor.from_openai(
-        OpenAI(),
+        client,
         mode=instructor.Mode.MD_JSON,
     )
 
 
-def _process_sample(client, sample: HubSample, model: str):
+def process_sample(client, sample: HubSample, model: str):
     return client.chat.completions.create(
         model=model,
         messages=[
@@ -44,20 +63,46 @@ def _process_sample(client, sample: HubSample, model: str):
     )
 
 
-def test_instructor_hub_sample(instructor_client, domain_arg: str):
+PROVIDER_MODELS = [
+    ("openai", "gpt-4o-mini-2024-07-18"),
+    ("openai", "gpt-4o-2024-11-20"),
+    ("gemini", "gemini-2.0-flash-exp"),
+    ("fireworks", "accounts/fireworks/models/llama-v3p2-11b-vision-instruct"),
+    ("ollama", "llama3.2-vision:11b"),
+]
+
+
+@pytest.mark.parametrize("provider_model", PROVIDER_MODELS)
+def test_instructor_hub_sample(provider_model: tuple[str, str], domain_arg: str):
+    provider, model = provider_model
+
+    # Get the client (based on provider)
+    try:
+        instructor_client = get_instructor_client(provider)
+    except Exception as e:
+        pytest.skip(f"Error getting instructor client: {e}")
+
+    logger.debug(f"Testing provider={provider}, model={model}")
     sample = VLMRUN_HUB_DATASET[domain_arg]
     logger.debug(f"Testing domain={sample.domain}, sample={sample}")
     logger.debug(f"sample.image={sample.image}")
-    response = _process_sample(instructor_client, sample, model="gpt-4o-mini-2024-07-18")
+    response = process_sample(instructor_client, sample, model=model)
     logger.debug(response.model_dump_json(indent=2))
     assert response is not None
 
 
-@pytest.mark.parametrize("model", ["gpt-4o-mini-2024-07-18", "gpt-4o-2024-11-20"])
 @pytest.mark.benchmark
-def test_instructor_hub_dataset(instructor_client, model: str):
+@pytest.mark.parametrize("provider_model", PROVIDER_MODELS)
+def test_instructor_hub_dataset(provider_model: tuple[str, str]):
+    provider, model = provider_model
     from datetime import datetime
     from pathlib import Path
+
+    # Get the client (based on provider)
+    try:
+        instructor_client = get_instructor_client(provider)
+    except Exception as e:
+        pytest.skip(f"Error getting instructor client: {e}")
 
     # Process all samples
     results = []
@@ -69,7 +114,7 @@ def test_instructor_hub_dataset(instructor_client, model: str):
 
         # Try to process the sample
         try:
-            response = _process_sample(instructor_client, sample, model=model)
+            response = process_sample(instructor_client, sample, model=model)
         except Exception as e:
             response = None
             logger.error(f"Error processing sample {sample.domain}: {e}")

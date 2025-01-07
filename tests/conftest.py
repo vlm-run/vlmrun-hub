@@ -2,7 +2,7 @@ import pytest
 
 
 def pytest_addoption(parser):
-    parser.addoption("--domain", action="store", default="document.invoice", help="Domain to test")
+    parser.addoption("--domain", action="store", default="document.us-drivers-license", help="Domain to test")
 
 
 @pytest.fixture

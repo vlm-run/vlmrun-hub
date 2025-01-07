@@ -31,7 +31,7 @@ Welcome to **VLM Run Hub**, a comprehensive repository of pre-defined [Pydantic]
 </td>
 
 <td>
-    
+
 ```json
 {
   "issuing_state": "MT",
