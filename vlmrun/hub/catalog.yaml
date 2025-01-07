@@ -5,7 +5,7 @@ schemas:
     schema: vlmrun.hub.schemas.document.invoice.Invoice
     prompt: "You are a detail-oriented invoice analyst. Extract all the relevant information from the candidate's invoice as accurately as possible."
     description: "Comprehensive invoice data extraction system that processes invoice images to extract structured information including invoice metadata, customer details, line items, and financial totals."
-    sample_data: "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/document.invoice-extraction/invoice_1.jpg"
+    sample_data: "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/document.invoice/invoice_1.jpg"
     metadata:
       supported_inputs: ["image", "document"]
       tags: ["document", "finance"]
