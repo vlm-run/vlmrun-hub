@@ -15,12 +15,21 @@ def get_instructor_client(provider: Literal["openai", "gemini", "fireworks", "ol
     client = None
     match provider:
         case "openai":
-            client = OpenAI()
+            api_key = os.getenv("OPENAI_API_KEY", None)
+            if not api_key:
+                raise ValueError("OPENAI_API_KEY is not set")
+            client = OpenAI(
+                api_key=api_key,
+                base_url="https://api.openai.com/v1",
+            )
         case "gemini":
             api_key = os.getenv("GEMINI_API_KEY", None)
             if not api_key:
                 raise ValueError("GEMINI_API_KEY is not set")
-            client = OpenAI(api_key=api_key, base_url="https://generativelanguage.googleapis.com/v1beta/openai/")
+            client = OpenAI(
+                api_key=api_key,
+                base_url="https://generativelanguage.googleapis.com/v1beta/openai/",
+            )
         case "fireworks":
             api_key = os.getenv("FIREWORKS_API_KEY", None)
             if not api_key:
@@ -30,7 +39,10 @@ def get_instructor_client(provider: Literal["openai", "gemini", "fireworks", "ol
                 base_url="https://api.fireworks.ai/inference/v1",
             )
         case "ollama":
-            client = OpenAI(api_key="ollama", base_url="http://localhost:11434/v1/")
+            client = OpenAI(
+                api_key="ollama",
+                base_url="http://localhost:11434/v1/",
+            )
             client.models.list()  # check if ollama is running, otherwise raise an error
         case _:
             raise ValueError(f"Invalid provider: {provider}")
@@ -136,7 +148,7 @@ def test_instructor_hub_dataset(provider_model: tuple[str, str]):
     BENCHMARK_DIR = Path(__file__).parent / "benchmarks"
     BENCHMARK_DIR.mkdir(parents=True, exist_ok=True)
     date_str = datetime.now().strftime("%Y-%m-%d")
-    benchmark_path = BENCHMARK_DIR / f"{date_str}-{model}-instructor-results.md"
+    benchmark_path = BENCHMARK_DIR / f"{date_str}-{model}-instructor-results.md".replace("/", "-")
 
     # Render the results in markdown
     def parse_json(x):
@@ -160,6 +172,6 @@ def test_instructor_hub_dataset(provider_model: tuple[str, str]):
         markdown_str += "</tr>"
     markdown_str += "\n</table>"
 
-    with open(benchmark_path, "w") as f:
+    with benchmark_path.open("w") as f:
         f.write(markdown_str)
     logger.debug(f"Results written to {benchmark_path}")
