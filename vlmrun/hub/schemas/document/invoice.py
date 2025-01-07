@@ -1,5 +1,5 @@
 from datetime import date
-from typing import Any, List
+from typing import List
 
 from pydantic import BaseModel, Field
 
@@ -7,8 +7,8 @@ from pydantic import BaseModel, Field
 class Address(BaseModel):
     street: str | None = Field(None, description="Street address")
     city: str | None = Field(None, description="City")
-    state: str | None = Field(None, description="State")
-    postal_code: str | None = Field(None, description="Postal code")
+    state: str | None = Field(None, description="State", max_length=2)
+    postal_code: str | None = Field(None, description="Postal code", min_length=5, max_length=10)
     country: str | None = Field(None, description="Country")
 
 
@@ -44,7 +44,3 @@ class Invoice(BaseModel):
     total: float | None = Field(None, description="Total of the invoice")
     currency: str | None = Field(None, description="Currency of the invoice")
     notes: str | None = Field(None, description="Notes of the invoice")
-    others: dict[str, Any] | None = Field(
-        None,
-        description="Other information of the invoice not captured by other fields",
-    )
