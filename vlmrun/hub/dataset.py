@@ -5,7 +5,10 @@ from typing import Type
 from PIL import Image
 from pydantic import BaseModel
 
-from vlmrun.hub.constants import VLMRUN_HUB_CATALOG_PATH
+from vlmrun.hub.constants import (
+    VLMRUN_HUB_CATALOG_PATH,
+    VLMRUN_HUB_CONTRIB_CATALOG_PATH,
+)
 from vlmrun.hub.registry import SchemaCatalogYaml
 from vlmrun.hub.utils import remote_image
 
@@ -45,4 +48,12 @@ VLMRUN_HUB_DATASET = {
         data=schema.sample_data,
     )
     for schema in catalog.schemas
+} | {
+    schema.domain: HubSample(
+        domain=schema.domain,
+        response_model=schema.schema_class,
+        prompt=schema.prompt,
+        data=schema.sample_data,
+    )
+    for schema in SchemaCatalogYaml.from_yaml(VLMRUN_HUB_CONTRIB_CATALOG_PATH).schemas
 }
