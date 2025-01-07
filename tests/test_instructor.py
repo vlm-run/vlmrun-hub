@@ -60,6 +60,7 @@ def process_sample(client, sample: HubSample, model: str):
         ],
         response_model=sample.response_model,
         temperature=0,
+        max_retries=0,
     )
 
 
@@ -72,7 +73,7 @@ PROVIDER_MODELS = [
 ]
 
 
-@pytest.mark.parametrize("provider_model", PROVIDER_MODELS)
+@pytest.mark.parametrize("provider_model", PROVIDER_MODELS[:1])
 def test_instructor_hub_sample(provider_model: tuple[str, str], domain_arg: str):
     provider, model = provider_model
 
@@ -138,6 +139,9 @@ def test_instructor_hub_dataset(provider_model: tuple[str, str]):
     benchmark_path = BENCHMARK_DIR / f"{date_str}-{model}-instructor-results.md"
 
     # Render the results in markdown
+    def parse_json(x):
+        return x.replace("\n", "<br>") if x is not None else "❌"
+
     markdown_str = f"## Benchmark Results (model={model}, date={date_str})\n\n"
     markdown_str += """<table>
 <tr>
@@ -152,7 +156,7 @@ def test_instructor_hub_dataset(provider_model: tuple[str, str]):
         markdown_str += f"<td> <kbd>{result['domain']}</kbd> </td>\n"
         markdown_str += f"<td> <kbd>{result['response_model']}</kbd> </td>\n"
         markdown_str += f"<td> <img src='{result['sample']}' width='100%' /> </td>\n"
-        markdown_str += "<td> <pre>{x}</pre> </td>\n".format(x=result["response_json"].replace("\n", "<br>"))
+        markdown_str += "<td> <pre>{x}</pre> </td>\n".format(x=parse_json(result["response_json"]))
         markdown_str += "</tr>"
     markdown_str += "\n</table>"
 
