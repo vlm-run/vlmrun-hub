@@ -1,14 +1,8 @@
-<table align="center" style="width: 100%;">
-    <tr>
-        <td align="right" style="vertical-align: middle; padding-right: 5px;">
-            <img src="./docs/assets/vlm-black.svg" alt="VLM Run Logo" width="80" style="margin-bottom: -5px; color: #2e3138;">
-        </td>
-        <td align="left" style="vertical-align: middle; font-size: 40px; padding-left: 5px; color: #2e3138;">
-            <b>Hub</b>
-        </td>
-    </tr>
-</table>
-
+<p align="center" style="width: 100%;">
+    <img src="./docs/assets/vlm-black.svg" alt="VLM Run Logo" width="80" style="margin-bottom: -5px; color: #2e3138; vertical-align: middle; padding-right: 5px;"><br>
+    <span style="font-size: 40px; color: #2e3138; vertical-align: middle; padding-left: 5px;"><b>Hub</b></span>
+</p>
+<br>
 
 <p align="center">
 <a href="https://vlm.run"><b>Website</b></a> | <a href="https://docs.vlm.run/"><b>Docs</b></a> | <a href="https://docs.vlm.run/blog"><b>Blog</b></a> | <a href="https://discord.gg/CCY8cYNC"><b>Discord</b></a> | <a href="vlmrun/hub/catalog.yaml"><b>Catalog</b></a>
@@ -302,7 +296,8 @@ The catalog is automatically validated to ensure consistency and completeness of
 We periodically run popular VLMs on each of the examples & schemas in the [catalog.yaml](vlmrun/hub/catalog.yaml) file and publish the results in the [benchmarks](tests/benchmarks/) directory.
 | Provider | Model | Date | Results |
 | --- | --- | --- | --- |
-| OpenAI + [Instructor](https://github.com/jxnl/instructor) | gpt-4o-2024-11-20 | 2025-01-06 | [link](tests/benchmarks/2025-01-06-gpt-4o-mini-2024-07-18-instructor-results.md) |
+| OpenAI + [Instructor](https://github.com/jxnl/instructor) | gpt-4o-2024-11-20 | 2025-01-09 | [link](tests/benchmarks/2025-01-09-gpt-4o-2024-11-20-instructor-results.md) |
+| OpenAI + [Instructor](https://github.com/jxnl/instructor) | gpt-4o-mini-2024-07-18 | 2025-01-09 | [link](tests/benchmarks/2025-01-09-gpt-4o-mini-2024-07-18-instructor-results.md) |
 
 
 ## 📂 Directory Structure
