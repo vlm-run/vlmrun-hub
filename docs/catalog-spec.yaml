@@ -20,7 +20,7 @@ schemas:
     description: # e.g., "Comprehensive invoice data extraction system..."
 
     # Provide a publicly accessible URL to sample data for testing and reference
-    sample_data: # e.g., "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/document.invoice-extraction/invoice_1.jpg"
+    sample_data: # e.g., "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/document.invoice/invoice_1.jpg"
 
     # Metadata section for additional information
     metadata:

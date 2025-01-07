@@ -34,7 +34,7 @@ The **Structured Outputs API** (popularized by [GPT-4o](https://openai.com/index
 
 ## 🚀 Getting Started
 
-Let's say we want to extract invoice metadata from an [invoice image](https://storage.googleapis.com/vlm-data-public-prod/hub/examples/document.invoice-extraction/invoice_1.jpg). You can readily use our [`Invoice`](vlmrun/hub/schemas/document/invoice.py) schema we have defined under `vlmrun.hub.schemas.document.invoice` and use it with any VLM of your choosing.
+Let's say we want to extract invoice metadata from an [invoice image](https://storage.googleapis.com/vlm-data-public-prod/hub/examples/document.invoice/invoice_1.jpg). You can readily use our [`Invoice`](vlmrun/hub/schemas/document/invoice.py) schema we have defined under `vlmrun.hub.schemas.document.invoice` and use it with any VLM of your choosing.
 
 ### With [Instructor](https://github.com/jxnl/instructor) / OpenAI
 
@@ -44,7 +44,7 @@ from openai import OpenAI
 
 from vlmrun.hub.schemas.document.invoice import Invoice
 
-IMAGE_URL = "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/document.invoice-extraction/invoice_1.jpg"
+IMAGE_URL = "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/document.invoice/invoice_1.jpg"
 
 client = instructor.from_openai(
     OpenAI(), mode=instructor.Mode.MD_JSON
@@ -73,7 +73,7 @@ response = client.chat.completions.create(
 
 <tr>
 <td style="width: 40%;">
-<img src="https://storage.googleapis.com/vlm-data-public-prod/hub/examples/document.invoice-extraction/invoice_1.jpg">
+<img src="https://storage.googleapis.com/vlm-data-public-prod/hub/examples/document.invoice/invoice_1.jpg">
 </td>
 <td>
 
@@ -157,7 +157,7 @@ import requests
 from vlmrun.hub.schemas.document.invoice import Invoice
 
 
-IMAGE_URL = "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/document.invoice-extraction/invoice_1.jpg"
+IMAGE_URL = "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/document.invoice/invoice_1.jpg"
 
 json_data = {
     "image": IMAGE_URL,
@@ -180,7 +180,7 @@ from openai import OpenAI
 
 from vlmrun.hub.schemas.document.invoice import Invoice
 
-IMAGE_URL = "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/document.invoice-extraction/invoice_1.jpg"
+IMAGE_URL = "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/document.invoice/invoice_1.jpg"
 
 client = OpenAI()
 completion = client.beta.chat.completions.parse(
@@ -206,7 +206,7 @@ from ollama import chat
 from vlmrun.hub.schemas.document.invoice import Invoice
 from vlmrun.hub.utils import encode_image, remote_image
 
-IMAGE_URL = "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/document.invoice-extraction/invoice_1.jpg"
+IMAGE_URL = "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/document.invoice/invoice_1.jpg"
 
 img = remote_image(IMAGE_URL)
 chat_response = chat(
