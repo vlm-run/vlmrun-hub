@@ -253,7 +253,7 @@ We periodically run popular VLMs on each of the examples & schemas in the [catal
 
 Schemas are organized by industry for easy navigation:
 
-```bash
+```
 vlmrun
 └── hub
     ├── schemas
@@ -278,7 +278,7 @@ vlmrun
 
 ## ✨ How to Contribute
 
-We’re building this hub for the community, and contributions are always welcome! Follow the [SCHEMA-GUIDELINES.md](docs/SCHEMA-GUIDELINES.md) to get started.
+We’re building this hub for the community, and contributions are always welcome! Follow the [CONTRIBUTING](docs/CONTRIBUTING.md) and [SCHEMA-GUIDELINES.md](docs/SCHEMA-GUIDELINES.md) to get started.
 
 
 ## 🔗  Quick Links
