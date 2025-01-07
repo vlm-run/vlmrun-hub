@@ -1,1 +1,0 @@
-"""Retail domain models."""
