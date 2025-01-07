@@ -1,6 +1,15 @@
 apiVersion: v1
 schemas:
   # Document domains
+  - domain: document.bank-statement
+    schema: vlmrun.hub.schemas.document.bank_statement.BankStatement
+    prompt: "You are a diligent bank statement analyzer. Extract all the relevant information from the statement as accurately as possible."
+    description: "Bank statement data extraction system that processes bank statements to extract structured financial transaction information including account details, balances, and transaction history."
+    sample_data: "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/document.bank-statement/lending_bankstatement.pdf"
+    metadata:
+      supported_inputs: ["image", "document"]
+      tags: ["finance", "banking", "work"]
+
   - domain: document.invoice
     schema: vlmrun.hub.schemas.document.invoice.Invoice
     prompt: "You are a detail-oriented invoice analyst. Extract all the relevant information from the candidate's invoice as accurately as possible."
@@ -8,7 +17,7 @@ schemas:
     sample_data: "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/document.invoice/invoice_1.jpg"
     metadata:
       supported_inputs: ["image", "document"]
-      tags: ["document", "finance"]
+      tags: ["finance", "work"]
 
   - domain: document.receipt
     schema: vlmrun.hub.schemas.document.receipt.Receipt
@@ -17,7 +26,7 @@ schemas:
     sample_data: "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/document.receipt/sample_receipt.webp"
     metadata:
       supported_inputs: ["image", "document"]
-      tags: ["document", "finance"]
+      tags: ["finance", "work"]
 
   - domain: document.resume
     schema: vlmrun.hub.schemas.document.resume.Resume
@@ -26,7 +35,7 @@ schemas:
     sample_data: "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/document.resume/fake-resume.webp"
     metadata:
       supported_inputs: ["image", "document"]
-      tags: ["document", "resume"]
+      tags: ["work", "hr"]
 
   - domain: document.us-drivers-license
     schema: vlmrun.hub.schemas.document.us_drivers_license.USDriversLicense
@@ -35,7 +44,7 @@ schemas:
     sample_data: "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/document.us-drivers-license/dl3.jpg"
     metadata:
       supported_inputs: ["image", "document"]
-      tags: ["document", "identity"]
+      tags: ["work", "identity"]
 
   - domain: document.utility-bill
     schema: vlmrun.hub.schemas.document.utility_bill.UtilityBill
@@ -44,16 +53,16 @@ schemas:
     sample_data: "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/document.utility-bill/utility-bill-example.webp"
     metadata:
       supported_inputs: ["image", "document"]
-      tags: ["document", "finance"]
+      tags: ["energy"]
 
-  - domain: document.bank-statement
-    schema: vlmrun.hub.schemas.document.bank_statement.BankStatement
-    prompt: "You are a diligent bank statement analyzer. Extract all the relevant information from the statement as accurately as possible."
-    description: "Bank statement data extraction system that processes bank statements to extract structured financial transaction information including account details, balances, and transaction history."
-    sample_data: "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/document.bank-statement/lending_bankstatement.pdf"
+  - domain: document.w2-form
+    schema: vlmrun.hub.schemas.contrib.document.w2_form.W2Form
+    prompt: "You are a detail-oriented tax document analyst. Extract all the relevant information from the W-2 form as accurately as possible."
+    description: "W-2 form data extraction system that processes Form W-2 (Wage and Tax Statement) to extract structured information including employee details, employer information, wages, and tax withholding data."
+    sample_data: "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/document.w2-form/2020FormW-2.pdf"
     metadata:
       supported_inputs: ["image", "document"]
-      tags: ["document", "finance", "banking"]
+      tags: ["finance", "work", "hr"]
 
   # Industry-specific domains
   # aerospace
@@ -64,7 +73,7 @@ schemas:
     sample_data: "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/aerospace.remote-sensing/planet_labs_port.jpg"
     metadata:
       supported_inputs: ["image", "video"]
-      tags: ["aerospace", "image"]
+      tags: ["aerospace"]
 
   # healthcare
   - domain: healthcare.medical-insurance-card
@@ -74,7 +83,7 @@ schemas:
     sample_data: "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/healthcare.medical-insurance-card/blue_cross_example.jpg"
     metadata:
       supported_inputs: ["image", "document"]
-      tags: ["healthcare", "medical"]
+      tags: ["healthcare", "work"]
 
   # retail
   - domain: retail.ecommerce-product-caption
@@ -94,7 +103,7 @@ schemas:
     sample_data: "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/media.nfl-game-state/packers_cardinals_screenshot.png"
     metadata:
       supported_inputs: ["image", "video"]
-      tags: ["media", "sports", "nfl"]
+      tags: ["media", "sports"]
 
   - domain: media.nba-game-state
     schema: vlmrun.hub.schemas.contrib.media.nba_game_state.NBAGameState
@@ -103,7 +112,7 @@ schemas:
     sample_data: "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/media.nba-game-state/heats_spurs.png"
     metadata:
       supported_inputs: ["image", "video"]
-      tags: ["media", "sports", "nba"]
+      tags: ["media", "sports"]
 
   - domain: media.tv-news
     schema: vlmrun.hub.schemas.contrib.media.tv_news.TVNews
@@ -113,12 +122,3 @@ schemas:
     metadata:
       supported_inputs: ["image", "video"]
       tags: ["media", "news"]
-
-  - domain: document.w2-form
-    schema: vlmrun.hub.schemas.contrib.document.w2_form.W2Form
-    prompt: "You are a detail-oriented tax document analyst. Extract all the relevant information from the W-2 form as accurately as possible."
-    description: "W-2 form data extraction system that processes Form W-2 (Wage and Tax Statement) to extract structured information including employee details, employer information, wages, and tax withholding data."
-    sample_data: "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/document.w2-form/2020FormW-2.pdf"
-    metadata:
-      supported_inputs: ["image", "document"]
-      tags: ["document", "finance", "tax"]
