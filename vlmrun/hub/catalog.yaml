@@ -50,7 +50,7 @@ schemas:
     schema: vlmrun.hub.schemas.document.bank_statement.BankStatement
     prompt: "You are a diligent bank statement analyzer. Extract all the relevant information from the statement as accurately as possible."
     description: "Bank statement data extraction system that processes bank statements to extract structured financial transaction information including account details, balances, and transaction history."
-    sample_data: "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/document.bank-statement/sample_statement.pdf"
+    sample_data: "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/document.bank-statement/lending_bankstatement.pdf"
     metadata:
       supported_inputs: ["image", "document"]
       tags: ["document", "finance", "banking"]
