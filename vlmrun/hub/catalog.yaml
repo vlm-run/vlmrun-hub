@@ -78,7 +78,7 @@ schemas:
 
   # retail
   - domain: retail.ecommerce-product-caption
-    schema: vlmrun.hub.schemas.contrib.retail.ecommerce_product_caption.RetailEcommerceProductCaption
+    schema: vlmrun.hub.schemas.retail.ecommerce_product_caption.RetailEcommerceProductCaption
     prompt: "You are a detail-oriented product analyst. Extract all the relevant product information from the image as accurately as possible."
     description: "Product data extraction system that processes product images to extract structured information including visual description, product details, and delivery information."
     sample_data: "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/retail.ecommerce-product-caption/Electronics%20-%20Kindle.webp"
