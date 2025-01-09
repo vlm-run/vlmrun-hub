@@ -14,4 +14,4 @@ class NBAGameState(BaseModel):
     clock_time: str | None = Field(None, description="Time remaining in the current quarter, e.g., '9:09'")
     shot_clock: int | None = Field(None, description="Shot clock time remaining")
     network: str | None = Field(None, description="TV network broadcasting the game")
-    is_shown: bool | None = Field(None, description="Whether the game is currently being shown")
+    is_shown: bool | None = Field(None, description="Whether the game is currently being shown.")
