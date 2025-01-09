@@ -95,8 +95,8 @@ schemas:
       supported_inputs: ["image", "video"]
       tags: ["media", "sports", "nba"]
 
-  - domain: media.tv_news
-    schema: vlmrun.hub.schemas.contrib.media.tv_news.TVNews
+  - domain: media.tv-news
+    schema: vlmrun.hub.schemas.contrib.media.tv-news.TVNews
     prompt: "You are a detail-oriented TV news analyst. Extract relevant news broadcast information as accurately as possible."
     description: "TV news data extraction system that processes news footage or screenshots to extract structured information such as headlines, anchors, and on-screen text."
     sample_data: "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/media.tv-news/bbc_news_ukraine_screenshot.jpg"
