@@ -99,7 +99,7 @@ schemas:
     schema: vlmrun.hub.schemas.contrib.document.w2_form.W2Form
     prompt: "You are a detail-oriented tax document analyst. Extract all the relevant information from the W-2 form as accurately as possible."
     description: "W-2 form data extraction system that processes Form W-2 (Wage and Tax Statement) to extract structured information including employee details, employer information, wages, and tax withholding data."
-    sample_data: "/tmp/w2form/w2form.png"
+    sample_data: "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/document.w2-form/2020FormW-2.pdf"
     metadata:
       supported_inputs: ["image", "document"]
       tags: ["document", "finance", "tax"]
