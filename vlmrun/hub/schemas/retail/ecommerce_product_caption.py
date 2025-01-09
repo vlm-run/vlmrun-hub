@@ -16,8 +16,3 @@ class RetailEcommerceProductCaption(BaseModel):
     category: str = Field(..., description="The category of the product, e.g. 'Electronics / E-readers'.")
     price: str = Field(..., description="The price of the product.")
     color: str = Field(..., description="The color of the product.")
-    delivery_estimate: str = Field(..., description="The estimated delivery time for the product.")
-    sample_data: str = Field(
-        default="https://storage.googleapis.com/vlm-data-public-prod/hub/examples/retail.ecommerce-product-caption/Electronics%20-%20Kindle.webp",
-        description="Sample image data for this schema.",
-    )
