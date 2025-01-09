@@ -48,7 +48,7 @@ def test_instructor_hub_sample(instructor_client, domain_arg: str):
     sample = VLMRUN_HUB_DATASET[domain_arg]
     logger.debug(f"Testing domain={sample.domain}, sample={sample}")
     logger.debug(f"sample.image={sample.image}")
-    response = _process_sample(instructor_client, sample, model="gpt-4o-mini-2024-07-18")
+    response = _process_sample(instructor_client, sample, model="gpt-4-vision-preview")
     logger.debug(response.model_dump_json(indent=2))
     assert response is not None
 
