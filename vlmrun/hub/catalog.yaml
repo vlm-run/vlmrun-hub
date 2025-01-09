@@ -95,6 +95,15 @@ schemas:
       supported_inputs: ["image", "video"]
       tags: ["media", "sports", "nba"]
 
+  - domain: media.tv-news
+    schema: vlmrun.hub.schemas.contrib.media.tv_news.TVNews
+    prompt: "You are a detail-oriented TV news analyst. Extract relevant news broadcast information as accurately as possible."
+    description: "TV news data extraction system that processes news footage or screenshots to extract structured information such as headlines, anchors, and on-screen text."
+    sample_data: "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/media.tv-news/bbc_news_ukraine_screenshot.jpg"
+    metadata:
+      supported_inputs: ["image", "video"]
+      tags: ["media", "news"]
+
   - domain: document.w2-form
     schema: vlmrun.hub.schemas.contrib.document.w2_form.W2Form
     prompt: "You are a detail-oriented tax document analyst. Extract all the relevant information from the W-2 form as accurately as possible."
