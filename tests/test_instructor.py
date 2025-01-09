@@ -48,18 +48,18 @@ def test_instructor_hub_sample(instructor_client, domain_arg: str):
     sample = VLMRUN_HUB_DATASET[domain_arg]
     logger.debug(f"Testing domain={sample.domain}, sample={sample}")
     logger.debug(f"sample.image={sample.image}")
-    response = _process_sample(instructor_client, sample, model="gpt-4-vision-preview")
+    response = _process_sample(instructor_client, sample, model="gpt-4o-mini-2024-07-18")
     logger.debug(response.model_dump_json(indent=2))
     assert response is not None
 
 
-# @pytest.mark.parametrize("model", ["gpt-4-vision-preview"])
+# @pytest.mark.parametrize("model", ["gpt-4o-mini-2024-07-18", "gpt-4o-2024-11-20"])
 @pytest.mark.benchmark
 def test_instructor_hub_dataset(instructor_client):
     from datetime import datetime
     from pathlib import Path
 
-    MODEL = "gpt-4-vision-preview"
+    MODEL = "gpt-4o-mini-2024-07-18"
 
     # Process all samples
     results = []
