@@ -15,32 +15,32 @@ class W2Form(BaseModel):
     """W2 Form schema for extracting information from IRS Form W-2 (Wage and Tax Statement)."""
 
     control_number: str | None = Field(None, description="Control number assigned to the W2 form")
-    ein: str = Field(..., description="Employer Identification Number (EIN)")
-    ssn: str = Field(..., description="Employee's Social Security Number (SSN)")
+    ein: str | None = Field(None, description="Employer Identification Number (EIN)")
+    ssn: str | None = Field(None, description="Employee's Social Security Number (SSN)")
 
-    employee_name: str = Field(..., description="Full name of the employee")
-    employee_address: Address = Field(..., description="Employee's complete address")
+    employee_name: str | None = Field(None, description="Full name of the employee")
+    employee_address: Address | None = Field(None, description="Employee's complete address")
     
-    employer_name: str = Field(..., description="Full name of the employer")
-    employer_address: Address = Field(..., description="Employer's complete address")
+    employer_name: str | None = Field(None, description="Full name of the employer")
+    employer_address: Address | None = Field(None, description="Employer's complete address")
 
-    wages_tips_other_compensation: float = Field(
-        ..., description="Wages, tips, and other compensation (Box 1)"
+    wages_tips_other_compensation: float | None = Field(
+        None, description="Wages, tips, and other compensation (Box 1)"
     )
-    social_security_wages: float = Field(
-        ..., description="Social security wages (Box 3)"
+    social_security_wages: float | None = Field(
+        None, description="Social security wages (Box 3)"
     )
-    social_security_tax_withheld: float = Field(
-        ..., description="Social security tax withheld (Box 4)"
+    social_security_tax_withheld: float | None = Field(
+        None, description="Social security tax withheld (Box 4)"
     )
-    medicare_wages_and_tips: float = Field(
-        ..., description="Medicare wages and tips (Box 5)"
+    medicare_wages_and_tips: float | None = Field(
+        None, description="Medicare wages and tips (Box 5)"
     )
-    medicare_tax_withheld: float = Field(
-        ..., description="Medicare tax withheld (Box 6)"
+    medicare_tax_withheld: float | None = Field(
+        None, description="Medicare tax withheld (Box 6)"
     )
-    federal_income_tax_withheld: float = Field(
-        ..., description="Federal income tax withheld (Box 2)"
+    federal_income_tax_withheld: float | None = Field(
+        None, description="Federal income tax withheld (Box 2)"
     )
 
-    tax_year: int = Field(..., description="Tax year for which the W2 form is issued")
+    tax_year: int | None = Field(None, description="Tax year for which the W2 form is issued")
