@@ -8,7 +8,7 @@ class Address(BaseModel):
     street: str | None = Field(None, description="Street address")
     city: str | None = Field(None, description="City")
     state: str | None = Field(None, description="State")
-    zip_code: str | None = Field(None, description="ZIP code")
+    zip_code: str | None = Field(None, description="ZIP code", min_length=5, max_length=10)
 
 
 class W2Form(BaseModel):
