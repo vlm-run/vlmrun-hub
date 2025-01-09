@@ -15,7 +15,7 @@ This PR introduces a new schema `retail.ecommerce-product-caption` based on the 
 ## Testing Status
 Test execution is blocked by:
 1. Required OPENAI_API_KEY environment variable
-2. Custom model dependency "gpt-4o-mini-2024-07-18"
+2. Using OpenAI's gpt-4-vision-preview model for testing
 Awaiting guidance on test requirements and model access.
 
 Link to Devin run: https://app.devin.ai/sessions/85a9408ec3cf45838df4f59bf1084c07

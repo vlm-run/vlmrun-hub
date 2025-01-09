@@ -53,13 +53,13 @@ def test_instructor_hub_sample(instructor_client, domain_arg: str):
     assert response is not None
 
 
-# @pytest.mark.parametrize("model", ["gpt-4o-mini-2024-07-18", "gpt-4o-2024-11-20"])
+# @pytest.mark.parametrize("model", ["gpt-4-vision-preview"])
 @pytest.mark.benchmark
 def test_instructor_hub_dataset(instructor_client):
     from datetime import datetime
     from pathlib import Path
 
-    MODEL = "gpt-4o-mini-2024-07-18"
+    MODEL = "gpt-4-vision-preview"
 
     # Process all samples
     results = []
