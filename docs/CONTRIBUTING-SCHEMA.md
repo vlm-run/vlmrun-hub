@@ -17,7 +17,7 @@ Please refer to the [Schema Guidelines](./SCHEMA-GUIDELINES.md) for comprehensiv
 
 2. **Add Tests**: Include tests for your schema in `tests/test_schemas.py`.
 
-3. **Add to Catalog**: Add your schema to the `catalog.yaml` file in the `schemas` section, and test it with pytest -sv tests/test_instructor.py. --domain="<domain_name>".
+3. **Add to the contrib Catalog**: Add your schema to the [`vlmrun/hub/schemas/contrib/catalog.yaml`](../vlmrun/hub/schemas/contrib/catalog.yaml) file in the `schemas` section, and test it with `pytest -sv tests/test_instructor.py. --domain="<domain_name>"`.
 
 4. **Submit a Pull Request**: Once your schema is complete and tested, submit a pull request for review.
 

@@ -6,9 +6,15 @@ from pydantic import BaseModel
 from vlmrun.hub.registry import SchemaCatalogYaml
 
 
-def test_catalog_yaml():
+@pytest.mark.parametrize(
+    "catalog_path",
+    [
+        Path(__file__).parent.parent / "vlmrun" / "hub" / "catalog.yaml",
+        Path(__file__).parent.parent / "vlmrun" / "hub" / "schemas" / "contrib" / "catalog.yaml",
+    ],
+)
+def test_catalog_yaml(catalog_path):
     """Test that catalog.yaml is valid and follows the expected structure."""
-    catalog_path = Path(__file__).parent.parent / "vlmrun" / "hub" / "catalog.yaml"
     assert catalog_path.exists(), "catalog.yaml file not found"
 
     # Load the catalog

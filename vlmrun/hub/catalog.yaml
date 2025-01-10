@@ -1,6 +1,6 @@
 apiVersion: v1
 schemas:
-  # Document domains
+  # document
   - domain: document.bank-statement
     schema: vlmrun.hub.schemas.document.bank_statement.BankStatement
     prompt: "You are a diligent bank statement analyzer. Extract all the relevant information from the statement as accurately as possible."
@@ -64,8 +64,7 @@ schemas:
       supported_inputs: ["image", "document"]
       tags: ["finance", "work", "hr"]
 
-  # Industry-specific domains
-  # aerospace
+  # industry: aerospace
   - domain: aerospace.remote-sensing
     schema: vlmrun.hub.schemas.aerospace.remote_sensing.RemoteSensing
     prompt: "You are a detail-oriented remote sensing analyst. Analyze this satellite image to identify and categorize land features, infrastructure, and environmental elements. Note any significant objects and assess visibility conditions as accurately as possible."
@@ -75,7 +74,7 @@ schemas:
       supported_inputs: ["image", "video"]
       tags: ["aerospace"]
 
-  # healthcare
+  # industry: healthcare
   - domain: healthcare.medical-insurance-card
     schema: vlmrun.hub.schemas.healthcare.medical_insurance_card.MedicalInsuranceCard
     prompt: "You are a detail-oriented document analyst. Extract all the relevant information from the candidate's medical insurance card as accurately as possible."
@@ -85,7 +84,7 @@ schemas:
       supported_inputs: ["image", "document"]
       tags: ["healthcare", "work"]
 
-  # retail
+  # industry: retail
   - domain: retail.ecommerce-product-caption
     schema: vlmrun.hub.schemas.retail.ecommerce_product_caption.RetailEcommerceProductCaption
     prompt: "You are a detail-oriented product analyst. Extract all the relevant product information from the image as accurately as possible."
@@ -95,27 +94,9 @@ schemas:
       supported_inputs: ["image"]
       tags: ["retail", "ecommerce"]
 
-  # media
-  - domain: media.nfl-game-state
-    schema: vlmrun.hub.schemas.contrib.media.nfl_game_state.NFLGameState
-    prompt: "You are a detail-oriented NFL Game Analyst. Extract all the relevant game state information from the video feed or screenshot as accurately as possible."
-    description: "NFL game state extraction system that processes game footage or screenshots to extract structured information including teams, scores, game clock, possession, and other relevant game state details."
-    sample_data: "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/media.nfl-game-state/packers_cardinals_screenshot.png"
-    metadata:
-      supported_inputs: ["image", "video"]
-      tags: ["media", "sports"]
-
-  - domain: media.nba-game-state
-    schema: vlmrun.hub.schemas.contrib.media.nba_game_state.NBAGameState
-    prompt: "You are a detail-oriented NBA Game Analyst. Extract all the relevant game state information from the video feed or screenshot as accurately as possible."
-    description: "NBA game state extraction system that processes game footage or screenshots to extract structured information including teams, scores, game clock, shot clock, and other relevant game state details."
-    sample_data: "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/media.nba-game-state/heats_spurs.png"
-    metadata:
-      supported_inputs: ["image", "video"]
-      tags: ["media", "sports"]
-
+  # industry: media
   - domain: media.tv-news
-    schema: vlmrun.hub.schemas.contrib.media.tv_news.TVNews
+    schema: vlmrun.hub.schemas.media.tv_news.TVNews
     prompt: "You are a detail-oriented TV news analyst. Extract relevant news broadcast information as accurately as possible."
     description: "TV news data extraction system that processes news footage or screenshots to extract structured information such as headlines, anchors, and on-screen text."
     sample_data: "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/media.tv-news/bbc_news_ukraine_screenshot.jpg"

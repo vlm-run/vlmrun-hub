@@ -1,0 +1,23 @@
+apiVersion: v1
+schemas:
+  # document
+  # image
+  # video
+  # industry: media
+  - domain: media.nfl-game-state
+    schema: vlmrun.hub.schemas.contrib.media.nfl_game_state.NFLGameState
+    prompt: "You are a detail-oriented NFL Game Analyst. Extract all the relevant game state information from the video feed or screenshot as accurately as possible."
+    description: "NFL game state extraction system that processes game footage or screenshots to extract structured information including teams, scores, game clock, possession, and other relevant game state details."
+    sample_data: "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/media.nfl-game-state/packers_cardinals_screenshot.png"
+    metadata:
+      supported_inputs: ["image", "video"]
+      tags: ["media", "sports"]
+
+  - domain: media.nba-game-state
+    schema: vlmrun.hub.schemas.contrib.media.nba_game_state.NBAGameState
+    prompt: "You are a detail-oriented NBA Game Analyst. Extract all the relevant game state information from the video feed or screenshot as accurately as possible."
+    description: "NBA game state extraction system that processes game footage or screenshots to extract structured information including teams, scores, game clock, shot clock, and other relevant game state details."
+    sample_data: "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/media.nba-game-state/heats_spurs.png"
+    metadata:
+      supported_inputs: ["image", "video"]
+      tags: ["media", "sports"]

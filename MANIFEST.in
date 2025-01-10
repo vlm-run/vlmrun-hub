@@ -1,1 +1,2 @@
 include vlmrun/hub/catalog.yaml
+include vlmrun/hub/schemas/contrib/catalog.yaml
