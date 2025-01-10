@@ -25,18 +25,15 @@ Welcome to **VLM Run Hub**, a comprehensive repository of pre-defined [Pydantic]
 <td> <b>Image</b> </td>
 <td> <b>JSON</b> </td>
 </tr>
-
 <tr>
 <td style="width: 40%;">
 <img src="https://storage.googleapis.com/vlm-data-public-prod/hub/examples/document.us-drivers-license/dl3.jpg">
 </td>
 <td>
-
 ```json
 {
   "issuing_state": "MT",
   "license_number": "0812319684104",
-  "full_name": "Brenda Lynn Sample",
   "first_name": "Brenda",
   "middle_name": "Lynn",
   "last_name": "Sample",
@@ -51,22 +48,17 @@ Welcome to **VLM Run Hub**, a comprehensive repository of pre-defined [Pydantic]
   "height": "5'06\"",
   "weight": 150.0,
   "eye_color": "BRO",
-  "hair_color": null,
   "issue_date": "2015-02-15",
   "expiration_date": "2023-08-04",
-  "license_class": "D",
-  "donor": null,
-  "veteran": null
+  "license_class": "D"
 }
 ```
-
 </td>
 </tr>
 </table>
-
 </details>
 
-### Why use this repo / pre-defined Pydantic schemas?
+### 🧰 Why use this hub of pre-defined Pydantic schemas?
 
 - 📚 **Easy to use:** [Pydantic](https://docs.pydantic.dev/latest/) is a well-understood and battle-tested data model for structured data.
 - 🔋 **Batteries included:**  Each schema in this repo has been validated across real-world industry use cases—from healthcare to finance to media—saving you weeks of development effort.
@@ -76,23 +68,23 @@ Welcome to **VLM Run Hub**, a comprehensive repository of pre-defined [Pydantic]
 - 🚀 **Optimized for Visual ETL:** Purpose-built for extracting structured data from images, videos, and documents, this repo bridges the gap between unstructured data and actionable insights.
 
 
-## 💡 Motivation
+### 💡 Motivation
 
 While vision models like OpenAI’s [GPT-4o](https://openai.com/index/hello-gpt-4o/) and Anthropic’s [Claude Vision](https://www.anthropic.com/claude) excel in exploratory tasks like "chat with images," they often lack practicality for automation and integration, where **strongly-typed**, **validated outputs** are crucial.
 
 The **Structured Outputs API** (popularized by [GPT-4o](https://openai.com/index/introducing-structured-outputs-in-the-api/), [Gemini](https://ai.google.dev/gemini-api/docs/structured-output)) addresses this by constraining LLMs to return data in precise, strongly-typed formats such as [Pydantic](https://docs.pydantic.dev/latest/) models. This eliminates complex parsing and validation, ensuring outputs conform to expected types and structures. These schemas can be nested and include complex types like lists and dictionaries, enabling seamless integration with existing systems while leveraging the full capabilities of the model.
 
-## 💾 Installation
+### 💾 Installation
 
 ```python
 pip install vlmrun-hub
 ```
 
-## 🚀 Getting Started
+### 🚀 Getting Started
 
 Let's say we want to extract invoice metadata from an [invoice image](https://storage.googleapis.com/vlm-data-public-prod/hub/examples/document.invoice/invoice_1.jpg). You can readily use our [`Invoice`](vlmrun/hub/schemas/document/invoice.py) schema we have defined under `vlmrun.hub.schemas.document.invoice` and use it with any VLM of your choosing.
 
-### With [Instructor](https://github.com/jxnl/instructor) / OpenAI
+#### With [Instructor](https://github.com/jxnl/instructor) / OpenAI
 
 ```python
 import instructor
@@ -205,7 +197,7 @@ response = client.chat.completions.create(
 
 </details>
 
-### With [VLM Run](https://vlm.run)
+#### With [VLM Run](https://vlm.run)
 
 ```python
 import requests
@@ -228,7 +220,7 @@ response = requests.post(
 )
 ```
 
-### With [OpenAI Structured Outputs API](https://platform.openai.com/docs/guides/structured-outputs)
+#### With [OpenAI Structured Outputs API](https://platform.openai.com/docs/guides/structured-outputs)
 
 ```python
 import instructor
@@ -254,7 +246,7 @@ completion = client.beta.chat.completions.parse(
 
 > When working with the OpenAI Structured Outputs API, you need to ensure that the `response_format` is a valid Pydantic model with the [supported types](https://platform.openai.com/docs/guides/structured-outputs#supported-schemas).
 
-### Locally with [Ollama](https://ollama.com)
+#### Locally with [Ollama](https://ollama.com)
 
 ```python
 from ollama import chat
@@ -284,7 +276,7 @@ response = Invoice.model_validate_json(
 )
 ```
 
-## 📖 Schema Catalog
+### 📖 Schema Catalog
 
 The VLM Run Hub maintains a comprehensive catalog of all available schemas in the [`vlmrun/hub/catalog.yaml`](vlmrun/hub/catalog.yaml) file. This catalog provides:
 
@@ -297,7 +289,7 @@ The VLM Run Hub maintains a comprehensive catalog of all available schemas in th
 The catalog is automatically validated to ensure consistency and completeness of schema documentation. We refer the developer to the [catalog-spec.yaml](docs/catalog-spec.yaml) for the full YAML specification.
 
 
-## 📖 Qualitative Results
+### 📖 Qualitative Results
 
 We periodically run popular VLMs on each of the examples & schemas in the [catalog.yaml](vlmrun/hub/catalog.yaml) file and publish the results in the [benchmarks](tests/benchmarks/) directory.
 | Provider | Model | Date | Results |
@@ -306,7 +298,7 @@ We periodically run popular VLMs on each of the examples & schemas in the [catal
 | OpenAI + [Instructor](https://github.com/jxnl/instructor) | gpt-4o-mini-2024-07-18 | 2025-01-09 | [link](tests/benchmarks/2025-01-09-gpt-4o-mini-2024-07-18-instructor-results.md) |
 
 
-## 📂 Directory Structure
+### 📂 Directory Structure
 
 Schemas are organized by industry for easy navigation:
 
@@ -333,12 +325,12 @@ vlmrun
     └── version.py
 ```
 
-## ✨ How to Contribute
+### ✨ How to Contribute
 
 We’re building this hub for the community, and contributions are always welcome! Follow the [CONTRIBUTING](docs/CONTRIBUTING.md) and [SCHEMA-GUIDELINES.md](docs/SCHEMA-GUIDELINES.md) to get started.
 
 
-## 🔗  Quick Links
+### 🔗  Quick Links
 
 * 💬 Send us an email at [support@vlm.run](mailto:support@vlm.run) or join our [Discord](https://discord.gg/4jgyECY4rq) for help.
 * 📣 Follow us on [Twitter](https://x.com/vlmrun), and [LinkedIn](https://www.linkedin.com/company/vlm-run) to keep up-to-date on our products.
