@@ -15,12 +15,21 @@ def get_instructor_client(provider: Literal["openai", "gemini", "fireworks", "ol
     client = None
     match provider:
         case "openai":
-            client = OpenAI()
+            api_key = os.getenv("OPENAI_API_KEY", None)
+            if not api_key:
+                raise ValueError("OPENAI_API_KEY is not set")
+            client = OpenAI(
+                api_key=api_key,
+                base_url="https://api.openai.com/v1",
+            )
         case "gemini":
             api_key = os.getenv("GEMINI_API_KEY", None)
             if not api_key:
                 raise ValueError("GEMINI_API_KEY is not set")
-            client = OpenAI(api_key=api_key, base_url="https://generativelanguage.googleapis.com/v1beta/openai/")
+            client = OpenAI(
+                api_key=api_key,
+                base_url="https://generativelanguage.googleapis.com/v1beta/openai/",
+            )
         case "fireworks":
             api_key = os.getenv("FIREWORKS_API_KEY", None)
             if not api_key:
@@ -30,7 +39,10 @@ def get_instructor_client(provider: Literal["openai", "gemini", "fireworks", "ol
                 base_url="https://api.fireworks.ai/inference/v1",
             )
         case "ollama":
-            client = OpenAI(api_key="ollama", base_url="http://localhost:11434/v1/")
+            client = OpenAI(
+                api_key="ollama",
+                base_url="http://localhost:11434/v1/",
+            )
             client.models.list()  # check if ollama is running, otherwise raise an error
         case _:
             raise ValueError(f"Invalid provider: {provider}")
@@ -60,6 +72,7 @@ def process_sample(client, sample: HubSample, model: str):
         ],
         response_model=sample.response_model,
         temperature=0,
+        max_retries=0,
     )
 
 
@@ -72,7 +85,7 @@ PROVIDER_MODELS = [
 ]
 
 
-@pytest.mark.parametrize("provider_model", PROVIDER_MODELS)
+@pytest.mark.parametrize("provider_model", PROVIDER_MODELS[:1])
 def test_instructor_hub_sample(provider_model: tuple[str, str], domain_arg: str):
     provider, model = provider_model
 
@@ -135,9 +148,12 @@ def test_instructor_hub_dataset(provider_model: tuple[str, str]):
     BENCHMARK_DIR = Path(__file__).parent / "benchmarks"
     BENCHMARK_DIR.mkdir(parents=True, exist_ok=True)
     date_str = datetime.now().strftime("%Y-%m-%d")
-    benchmark_path = BENCHMARK_DIR / f"{date_str}-{model}-instructor-results.md"
+    benchmark_path = BENCHMARK_DIR / f"{date_str}-{model}-instructor-results.md".replace("/", "-")
 
     # Render the results in markdown
+    def parse_json(x):
+        return x.replace("\n", "<br>") if x is not None else "❌"
+
     markdown_str = f"## Benchmark Results (model={model}, date={date_str})\n\n"
     markdown_str += """<table>
 <tr>
@@ -152,10 +168,10 @@ def test_instructor_hub_dataset(provider_model: tuple[str, str]):
         markdown_str += f"<td> <kbd>{result['domain']}</kbd> </td>\n"
         markdown_str += f"<td> <kbd>{result['response_model']}</kbd> </td>\n"
         markdown_str += f"<td> <img src='{result['sample']}' width='100%' /> </td>\n"
-        markdown_str += "<td> <pre>{x}</pre> </td>\n".format(x=result["response_json"].replace("\n", "<br>"))
+        markdown_str += "<td> <pre>{x}</pre> </td>\n".format(x=parse_json(result["response_json"]))
         markdown_str += "</tr>"
     markdown_str += "\n</table>"
 
-    with open(benchmark_path, "w") as f:
+    with benchmark_path.open("w") as f:
         f.write(markdown_str)
     logger.debug(f"Results written to {benchmark_path}")

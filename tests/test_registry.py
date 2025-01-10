@@ -1,5 +1,4 @@
 import pytest
-from loguru import logger
 from pydantic import BaseModel
 
 from vlmrun.hub.registry import Registry
@@ -53,8 +52,12 @@ def test_registry_on_import():
     """Test that the registry is populated on import"""
     from vlmrun.hub import schemas
 
+    # Test that the registry is populated on import
+    schemas.import_all(catalog_paths=None)
+    assert len(Registry.get().list()) > 0, "Registry should be populated on import"
+
+    # Test that the registry includes contrib schemas
     schemas.import_all()
     assert len(Registry.get().list()) > 0, "Registry should be populated on import"
     for domain in Registry.get().list():
-        logger.debug(f"Schema: {domain}")
         assert issubclass(Registry.get()[domain], BaseModel), f"Schema {domain} is not a subclass of BaseModel"

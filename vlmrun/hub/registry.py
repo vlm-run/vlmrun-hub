@@ -36,6 +36,12 @@ class Registry:
     def __getitem__(self, name: str) -> BaseModel:
         return self.schemas[name]
 
+    def __repr__(self):
+        repr_str = f"Registry [schemas={len(self.schemas)}]"
+        for name, schema in self.schemas.items():
+            repr_str += f"\n  {name} :: {schema.__name__}"
+        return repr_str
+
     @classmethod
     def list(cls) -> list[str]:
         return list(cls.schemas.keys())

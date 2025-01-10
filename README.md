@@ -298,8 +298,10 @@ The catalog is automatically validated to ensure consistency and completeness of
 We periodically run popular VLMs on each of the examples & schemas in the [catalog.yaml](vlmrun/hub/catalog.yaml) file and publish the results in the [benchmarks](tests/benchmarks/) directory.
 | Provider | Model | Date | Results |
 | --- | --- | --- | --- |
-| OpenAI + [Instructor](https://github.com/jxnl/instructor) | gpt-4o-2024-11-20 | 2025-01-09 | [link](tests/benchmarks/2025-01-09-gpt-4o-2024-11-20-instructor-results.md) |
-| OpenAI + [Instructor](https://github.com/jxnl/instructor) | gpt-4o-mini-2024-07-18 | 2025-01-09 | [link](tests/benchmarks/2025-01-09-gpt-4o-mini-2024-07-18-instructor-results.md) |
+| OpenAI | gpt-4o-2024-11-20 | 2025-01-09 | [link](tests/benchmarks/2025-01-09-gpt-4o-2024-11-20-instructor-results.md) |
+| OpenAI | gpt-4o-mini-2024-07-18 | 2025-01-09 | [link](tests/benchmarks/2025-01-09-gpt-4o-mini-2024-07-18-instructor-results.md) |
+| Gemini | gemini-2.0-flash-exp | 2025-01-10 | [link](tests/benchmarks/2025-01-10-gemini-2.0-flash-exp-instructor-results.md) |
+| Llama 3.2 11B | llama3.2-vision:11b | 2025-01-10 | [link](tests/benchmarks/2025-01-10-llama3.2-vision:11b-instructor-results.md) |
 
 
 ### 📂 Directory Structure
