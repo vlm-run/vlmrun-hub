@@ -1,4 +1,5 @@
 """Schema for retail product captions."""
+
 from pydantic import BaseModel, Field
 
 

@@ -53,23 +53,23 @@ def test_instructor_hub_sample(instructor_client, domain_arg: str):
     assert response is not None
 
 
-# @pytest.mark.parametrize("model", ["gpt-4o-mini-2024-07-18", "gpt-4o-2024-11-20"])
+@pytest.mark.parametrize("model", ["gpt-4o-mini-2024-07-18", "gpt-4o-2024-11-20"])
 @pytest.mark.benchmark
-def test_instructor_hub_dataset(instructor_client):
+def test_instructor_hub_dataset(instructor_client, model: str):
     from datetime import datetime
     from pathlib import Path
-
-    MODEL = "gpt-4o-mini-2024-07-18"
 
     # Process all samples
     results = []
     for sample in VLMRUN_HUB_DATASET.values():
         logger.debug(f"Testing domain={sample.domain}, sample={sample}")
-        logger.debug(f"sample.image={sample.image}")
+        if sample.data.endswith(".pdf"):
+            logger.debug(f"Skipping sample `{sample.domain}` because it is a PDF")
+            continue
 
         # Try to process the sample
         try:
-            response = _process_sample(instructor_client, sample, model=MODEL)
+            response = _process_sample(instructor_client, sample, model=model)
         except Exception as e:
             response = None
             logger.error(f"Error processing sample {sample.domain}: {e}")
@@ -90,16 +90,16 @@ def test_instructor_hub_dataset(instructor_client):
     BENCHMARK_DIR = Path(__file__).parent / "benchmarks"
     BENCHMARK_DIR.mkdir(parents=True, exist_ok=True)
     date_str = datetime.now().strftime("%Y-%m-%d")
-    benchmark_path = BENCHMARK_DIR / f"{date_str}-{MODEL}-instructor-results.md"
+    benchmark_path = BENCHMARK_DIR / f"{date_str}-{model}-instructor-results.md"
 
     # Render the results in markdown
-    markdown_str = f"## Benchmark Results (model={MODEL}, date={date_str})\n\n"
+    markdown_str = f"## Benchmark Results (model={model}, date={date_str})\n\n"
     markdown_str += """<table>
 <tr>
-<td width='5%'> Domain </td>
-<td width='5%'> Response Model </td>
-<td width='40%'> Sample </td>
-<td width='50%'> Response JSON </td>
+<td style='width: 5%;'> Domain </td>
+<td style='width: 5%;'> Response Model </td>
+<td style='width: 40%;'> Sample </td>
+<td style='width: 50%;'> Response JSON </td>
 </tr>
     """
     for result in results:
