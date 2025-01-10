@@ -103,3 +103,13 @@ schemas:
     metadata:
       supported_inputs: ["image", "video"]
       tags: ["media", "news"]
+
+  # document: us-passport
+  - domain: document.us-passport
+    schema: vlmrun.hub.schemas.contrib.document.us_passport.USPassport
+    prompt: "You are a detail-oriented passport document analyst. Extract all the relevant information from the US passport as accurately as possible."
+    description: "US passport data extraction system that processes passport images to extract structured information including personal details, document identifiers, and biometric data."
+    sample_data: "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/document.us-passport/2020-Next-Gen-US-Passport.png"
+    metadata:
+      supported_inputs: ["image", "document"]
+      tags: ["identity", "travel", "document"]
