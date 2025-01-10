@@ -29,7 +29,9 @@ Welcome to **VLM Run Hub**, a comprehensive repository of pre-defined [Pydantic]
 <td style="width: 40%;">
 <img src="https://storage.googleapis.com/vlm-data-public-prod/hub/examples/document.us-drivers-license/dl3.jpg">
 </td>
+
 <td>
+    
 ```json
 {
   "issuing_state": "MT",
@@ -53,7 +55,9 @@ Welcome to **VLM Run Hub**, a comprehensive repository of pre-defined [Pydantic]
   "license_class": "D"
 }
 ```
+
 </td>
+
 </tr>
 </table>
 </details>
