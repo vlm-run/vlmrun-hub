@@ -1,6 +1,6 @@
 <div align="center">
 <p align="center" style="width: 100%;">
-    <img src="./docs/assets/vlm-black.svg" alt="VLM Run Logo" width="80" style="margin-bottom: -5px; color: #2e3138; vertical-align: middle; padding-right: 5px;"><br>
+    <img src="https://raw.githubusercontent.com/vlm-run/.github/refs/heads/main/profile/assets/vlm-black.svg" alt="VLM Run Logo" width="80" style="margin-bottom: -5px; color: #2e3138; vertical-align: middle; padding-right: 5px;"><br>
 </p>
 <h2>VLM Run Hub</h2>
 <p align="center">
