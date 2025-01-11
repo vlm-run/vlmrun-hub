@@ -62,6 +62,13 @@ Welcome to **VLM Run Hub**, a comprehensive repository of pre-defined [Pydantic]
 </table>
 </details>
 
+### 💡 Motivation
+
+While vision models like OpenAI’s [GPT-4o](https://openai.com/index/hello-gpt-4o/) and Anthropic’s [Claude Vision](https://www.anthropic.com/claude) excel in exploratory tasks like "chat with images," they often lack practicality for automation and integration, where **strongly-typed**, **validated outputs** are crucial.
+
+The **Structured Outputs API** (popularized by [GPT-4o](https://openai.com/index/introducing-structured-outputs-in-the-api/), [Gemini](https://ai.google.dev/gemini-api/docs/structured-output)) addresses this by constraining LLMs to return data in precise, strongly-typed formats such as [Pydantic](https://docs.pydantic.dev/latest/) models. This eliminates complex parsing and validation, ensuring outputs conform to expected types and structures. These schemas can be nested and include complex types like lists and dictionaries, enabling seamless integration with existing systems while leveraging the full capabilities of the model.
+
+
 ### 🧰 Why use this hub of pre-defined Pydantic schemas?
 
 - 📚 **Easy to use:** [Pydantic](https://docs.pydantic.dev/latest/) is a well-understood and battle-tested data model for structured data.
@@ -72,11 +79,18 @@ Welcome to **VLM Run Hub**, a comprehensive repository of pre-defined [Pydantic]
 - 🚀 **Optimized for Visual ETL:** Purpose-built for extracting structured data from images, videos, and documents, this repo bridges the gap between unstructured data and actionable insights.
 
 
-### 💡 Motivation
+### 📖 Schema Catalog
 
-While vision models like OpenAI’s [GPT-4o](https://openai.com/index/hello-gpt-4o/) and Anthropic’s [Claude Vision](https://www.anthropic.com/claude) excel in exploratory tasks like "chat with images," they often lack practicality for automation and integration, where **strongly-typed**, **validated outputs** are crucial.
+The VLM Run Hub maintains a comprehensive catalog of all available schemas in the [`vlmrun/hub/catalog.yaml`](vlmrun/hub/catalog.yaml) file. The catalog is automatically validated to ensure consistency and completeness of schema documentation. We refer the developer to the [catalog-spec.yaml](docs/catalog-spec.yaml) for the full YAML specification. Here are some featured schemas:
 
-The **Structured Outputs API** (popularized by [GPT-4o](https://openai.com/index/introducing-structured-outputs-in-the-api/), [Gemini](https://ai.google.dev/gemini-api/docs/structured-output)) addresses this by constraining LLMs to return data in precise, strongly-typed formats such as [Pydantic](https://docs.pydantic.dev/latest/) models. This eliminates complex parsing and validation, ensuring outputs conform to expected types and structures. These schemas can be nested and include complex types like lists and dictionaries, enabling seamless integration with existing systems while leveraging the full capabilities of the model.
+- Documents: [document.bank-statement](vlmrun/hub/schemas/document/bank_statement.py), [document.invoice](vlmrun/hub/schemas/document/invoice.py), [document.receipt](vlmrun/hub/schemas/document/receipt.py), [document.resume](vlmrun/hub/schemas/document/resume.py), [document.us-drivers-license](vlmrun/hub/schemas/document/us_drivers_license.py), [document.utility-bill](vlmrun/hub/schemas/document/utility_bill.py), [document.w2-form](vlmrun/hub/schemas/document/w2_form.py)
+- Other industry-specific schemas: [healthcare.medical-insurance-card](vlmrun/hub/schemas/healthcare/medical_insurance_card.py), [retail.ecommerce-product-caption](vlmrun/hub/schemas/retail/ecommerce_product_caption.py), [media.tv-news](vlmrun/hub/schemas/media/tv_news.py), [aerospace.remote-sensing](vlmrun/hub/schemas/aerospace/remote_sensing.py)
+
+If you have a new schema you want to add to the catalog, please refer to the [SCHEMA-GUIDELINES.md](docs/SCHEMA-GUIDELINES.md) for the full guidelines.
+### 🚀 Getting Started
+
+Let's say we want to extract invoice metadata from an [invoice image](https://storage.googleapis.com/vlm-data-public-prod/hub/examples/document.invoice/invoice_1.jpg). You can readily use our [`Invoice`](vlmrun/hub/schemas/document/invoice.py) schema we have defined under `vlmrun.hub.schemas.document.invoice` and use it with any VLM of your choosing.
+
 
 ### 💾 Installation
 
@@ -84,9 +98,6 @@ The **Structured Outputs API** (popularized by [GPT-4o](https://openai.com/index
 pip install vlmrun-hub
 ```
 
-### 🚀 Getting Started
-
-Let's say we want to extract invoice metadata from an [invoice image](https://storage.googleapis.com/vlm-data-public-prod/hub/examples/document.invoice/invoice_1.jpg). You can readily use our [`Invoice`](vlmrun/hub/schemas/document/invoice.py) schema we have defined under `vlmrun.hub.schemas.document.invoice` and use it with any VLM of your choosing.
 
 #### With [Instructor](https://github.com/jxnl/instructor) / OpenAI
 
@@ -280,19 +291,6 @@ response = Invoice.model_validate_json(
 )
 ```
 
-### 📖 Schema Catalog
-
-The VLM Run Hub maintains a comprehensive catalog of all available schemas in the [`vlmrun/hub/catalog.yaml`](vlmrun/hub/catalog.yaml) file. This catalog provides:
-
-- Domain-specific schema references
-- Detailed descriptions and prompts
-- Sample data references
-- Version information
-- Metadata including relevant tags
-
-The catalog is automatically validated to ensure consistency and completeness of schema documentation. We refer the developer to the [catalog-spec.yaml](docs/catalog-spec.yaml) for the full YAML specification.
-
-
 ### 📖 Qualitative Results
 
 We periodically run popular VLMs on each of the examples & schemas in the [catalog.yaml](vlmrun/hub/catalog.yaml) file and publish the results in the [benchmarks](tests/benchmarks/) directory.
@@ -302,6 +300,7 @@ We periodically run popular VLMs on each of the examples & schemas in the [catal
 | OpenAI | gpt-4o-mini-2024-07-18 | 2025-01-09 | [link](tests/benchmarks/2025-01-09-gpt-4o-mini-2024-07-18-instructor-results.md) |
 | Gemini | gemini-2.0-flash-exp | 2025-01-10 | [link](tests/benchmarks/2025-01-10-gemini-2.0-flash-exp-instructor-results.md) |
 | Llama 3.2 11B | llama3.2-vision:11b | 2025-01-10 | [link](tests/benchmarks/2025-01-10-llama3.2-vision:11b-instructor-results.md) |
+| Microsoft | phi-4 | 2025-01-10 | [link](tests/benchmarks/2025-01-11-phi4-instructor-results.md) |
 
 
 ### 📂 Directory Structure

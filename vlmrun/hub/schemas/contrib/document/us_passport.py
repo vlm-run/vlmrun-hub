@@ -5,7 +5,7 @@ from pydantic import BaseModel, Field
 
 class USPassport(BaseModel):
     """US Passport schema for extracting information from passport documents."""
-    
+
     family_name: str = Field(..., description="Family name (surname) of the passport holder")
     given_names: str = Field(..., description="Given names (first and middle names) of the passport holder")
     document_id: str = Field(..., description="Passport document identification number")
