@@ -65,3 +65,24 @@ def test_catalog_yaml(catalog_path):
             assert issubclass(schema_class, BaseModel), f"Schema {entry.schema} must be a Pydantic model"
         except Exception as e:
             pytest.fail(f"Unable to import {entry.schema}: {e}")
+
+
+def test_catalog_yaml_with_refs():
+    """Test that catalog.yaml with refs is valid and follows the expected structure."""
+    catalog_path = Path(__file__).parent.parent / "vlmrun" / "hub" / "full-catalog.yaml"
+    assert catalog_path.exists(), "full-catalog.yaml file not found"
+
+    # Load the catalog
+    catalog = SchemaCatalogYaml.from_yaml(catalog_path)
+
+    # Basic validation
+    assert catalog.apiVersion == "v1", "API version must be v1"
+
+    n_schemas = len(
+        SchemaCatalogYaml.from_yaml(Path(__file__).parent.parent / "vlmrun" / "hub" / "catalog.yaml").schemas
+    ) + len(
+        SchemaCatalogYaml.from_yaml(
+            Path(__file__).parent.parent / "vlmrun" / "hub" / "schemas" / "contrib" / "catalog.yaml"
+        ).schemas
+    )
+    assert len(catalog.schemas) == n_schemas, "Catalog must contain the correct number of schemas"

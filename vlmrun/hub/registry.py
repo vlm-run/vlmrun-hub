@@ -5,6 +5,7 @@ from functools import cached_property
 from pathlib import Path
 from typing import Literal
 
+from loguru import logger
 from pydantic import BaseModel, Field, model_validator
 from pydantic_yaml import parse_yaml_raw_as
 
@@ -111,10 +112,27 @@ class SchemaCatalogYaml(BaseModel):
     """Root model for the catalog.yaml file."""
 
     apiVersion: str = Field(..., description="API version of the catalog format")
-    schemas: list[SchemaCatalogItem] = Field(..., description="List of schema entries")
+    catalogs: list[str] | None = Field(None, description="List of catalog files to include as references")
+    schemas: list[SchemaCatalogItem] = Field(default_factory=list, description="List of schema entries")
 
     @classmethod
     def from_yaml(cls, yaml_path: Path) -> "SchemaCatalogYaml":
         if not yaml_path.exists():
             raise FileNotFoundError(f"Catalog file not found: {yaml_path}")
-        return parse_yaml_raw_as(cls, yaml_path.read_text())
+        catalog: SchemaCatalogYaml = parse_yaml_raw_as(cls, yaml_path.read_text())
+        catalog = catalog.load_catalogs(yaml_path.parent)
+        return catalog
+
+    def load_catalogs(self, subdirectory: str | Path) -> "SchemaCatalogYaml":
+        """Unroll the catalog references into a single list of schemas."""
+        if self.catalogs:
+            for catalog in self.catalogs:
+                logger.debug(f"Loading sub-catalog [catalog={catalog}, dir={subdirectory}]")
+                catalog_path = Path(subdirectory) / catalog
+                assert catalog_path.exists(), f"Catalog {catalog} not found in schemas"
+                catalog_yaml = SchemaCatalogYaml.from_yaml(catalog_path)
+                n_schemas = len(catalog_yaml.schemas)
+                self.schemas.extend(catalog_yaml.schemas)
+                logger.debug(f"Loaded sub-catalog [catalog={catalog}, n_schemas={n_schemas}]")
+            logger.debug(f"Loaded full catalog [n_catalogs={len(self.catalogs)}, n_schemas={len(self.schemas)}]")
+        return self
