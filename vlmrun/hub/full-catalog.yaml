@@ -1,0 +1,4 @@
+apiVersion: v1
+catalogs:
+  - ./catalog.yaml
+  - ./schemas/contrib/catalog.yaml
