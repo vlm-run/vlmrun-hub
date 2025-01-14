@@ -63,8 +63,8 @@ class SchemaCatalogItem(BaseModel):
     domain: str = Field(..., description="Domain identifier for the schema")
     schema: str = Field(..., description="Fully qualified path to the schema class")
     prompt: str = Field(..., description="Task-specific prompt for the schema")
-    description: str = Field(..., description="Detailed description of the schema's purpose")
-    sample_data: str = Field(..., description="URL to sample data for testing")
+    description: str | None = Field(None, description="Detailed description of the schema's purpose")
+    sample_data: str | list[str] | None = Field(None, description="URL to sample data for testing")
     version: str | None = Field(None, description="Optional schema version in semver format")
     metadata: SchemaCatalogMetadata | None = Field(None, description="Additional metadata including tags")
 
