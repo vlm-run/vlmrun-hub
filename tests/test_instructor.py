@@ -63,9 +63,7 @@ def process_sample(client, sample: HubSample, model: str):
                     {"type": "text", "text": sample.prompt},
                     *[
                         {"type": "image_url", "image_url": {"url": encode_image(img, format="JPEG")}}
-                        for img in [
-                            sample.image,
-                        ]
+                        for img in sample.images
                     ],
                 ],
             },
@@ -98,7 +96,7 @@ def test_instructor_hub_sample(provider_model: tuple[str, str], domain_arg: str)
     logger.debug(f"Testing provider={provider}, model={model}")
     sample = VLMRUN_HUB_DATASET[domain_arg]
     logger.debug(f"Testing domain={sample.domain}, sample={sample}")
-    logger.debug(f"sample.image={sample.image}")
+    logger.debug(f"sample.images={sample.images}")
     response = process_sample(instructor_client, sample, model=model)
     logger.debug(response.model_dump_json(indent=2))
     assert response is not None
@@ -121,9 +119,7 @@ def test_instructor_hub_dataset(provider_model: tuple[str, str]):
     results = []
     for sample in VLMRUN_HUB_DATASET.values():
         logger.debug(f"Testing domain={sample.domain}, sample={sample}")
-        if sample.data.endswith(".pdf"):
-            logger.debug(f"Skipping sample `{sample.domain}` because it is a PDF")
-            continue
+        logger.debug(f"sample.images={sample.images}")
 
         # Try to process the sample
         try:
