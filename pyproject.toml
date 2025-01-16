@@ -18,12 +18,12 @@ classifiers = [
     "Intended Audience :: Science/Research","Topic :: Software Development :: Libraries",
     "Topic :: Scientific/Engineering :: Artificial Intelligence",
     "Topic :: Scientific/Engineering :: Image Processing",
-    "License :: OSI Approved :: MIT License",
+    "License :: OSI Approved :: Apache Software License",
     "Programming Language :: Python :: 3 :: Only",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
 ]
-license = {file = "LICENSE"}
+license = {text = "Apache-2.0"}
 dynamic = ["version", "dependencies", "optional-dependencies"]
 
 [project.urls]
