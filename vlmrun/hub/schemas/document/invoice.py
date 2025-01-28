@@ -8,7 +8,7 @@ class Address(BaseModel):
     street: str | None = Field(None, description="Street address")
     city: str | None = Field(None, description="City")
     state: str | None = Field(None, description="State", max_length=2)
-    postal_code: str | None = Field(None, description="Postal code", min_length=5, max_length=10)
+    postal_code: str | None = Field(None, description="Postal code")
     country: str | None = Field(None, description="Country")
 
 
