@@ -291,6 +291,12 @@ response = Invoice.model_validate_json(
 )
 ```
 
+### 📓 Example Notebooks
+
+Check out our collection of example notebooks to see VLM Run Hub in action:
+
+- [Financial Presentations Analysis](https://colab.research.google.com/drive/1Q6CCXzKlEK8nFkvl_z9m0Y1LUL4KwYJ4?usp=sharing): Process and extract structured data from financial presentations and reports
+
 ### 📖 Qualitative Results
 
 We periodically run popular VLMs on each of the examples & schemas in the [catalog.yaml](vlmrun/hub/catalog.yaml) file and publish the results in the [benchmarks](tests/benchmarks/) directory.
