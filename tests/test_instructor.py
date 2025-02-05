@@ -13,39 +13,38 @@ def get_instructor_client(provider: Literal["openai", "gemini", "fireworks", "ol
     from openai import OpenAI
 
     client = None
-    match provider:
-        case "openai":
-            api_key = os.getenv("OPENAI_API_KEY", None)
-            if not api_key:
-                raise ValueError("OPENAI_API_KEY is not set")
-            client = OpenAI(
-                api_key=api_key,
-                base_url="https://api.openai.com/v1",
-            )
-        case "gemini":
-            api_key = os.getenv("GEMINI_API_KEY", None)
-            if not api_key:
-                raise ValueError("GEMINI_API_KEY is not set")
-            client = OpenAI(
-                api_key=api_key,
-                base_url="https://generativelanguage.googleapis.com/v1beta/openai/",
-            )
-        case "fireworks":
-            api_key = os.getenv("FIREWORKS_API_KEY", None)
-            if not api_key:
-                raise ValueError("FIREWORKS_API_KEY is not set")
-            client = OpenAI(
-                api_key=api_key,
-                base_url="https://api.fireworks.ai/inference/v1",
-            )
-        case "ollama":
-            client = OpenAI(
-                api_key="ollama",
-                base_url="http://localhost:11434/v1/",
-            )
-            client.models.list()  # check if ollama is running, otherwise raise an error
-        case _:
-            raise ValueError(f"Invalid provider: {provider}")
+    if provider == "openai":
+        api_key = os.getenv("OPENAI_API_KEY", None)
+        if not api_key:
+            raise ValueError("OPENAI_API_KEY is not set")
+        client = OpenAI(
+            api_key=api_key,
+            base_url="https://api.openai.com/v1",
+        )
+    elif provider == "gemini":
+        api_key = os.getenv("GEMINI_API_KEY", None)
+        if not api_key:
+            raise ValueError("GEMINI_API_KEY is not set")
+        client = OpenAI(
+            api_key=api_key,
+            base_url="https://generativelanguage.googleapis.com/v1beta/openai/",
+        )
+    elif provider == "fireworks":
+        api_key = os.getenv("FIREWORKS_API_KEY", None)
+        if not api_key:
+            raise ValueError("FIREWORKS_API_KEY is not set")
+        client = OpenAI(
+            api_key=api_key,
+            base_url="https://api.fireworks.ai/inference/v1",
+        )
+    elif provider == "ollama":
+        client = OpenAI(
+            api_key="ollama",
+            base_url="http://localhost:11434/v1/",
+        )
+        client.models.list()  # check if ollama is running, otherwise raise an error
+    else:
+        raise ValueError(f"Invalid provider: {provider}")
 
     return instructor.from_openai(
         client,
