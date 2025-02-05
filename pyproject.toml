@@ -55,6 +55,7 @@ dependencies = {file = ["requirements/requirements.txt"]}
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["vlmrun.hub"]
+namespaces = true
 
 [tool.black]
 line-length = 120
