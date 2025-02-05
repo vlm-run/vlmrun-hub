@@ -4,8 +4,8 @@ from typing import Literal
 import pytest
 from loguru import logger
 
+from vlmrun.common.image import encode_image
 from vlmrun.hub.dataset import VLMRUN_HUB_DATASET, HubSample
-from vlmrun.hub.utils import encode_image
 
 
 def get_instructor_client(provider: Literal["openai", "gemini", "fireworks", "ollama"] = "openai"):

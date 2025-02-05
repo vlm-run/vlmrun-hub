@@ -266,8 +266,10 @@ completion = client.beta.chat.completions.parse(
 ```python
 from ollama import chat
 
+from vlmrun.common.image import encode_image
+from vlmrun.common.utils import remote_image
 from vlmrun.hub.schemas.document.invoice import Invoice
-from vlmrun.hub.utils import encode_image, remote_image
+
 
 IMAGE_URL = "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/document.invoice/invoice_1.jpg"
 

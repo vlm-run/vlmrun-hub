@@ -3,9 +3,6 @@ from typing import Any, Dict, List, Tuple, Type, Union, get_args, get_origin
 from pydantic import BaseModel, create_model
 from typing_extensions import TypeAlias
 
-from vlmrun.common.image import encode_image  # noqa: F401
-from vlmrun.common.utils import remote_image  # noqa: F401
-
 ResponseFormat: TypeAlias = Type[BaseModel]
 AnnotationType: TypeAlias = Union[Type, Any]
 
