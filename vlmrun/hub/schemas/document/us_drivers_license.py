@@ -1,5 +1,6 @@
 from datetime import date
 from enum import Enum
+from typing import Optional
 
 from pydantic import BaseModel, Field
 
@@ -33,24 +34,24 @@ class USDriversLicense(BaseModel):
     license_number: str = Field(..., description="Driver's license number")
 
     full_name: str = Field(..., description="Full name of the license holder")
-    first_name: str | None = Field(None, description="First name of the license holder")
-    middle_name: str | None = Field(None, description="Middle name of the license holder")
-    last_name: str | None = Field(None, description="Last name of the license holder")
+    first_name: Optional[str] = Field(None, description="First name of the license holder")
+    middle_name: Optional[str] = Field(None, description="Middle name of the license holder")
+    last_name: Optional[str] = Field(None, description="Last name of the license holder")
 
     address: Address = Field(..., description="Address of the license holder")
 
     date_of_birth: date = Field(..., description="Date of birth")
     gender: Gender = Field(..., description="Gender of the license holder")
 
-    height: str | None = Field(None, description="Height of the license holder in the format X'Y\" (e.g. 5'7\")")
-    weight: float | None = Field(None, description="Weight (in lbs) of the license holder (e.g. 150.5 lbs)")
-    eye_color: str | None = Field(None, description="Eye color code of the license holder")
-    hair_color: str | None = Field(None, description="Hair color code of the license holder")
+    height: Optional[str] = Field(None, description="Height of the license holder in the format X'Y\" (e.g. 5'7\")")
+    weight: Optional[float] = Field(None, description="Weight (in lbs) of the license holder (e.g. 150.5 lbs)")
+    eye_color: Optional[str] = Field(None, description="Eye color code of the license holder")
+    hair_color: Optional[str] = Field(None, description="Hair color code of the license holder")
 
     issue_date: date = Field(..., description="Date the license was issued")
     expiration_date: date = Field(..., description="Expiration date of the license")
 
     license_class: LicenseClass = Field(..., description="Class of the driver's license")
 
-    donor: bool | None = Field(None, description="Indicates if the holder is an organ donor")
-    veteran: bool | None = Field(None, description="Indicates if the holder is a veteran")
+    donor: Optional[bool] = Field(None, description="Indicates if the holder is an organ donor")
+    veteran: Optional[bool] = Field(None, description="Indicates if the holder is a veteran")

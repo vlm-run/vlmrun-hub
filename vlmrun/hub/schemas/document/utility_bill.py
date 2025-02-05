@@ -1,21 +1,23 @@
 from datetime import date
-from typing import List
+from typing import List, Optional
 
 from pydantic import BaseModel, Field
 
 
 class ChargeDetail(BaseModel):
-    description: str | None = Field(None, description="Description of the specific charge or service.")
-    amount: float | None = Field(None, description="Amount charged for the specific service or item.")
-    usage: str | None = Field(None, description="Usage details, such as 31 kWh.")
-    rate: float | None = Field(None, description="Rate per unit for the service or item.")
+    description: Optional[str] = Field(None, description="Description of the specific charge or service.")
+    amount: Optional[float] = Field(None, description="Amount charged for the specific service or item.")
+    usage: Optional[str] = Field(None, description="Usage details, such as 31 kWh.")
+    rate: Optional[float] = Field(None, description="Rate per unit for the service or item.")
 
 
 class Address(BaseModel):
-    street: str | None = Field(None, description="Street address where the service is provided.", max_length=128)
-    city: str | None = Field(None, description="City of the service address.", max_length=50)
-    state: str | None = Field(None, description="State or region of the service address.", max_length=2)
-    zip_code: str | None = Field(None, description="Postal code of the service address.", min_length=5, max_length=10)
+    street: Optional[str] = Field(None, description="Street address where the service is provided.", max_length=128)
+    city: Optional[str] = Field(None, description="City of the service address.", max_length=50)
+    state: Optional[str] = Field(None, description="State or region of the service address.", max_length=2)
+    zip_code: Optional[str] = Field(
+        None, description="Postal code of the service address.", min_length=5, max_length=10
+    )
 
 
 class UtilityBill(BaseModel):

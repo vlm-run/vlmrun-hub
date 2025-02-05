@@ -1,18 +1,18 @@
 from datetime import date
-from typing import Dict, List
+from typing import Dict, List, Optional
 
 from pydantic import BaseModel, Field, HttpUrl
 
 
 class ContactInfo(BaseModel):
     full_name: str = Field(..., description="Full name of the individual.")
-    email: str | None = Field(None, description="Email address.")
-    phone: str | None = Field(None, description="Phone number.")
-    address: str | None = Field(None, description="Physical address.")
-    linkedin: HttpUrl | None = Field(None, description="LinkedIn profile URL.")
-    github: HttpUrl | None = Field(None, description="GitHub profile URL.")
-    portfolio: HttpUrl | None = Field(None, description="Portfolio website URL.")
-    google_scholar: HttpUrl | None = Field(None, description="Google Scholar profile URL.")
+    email: Optional[str] = Field(None, description="Email address.")
+    phone: Optional[str] = Field(None, description="Phone number.")
+    address: Optional[str] = Field(None, description="Physical address.")
+    linkedin: Optional[HttpUrl] = Field(None, description="LinkedIn profile URL.")
+    github: Optional[HttpUrl] = Field(None, description="GitHub profile URL.")
+    portfolio: Optional[HttpUrl] = Field(None, description="Portfolio website URL.")
+    google_scholar: Optional[HttpUrl] = Field(None, description="Google Scholar profile URL.")
 
 
 class Education(BaseModel):

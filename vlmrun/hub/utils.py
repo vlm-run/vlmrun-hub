@@ -1,12 +1,16 @@
-from typing import Type, Union, List, get_origin, get_args
+from typing import Any, Dict, List, Tuple, Type, Union, get_args, get_origin
 
 from pydantic import BaseModel, create_model
+from typing_extensions import TypeAlias
 
 from vlmrun.common.image import encode_image  # noqa: F401
 from vlmrun.common.utils import remote_image  # noqa: F401
 
+ResponseFormat: TypeAlias = Type[BaseModel]
+AnnotationType: TypeAlias = Union[Type, Any]
 
-def patch_response_format(response_format: Type[BaseModel]) -> Type[BaseModel]:
+
+def patch_response_format(response_format: ResponseFormat) -> ResponseFormat:
     """Patch the OpenAI response format to handle Pydantic models, including nested models.
 
     The following fields are not supported by OpenAI:
@@ -20,7 +24,7 @@ def patch_response_format(response_format: Type[BaseModel]) -> Type[BaseModel]:
     """
     from datetime import date, datetime, time, timedelta
 
-    def patch_pydantic_field_annotation(annotation):
+    def patch_pydantic_field_annotation(annotation: AnnotationType) -> AnnotationType:
         if annotation in [date, datetime, time, timedelta]:
             return str
         elif get_origin(annotation) is Union:
@@ -33,13 +37,11 @@ def patch_response_format(response_format: Type[BaseModel]) -> Type[BaseModel]:
             return annotation
 
     def patch_pydantic_model(model: Type[BaseModel]) -> Type[BaseModel]:
-        # Copy the fields from the base class
         fields = model.model_fields.copy()
-        new_fields = {
+        new_fields: Dict[str, Tuple[AnnotationType, Any]] = {
             field_name: (patch_pydantic_field_annotation(field.annotation), field)
             for field_name, field in fields.items()
         }
-        # Create a new model with the subset of fields
         return create_model(f"{model.__name__}_patched", __base__=BaseModel, **new_fields)
 
     return patch_pydantic_model(response_format)

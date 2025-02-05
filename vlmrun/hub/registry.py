@@ -3,7 +3,7 @@ import importlib
 import json
 from functools import cached_property
 from pathlib import Path
-from typing import Literal, List, Optional, Union
+from typing import Dict, List, Literal, Optional, Type, Union
 
 from loguru import logger
 from pydantic import BaseModel, Field, model_validator
@@ -16,7 +16,7 @@ class Registry:
     _instance: "Registry" = None
     """Singleton instance of the registry."""
 
-    schemas: dict[str, BaseModel] = {}
+    schemas: Dict[str, Type[BaseModel]] = {}
     """Dictionary of registered schemas."""
 
     @classmethod
