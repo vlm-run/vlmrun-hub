@@ -36,7 +36,7 @@ def test_vlmrun_invoice():
         json=json_data,
         headers={"Authorization": f"Bearer {VLMRUN_API_KEY}"},
     )
-    assert response.status_code == 200, f"Response failed: {response.text}"
+    assert response.status_code == 201, f"Response failed: {response.text}"
     json_response = response.json()
     assert isinstance(json_response, dict), "Expected a dict response"
     assert "response" in json_response, "Failed to fetch 'response' key"
