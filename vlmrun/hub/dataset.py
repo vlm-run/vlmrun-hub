@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Type
+from typing import Type, Union, List
 
 from PIL import Image
 from pydantic import BaseModel
@@ -25,7 +25,7 @@ class HubSample:
     data: str
     """The images or image URLs associated with the sample"""
 
-    def _handle_image(self, image: str | Path) -> Image.Image:
+    def _handle_image(self, image: Union[str, Path]) -> Image.Image:
         if isinstance(image, str):
             if image.startswith("http"):
                 return remote_image(image)
@@ -52,7 +52,7 @@ class HubSample:
             raise ValueError(f"Invalid data extension: {url}")
 
     @property
-    def images(self) -> list[Image.Image]:
+    def images(self) -> List[Image.Image]:
         return self._handle_url(self.data)
 
 

@@ -1,4 +1,4 @@
-from typing import Type, Union, get_origin
+from typing import Type, Union, List, get_origin, get_args
 
 from pydantic import BaseModel, create_model
 
@@ -19,15 +19,14 @@ def patch_response_format(response_format: Type[BaseModel]) -> Type[BaseModel]:
     then convert them back to the original type.
     """
     from datetime import date, datetime, time, timedelta
-    from typing import List
 
     def patch_pydantic_field_annotation(annotation):
         if annotation in [date, datetime, time, timedelta]:
             return str
         elif get_origin(annotation) is Union:
-            return Union[tuple([patch_pydantic_field_annotation(a) for a in annotation.__args__])]
+            return Union[tuple([patch_pydantic_field_annotation(a) for a in get_args(annotation)])]
         elif get_origin(annotation) is List:
-            return List[patch_pydantic_field_annotation(annotation.__args__[0])]
+            return List[patch_pydantic_field_annotation(get_args(annotation)[0])]
         elif isinstance(annotation, type) and issubclass(annotation, BaseModel):
             return patch_pydantic_model(annotation)
         else:

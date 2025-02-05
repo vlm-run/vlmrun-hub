@@ -3,7 +3,7 @@ import importlib
 import json
 from functools import cached_property
 from pathlib import Path
-from typing import Literal
+from typing import Literal, List, Optional, Union
 
 from loguru import logger
 from pydantic import BaseModel, Field, model_validator
@@ -51,10 +51,10 @@ class Registry:
 class SchemaCatalogMetadata(BaseModel):
     """Represents the metadata for a schema in the catalog."""
 
-    supported_inputs: list[Literal["image", "video", "document"]] | None = Field(
+    supported_inputs: Optional[List[Literal["image", "video", "document"]]] = Field(
         None, description="List of supported input types"
     )
-    tags: list[str] | None = Field(None, description="List of tags")
+    tags: Optional[List[str]] = Field(None, description="List of tags")
 
 
 class SchemaCatalogItem(BaseModel):
@@ -63,10 +63,10 @@ class SchemaCatalogItem(BaseModel):
     domain: str = Field(..., description="Domain identifier for the schema")
     schema: str = Field(..., description="Fully qualified path to the schema class")
     prompt: str = Field(..., description="Task-specific prompt for the schema")
-    description: str | None = Field(None, description="Detailed description of the schema's purpose")
-    sample_data: str | list[str] | None = Field(None, description="URL to sample data for testing")
-    version: str | None = Field(None, description="Optional schema version in semver format")
-    metadata: SchemaCatalogMetadata | None = Field(None, description="Additional metadata including tags")
+    description: Optional[str] = Field(None, description="Detailed description of the schema's purpose")
+    sample_data: Optional[Union[str, List[str]]] = Field(None, description="URL to sample data for testing")
+    version: Optional[str] = Field(None, description="Optional schema version in semver format")
+    metadata: Optional[SchemaCatalogMetadata] = Field(None, description="Additional metadata including tags")
 
     @model_validator(mode="after")
     def validate_supported_inputs(self):
@@ -112,8 +112,8 @@ class SchemaCatalogYaml(BaseModel):
     """Root model for the catalog.yaml file."""
 
     apiVersion: str = Field(..., description="API version of the catalog format")
-    catalogs: list[str] | None = Field(None, description="List of catalog files to include as references")
-    schemas: list[SchemaCatalogItem] = Field(default_factory=list, description="List of schema entries")
+    catalogs: Union[List[str], None] = Field(None, description="List of catalog files to include as references")
+    schemas: List[SchemaCatalogItem] = Field(default_factory=list, description="List of schema entries")
 
     @classmethod
     def from_yaml(cls, yaml_path: Path) -> "SchemaCatalogYaml":
@@ -123,7 +123,7 @@ class SchemaCatalogYaml(BaseModel):
         catalog = catalog.load_catalogs(yaml_path.parent)
         return catalog
 
-    def load_catalogs(self, subdirectory: str | Path) -> "SchemaCatalogYaml":
+    def load_catalogs(self, subdirectory: Union[str, Path]) -> "SchemaCatalogYaml":
         """Unroll the catalog references into a single list of schemas."""
         if self.catalogs:
             for catalog in self.catalogs:
