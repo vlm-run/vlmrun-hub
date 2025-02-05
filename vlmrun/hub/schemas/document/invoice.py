@@ -7,7 +7,7 @@ from pydantic import BaseModel, Field
 class Address(BaseModel):
     street: Optional[str] = Field(None, description="Street address")
     city: Optional[str] = Field(None, description="City")
-    state: Optional[str] = Field(None, description="State", max_length=2)
+    state: Optional[str] = Field(None, description="State")
     postal_code: Optional[str] = Field(None, description="Postal code")
     country: Optional[str] = Field(None, description="Country")
 

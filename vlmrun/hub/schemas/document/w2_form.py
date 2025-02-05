@@ -1,13 +1,13 @@
 from typing import Optional
 
-from pydantic import BaseModel, Field, SkipValidation
+from pydantic import BaseModel, Field
 
 
 class Address(BaseModel):
     street: Optional[str] = Field(None, description="Street address")
     city: Optional[str] = Field(None, description="City")
-    state: Optional[SkipValidation[str]] = Field(None, description="State", min_length=2, max_length=2)
-    zip_code: Optional[SkipValidation[str]] = Field(None, description="ZIP code", min_length=5, max_length=10)
+    state: Optional[str] = Field(None, description="State")
+    zip_code: Optional[str] = Field(None, description="ZIP code")
 
 
 class W2Form(BaseModel):

@@ -1,5 +1,5 @@
 import os
-from typing import Type, List, Optional
+from typing import List, Optional, Type
 
 import pytest
 from loguru import logger
