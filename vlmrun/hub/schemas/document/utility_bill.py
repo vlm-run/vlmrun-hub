@@ -1,5 +1,5 @@
 from datetime import date
-from typing import List, Optional
+from typing import Dict, List, Optional
 
 from pydantic import BaseModel, Field
 
@@ -21,21 +21,21 @@ class Address(BaseModel):
 
 
 class UtilityBill(BaseModel):
-    account_number: str | None = Field(None, description="The unique identifier for the utility account.")
-    date_mailed: date | None = Field(None, description="The date the bill was issued.")
-    service_for: str | None = Field(None, description="Name of the entity or person the service is billed to.")
-    service_address: Address | None = Field(None, description="The address where the utility services are provided.")
-    billing_period_start: date | None = Field(None, description="The start date of the billing period.")
-    billing_period_end: date | None = Field(None, description="The end date of the billing period.")
-    date_due: date | None = Field(None, description="The due date for bill payment.")
-    amount_due: float | None = Field(None, description="The total amount payable by the due date.")
-    previous_balance: float | None = Field(None, description="The unpaid balance from the last billing cycle.")
-    payment_received: float | None = Field(None, description="Payments applied since the last bill.")
-    current_charges: float | None = Field(None, description="Total charges for the current billing cycle.")
-    breakdown_of_charges: List[ChargeDetail] | None = Field(
+    account_number: Optional[str] = Field(None, description="The unique identifier for the utility account.")
+    date_mailed: Optional[date] = Field(None, description="The date the bill was issued.")
+    service_for: Optional[str] = Field(None, description="Name of the entity or person the service is billed to.")
+    service_address: Optional[Address] = Field(None, description="The address where the utility services are provided.")
+    billing_period_start: Optional[date] = Field(None, description="The start date of the billing period.")
+    billing_period_end: Optional[date] = Field(None, description="The end date of the billing period.")
+    date_due: Optional[date] = Field(None, description="The due date for bill payment.")
+    amount_due: Optional[float] = Field(None, description="The total amount payable by the due date.")
+    previous_balance: Optional[float] = Field(None, description="The unpaid balance from the last billing cycle.")
+    payment_received: Optional[float] = Field(None, description="Payments applied since the last bill.")
+    current_charges: Optional[float] = Field(None, description="Total charges for the current billing cycle.")
+    breakdown_of_charges: Optional[List[ChargeDetail]] = Field(
         None, description="Itemized charges with descriptions, amounts, and optionally usage/rates."
     )
-    payment_options: List[str] | None = Field(None, description="Accepted methods for bill payment.")
-    contact_information: dict | None = Field(
+    payment_options: Optional[List[str]] = Field(None, description="Accepted methods for bill payment.")
+    contact_information: Optional[Dict] = Field(
         None, description="Relevant contact numbers for customer support or emergencies."
     )

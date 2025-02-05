@@ -37,11 +37,13 @@ def patch_response_format(response_format: ResponseFormat) -> ResponseFormat:
             return annotation
 
     def patch_pydantic_model(model: Type[BaseModel]) -> Type[BaseModel]:
+        # Copy the fields from the base class
         fields = model.model_fields.copy()
         new_fields: Dict[str, Tuple[AnnotationType, Any]] = {
             field_name: (patch_pydantic_field_annotation(field.annotation), field)
             for field_name, field in fields.items()
         }
+        # Create a new model with the subset of fields
         return create_model(f"{model.__name__}_patched", __base__=BaseModel, **new_fields)
 
     return patch_pydantic_model(response_format)

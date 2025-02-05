@@ -1,4 +1,5 @@
 from datetime import date
+from typing import Optional
 
 from pydantic import BaseModel, Field
 
@@ -15,8 +16,8 @@ class USPassport(BaseModel):
     mrz_code: str = Field(..., description="Machine Readable Zone (MRZ) code from the passport")
 
     # Additional optional fields that might be present
-    nationality: str | None = Field(None, description="Nationality of the passport holder")
-    place_of_birth: str | None = Field(None, description="Place of birth of the passport holder")
-    sex: str | None = Field(None, description="Sex of the passport holder (M/F)")
-    authority: str | None = Field(None, description="Issuing authority of the passport")
-    place_of_issue: str | None = Field(None, description="Place where the passport was issued")
+    nationality: Optional[str] = Field(None, description="Nationality of the passport holder")
+    place_of_birth: Optional[str] = Field(None, description="Place of birth of the passport holder")
+    sex: Optional[str] = Field(None, description="Sex of the passport holder (M/F)")
+    authority: Optional[str] = Field(None, description="Issuing authority of the passport")
+    place_of_issue: Optional[str] = Field(None, description="Place where the passport was issued")
