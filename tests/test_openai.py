@@ -1,5 +1,5 @@
 import os
-from typing import Type
+from typing import Type, List, Optional
 
 import pytest
 from loguru import logger
@@ -18,8 +18,6 @@ def openai_client():
 
 
 def test_openai_structured_outputs_simple(openai_client):
-    from typing import List
-
     from pydantic import Field
 
     from vlmrun.hub.utils import encode_image, remote_image
@@ -28,31 +26,31 @@ def test_openai_structured_outputs_simple(openai_client):
     invoice_image = remote_image(invoice_url)
 
     class Address(BaseModel):
-        street: str | None = Field(None, description="Street address")
-        city: str | None = Field(None, description="City")
-        state: str | None = Field(None, description="State")
-        postal_code: str | None = Field(None, description="Postal code")
-        country: str | None = Field(None, description="Country")
+        street: Optional[str] = Field(None, description="Street address")
+        city: Optional[str] = Field(None, description="City")
+        state: Optional[str] = Field(None, description="State")
+        postal_code: Optional[str] = Field(None, description="Postal code")
+        country: Optional[str] = Field(None, description="Country")
 
     class Item(BaseModel):
-        description: str | None = Field(None, description="Description or name of the item")
-        quantity: int | None = Field(None, description="Quantity of the item")
-        currency: str | None = Field(None, description="3-digit currency code")
-        unit_price: float | None = Field(None, description="Unit price of the item")
-        total_price: float | None = Field(None, description="Total price of the item")
+        description: Optional[str] = Field(None, description="Description or name of the item")
+        quantity: Optional[int] = Field(None, description="Quantity of the item")
+        currency: Optional[str] = Field(None, description="3-digit currency code")
+        unit_price: Optional[float] = Field(None, description="Unit price of the item")
+        total_price: Optional[float] = Field(None, description="Total price of the item")
 
     class Invoice(BaseModel):
-        invoice_id: str | None = Field(None, description="Unique invoice identifier")
-        invoice_issue_date: str | None = Field(None, description="Issue date of the invoice")
+        invoice_id: Optional[str] = Field(None, description="Unique invoice identifier")
+        invoice_issue_date: Optional[str] = Field(None, description="Issue date of the invoice")
 
-        customer_billing_address: Address | None = Field(None, description="Recipient's billing address")
-        customer_shipping_address: Address | None = Field(None, description="Recipient's shipping address")
+        customer_billing_address: Optional[Address] = Field(None, description="Recipient's billing address")
+        customer_shipping_address: Optional[Address] = Field(None, description="Recipient's shipping address")
 
-        items: List[Item] | None = Field(None, description="Items in the invoice")
-        subtotal: float | None = Field(None, description="Subtotal of the invoice")
-        tax: float | None = Field(None, description="Tax of the invoice")
-        total: float | None = Field(None, description="Total of the invoice")
-        currency: str | None = Field(None, description="Currency of the invoice")
+        items: Optional[List[Item]] = Field(None, description="Items in the invoice")
+        subtotal: Optional[float] = Field(None, description="Subtotal of the invoice")
+        tax: Optional[float] = Field(None, description="Tax of the invoice")
+        total: Optional[float] = Field(None, description="Total of the invoice")
+        currency: Optional[str] = Field(None, description="Currency of the invoice")
 
     response = openai_client.beta.chat.completions.parse(
         model="gpt-4o-mini",

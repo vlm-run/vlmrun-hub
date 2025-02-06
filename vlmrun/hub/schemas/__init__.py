@@ -1,3 +1,5 @@
+from typing import Optional, Tuple
+
 from loguru import logger
 
 from vlmrun.hub.constants import VLMRUN_HUB_CATALOG_PATH, VLMRUN_HUB_PATH
@@ -5,7 +7,7 @@ from vlmrun.hub.constants import VLMRUN_HUB_CATALOG_PATH, VLMRUN_HUB_PATH
 __all__ = ["import_all"]
 
 
-def import_all(catalog_paths: tuple[str] | None = (VLMRUN_HUB_PATH / "schemas/contrib/catalog.yaml",)):
+def import_all(catalog_paths: Optional[Tuple[str]] = (VLMRUN_HUB_PATH / "schemas/contrib/catalog.yaml",)):
     from vlmrun.hub.registry import Registry, SchemaCatalogYaml
 
     # Load the catalog
