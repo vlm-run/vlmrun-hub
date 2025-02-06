@@ -7,7 +7,7 @@ name = "vlmrun-hub"
 description = "VLM Run Hub for various industry-specific schemas"
 authors = [{name = "VLM Support", email = "support@vlm.com"}]
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.9"
 classifiers = [
     "Development Status :: 4 - Beta",
     "Programming Language :: Python",
@@ -54,7 +54,7 @@ dependencies = {file = ["requirements/requirements.txt"]}
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["vlmrun.hub"]
+include = ["vlmrun.hub*"]
 namespaces = true
 
 [tool.black]
