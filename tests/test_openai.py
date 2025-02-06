@@ -1,5 +1,5 @@
 import os
-from typing import Type, List, Optional
+from typing import List, Optional, Type
 
 import pytest
 from loguru import logger
@@ -20,7 +20,8 @@ def openai_client():
 def test_openai_structured_outputs_simple(openai_client):
     from pydantic import Field
 
-    from vlmrun.hub.utils import encode_image, remote_image
+    from vlmrun.common.image import encode_image
+    from vlmrun.common.utils import remote_image
 
     invoice_url = "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/document.invoice/invoice_1.jpg"
     invoice_image = remote_image(invoice_url)
@@ -75,8 +76,9 @@ def test_openai_structured_outputs_simple(openai_client):
 @pytest.mark.benchmark
 @pytest.mark.skip(reason="This test is not working due to the patch_response_format function")
 def test_openai_structured_outputs_hub_dataset(openai_client):
+    from vlmrun.common.image import encode_image
     from vlmrun.hub.dataset import VLMRUN_HUB_DATASET
-    from vlmrun.hub.utils import encode_image, patch_response_format
+    from vlmrun.hub.utils import patch_response_format
 
     for sample in VLMRUN_HUB_DATASET.values():
         response_model: Type[BaseModel] = sample.response_model

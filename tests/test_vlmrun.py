@@ -6,8 +6,9 @@ import requests
 from dotenv import load_dotenv
 from loguru import logger
 
+from vlmrun.common.image import encode_image
+from vlmrun.common.utils import remote_image
 from vlmrun.hub.schemas.document.invoice import Invoice
-from vlmrun.hub.utils import encode_image, remote_image
 
 load_dotenv()
 

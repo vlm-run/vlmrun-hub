@@ -25,12 +25,12 @@ class LicenseClass(str, Enum):
 class Address(BaseModel):
     street: str = Field(..., description="Street address")
     city: str = Field(..., description="City")
-    state: str = Field(..., description="Two-letter state code", max_length=2)
-    zip_code: str = Field(..., description="ZIP code", min_length=5, max_length=10)
+    state: str = Field(..., description="Two-letter state code")
+    zip_code: str = Field(..., description="ZIP code")
 
 
 class USDriversLicense(BaseModel):
-    issuing_state: str = Field(..., description="Two-letter code of the issuing state", max_length=2)
+    issuing_state: str = Field(..., description="Two-letter code of the issuing state")
     license_number: str = Field(..., description="Driver's license number")
 
     full_name: str = Field(..., description="Full name of the license holder")

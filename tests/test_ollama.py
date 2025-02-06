@@ -20,7 +20,7 @@ OLLAMA_BASE_URL = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
 def test_local_ollama():
     from ollama import chat
 
-    from vlmrun.hub.utils import encode_image
+    from vlmrun.common.image import encode_image
 
     try:
         requests.get(f"{OLLAMA_BASE_URL}/api/version")

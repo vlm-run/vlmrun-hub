@@ -12,12 +12,10 @@ class ChargeDetail(BaseModel):
 
 
 class Address(BaseModel):
-    street: Optional[str] = Field(None, description="Street address where the service is provided.", max_length=128)
-    city: Optional[str] = Field(None, description="City of the service address.", max_length=50)
-    state: Optional[str] = Field(None, description="State or region of the service address.", max_length=2)
-    zip_code: Optional[str] = Field(
-        None, description="Postal code of the service address.", min_length=5, max_length=10
-    )
+    street: Optional[str] = Field(None, description="Street address where the service is provided.")
+    city: Optional[str] = Field(None, description="City of the service address.")
+    state: Optional[str] = Field(None, description="State or region of the service address.")
+    zip_code: Optional[str] = Field(None, description="Postal code of the service address.")
 
 
 class UtilityBill(BaseModel):

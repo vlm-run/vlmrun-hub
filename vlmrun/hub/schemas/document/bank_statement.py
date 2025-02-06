@@ -8,7 +8,7 @@ class Address(BaseModel):
     street: Optional[str] = Field(None, description="Street address")
     city: Optional[str] = Field(None, description="City")
     state: Optional[str] = Field(None, description="State/Province code or name")
-    zip_code: Optional[str] = Field(None, description="Postal code", min_length=2, max_length=10)
+    zip_code: Optional[str] = Field(None, description="Postal code")
 
 
 class BankTransaction(BaseModel):
