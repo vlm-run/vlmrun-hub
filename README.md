@@ -95,7 +95,7 @@ Let's say we want to extract invoice metadata from an [invoice image](https://st
 ### 💾 Installation
 
 ```python
-pip install "vlmrun[hub]"
+pip install vlmrun-hub
 ```
 
 
