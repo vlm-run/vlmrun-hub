@@ -14,16 +14,14 @@ cookbooks/
 ## 🚀 Getting Started
 
 ### Prerequisites
-- Python 3.10+
+- Python 3.9+
 - Jupyter notebook/lab
 - VLM Run API key (get one at [vlm.run](https://vlm.run))
 
 ### Installation
 ```bash
-pip install vlmrun-hub vlmrun-client jupyter
+pip install vlmrun vlmrun-hub jupyter
 ```
-
-## 📓 Notebook Series [TODO]
 
 ## 🤝 Contributing
 
