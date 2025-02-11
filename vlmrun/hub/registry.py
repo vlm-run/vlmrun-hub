@@ -1,51 +1,97 @@
 import hashlib
 import importlib
 import json
-from functools import cached_property
+from functools import cached_property, wraps
 from pathlib import Path
-from typing import Dict, List, Literal, Optional, Type, Union
+from typing import Callable, Dict, List, Literal, Optional, Tuple, Type, TypeVar, Union
 
 from loguru import logger
 from pydantic import BaseModel, Field, model_validator
 from pydantic_yaml import parse_yaml_raw_as
 
+T = TypeVar("T")
+
+
+def ensure_schemas_loaded(func: Callable[..., T]) -> Callable[..., T]:
+    """Decorator to ensure schemas are loaded before accessing registry."""
+
+    @wraps(func)
+    def wrapper(self: "Registry", *args, **kwargs) -> T:
+        if not self._initialized:
+            self.load_schemas()
+        return func(self, *args, **kwargs)
+
+    return wrapper
+
 
 class Registry:
-    """Registry for schemas."""
+    """A singleton registry for schemas.
 
-    _instance: "Registry" = None
-    """Singleton instance of the registry."""
+    Examples:
+        >>> from vlmrun.hub.registry import registry
+        >>> schema = registry["document.invoice"]
+        >>> registry.list_schemas()
+        ['document.invoice', 'document.receipt', ...]
+    """
 
-    schemas: Dict[str, Type[BaseModel]] = {}
-    """Dictionary of registered schemas."""
+    def __init__(self):
+        self.schemas: Dict[str, Type[BaseModel]] = {}
+        self._initialized: bool = False
 
-    @classmethod
-    def get(cls) -> "Registry":
-        if not cls._instance:
-            cls._instance = cls()
-        return cls._instance
+    def load_schemas(self, catalog_paths: Optional[Tuple[Union[str, Path]]] = None) -> None:
+        from vlmrun.hub.constants import VLMRUN_HUB_CATALOG_PATH, VLMRUN_HUB_PATH
 
-    @classmethod
-    def register(cls, name: str, schema: type[BaseModel]):
+        if not self._initialized:
+            catalog = SchemaCatalogYaml.from_yaml(VLMRUN_HUB_CATALOG_PATH)
+            for schema in catalog.schemas:
+                self.register(schema.domain, schema.schema_class)
+
+            contrib_path = VLMRUN_HUB_PATH / "schemas/contrib/catalog.yaml"
+            if contrib_path.exists():
+                contrib_catalog = SchemaCatalogYaml.from_yaml(contrib_path)
+                for schema in contrib_catalog.schemas:
+                    self.register(schema.domain, schema.schema_class)
+
+            self._initialized = True
+            logger.debug(f"Loaded default and contrib schemas:\n{self}")
+
+        # Load additional schemas
+        if catalog_paths is not None:
+            for path in catalog_paths:
+                if Path(path).exists():
+                    catalog = SchemaCatalogYaml.from_yaml(path)
+                    for schema in catalog.schemas:
+                        self.register(schema.domain, schema.schema_class)
+                    logger.debug(f"Loaded additional schemas from {path}")
+
+    def register(self, name: str, schema: Type[BaseModel]) -> None:
+        """Register a schema with the registry."""
         if not issubclass(schema, BaseModel):
             raise ValueError(f"Schema {name} is not a subclass of BaseModel, type={type(schema)}")
-        cls.get().schemas[name] = schema
+        self.schemas[name] = schema
 
+    @ensure_schemas_loaded
+    def list_schemas(self) -> List[str]:
+        return sorted(self.schemas.keys())
+
+    @ensure_schemas_loaded
     def __contains__(self, name: str) -> bool:
         return name in self.schemas
 
-    def __getitem__(self, name: str) -> BaseModel:
+    @ensure_schemas_loaded
+    def __getitem__(self, name: str) -> Type[BaseModel]:
         return self.schemas[name]
 
-    def __repr__(self):
+    def __repr__(self) -> str:
+        if not self._initialized:
+            self.load_schemas()
         repr_str = f"Registry [schemas={len(self.schemas)}]"
-        for name, schema in self.schemas.items():
+        for name, schema in sorted(self.schemas.items()):
             repr_str += f"\n  {name} :: {schema.__name__}"
         return repr_str
 
-    @classmethod
-    def list(cls) -> list[str]:
-        return list(cls.schemas.keys())
+
+registry = Registry()
 
 
 class SchemaCatalogMetadata(BaseModel):

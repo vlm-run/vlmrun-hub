@@ -1,63 +1,100 @@
+from pathlib import Path
+
 import pytest
 from pydantic import BaseModel
 
-from vlmrun.hub.registry import Registry
+from vlmrun.hub.registry import Registry, SchemaCatalogItem, SchemaCatalogYaml
 
 
-class SampleSchema(BaseModel):
-    """Sample schema for testing"""
-
-    field1: str
-    field2: int
-
-
-def test_singleton_instance():
-    """Test that the instance method returns the same instance"""
-    instance1 = Registry.get()
-    instance2 = Registry.get()
-    assert instance1 is instance2, "Registry should be a singleton"
+@pytest.fixture
+def registry():
+    """Create a fresh registry instance for each test"""
+    return Registry()
 
 
-def test_register_schema():
-    """Test registering a schema"""
-    registry = Registry.get()
-    schema_name = "SampleSchema"
-    registry.register(schema_name, SampleSchema)
+def test_registry_singleton():
+    """Test that Registry behaves as a singleton"""
+    from vlmrun.hub.registry import registry as registry1
+    from vlmrun.hub.registry import registry as registry2
 
-    assert schema_name in registry.schemas, "Schema should be registered"
-    assert registry[schema_name] == SampleSchema, "Registered schema should match the input schema"
-
-    # Test getting the schema
-    retrieved_schema = registry[schema_name]
-    assert retrieved_schema == SampleSchema, "Retrieved schema should match the registered schema"
+    assert registry1 is registry2
+    assert isinstance(registry1, Registry)
 
 
-def test_get_nonexistent_schema():
-    """Test retrieving a schema that does not exist"""
-    registry = Registry.get()
+def test_registry_load_schemas(registry):
+    """Test loading schemas from catalog"""
+    registry.load_schemas()
+    assert len(registry.schemas) > 0
+
+    assert "document.receipt" in registry.schemas
+    assert "document.resume" in registry.schemas
+    assert "document.us-drivers-license" in registry.schemas
+
+
+def test_registry_getitem(registry):
+    """Test accessing schemas using dictionary syntax"""
+    schema = registry["document.receipt"]
+    assert issubclass(schema, BaseModel)
+
     with pytest.raises(KeyError):
-        registry["NonExistentSchema"]
+        _ = registry["non.existent.schema"]
 
 
-def test_list_schemas():
-    """Test listing all registered schemas"""
-    registry = Registry.get()
-    schema_name = "SampleSchema"
+def test_registry_repr(registry):
+    """Test string representation of registry"""
+    repr_str = repr(registry)
+    assert "Registry [schemas=" in repr_str
+    assert "document.receipt" in repr_str
+    assert "document.resume" in repr_str
 
-    registry.register(schema_name, SampleSchema)
-    assert schema_name in registry.list(), "Schema should be listed"
+
+def test_registry_list_schemas(registry):
+    """Test listing available schemas"""
+    schemas = registry.list_schemas()
+    assert isinstance(schemas, list)
+    assert len(schemas) > 0
+    assert "document.receipt" in schemas
+    assert "document.resume" in schemas
 
 
-def test_registry_on_import():
-    """Test that the registry is populated on import"""
-    from vlmrun.hub import schemas
+def test_schema_catalog_item_validation():
+    """Test SchemaCatalogItem validation"""
+    item = SchemaCatalogItem(
+        domain="test.domain",
+        schema="vlmrun.hub.schemas.document.Receipt",
+        prompt="Test prompt",
+        description="Test description that is sufficiently detailed",
+        supported_inputs=["document"],
+        tags=["test"],
+    )
+    assert item.domain == "test.domain"
+    assert item.schema == "vlmrun.hub.schemas.document.Receipt"
+    assert len(item.prompt) >= 10
+    assert len(item.description) >= 20
 
-    # Test that the registry is populated on import
-    schemas.import_all(catalog_paths=None)
-    assert len(Registry.get().list()) > 0, "Registry should be populated on import"
 
-    # Test that the registry includes contrib schemas
-    schemas.import_all()
-    assert len(Registry.get().list()) > 0, "Registry should be populated on import"
-    for domain in Registry.get().list():
-        assert issubclass(Registry.get()[domain], BaseModel), f"Schema {domain} is not a subclass of BaseModel"
+def test_schema_catalog_yaml_loading():
+    """Test loading catalog from YAML"""
+    catalog_path = Path(__file__).parent.parent / "vlmrun" / "hub" / "catalog.yaml"
+    catalog = SchemaCatalogYaml.from_yaml(catalog_path)
+
+    assert catalog.apiVersion == "v1"
+    assert isinstance(catalog.schemas, list)
+    assert len(catalog.schemas) > 0
+
+    # Test schema references
+    if catalog.catalogs:
+        assert isinstance(catalog.catalogs, list)
+        for ref in catalog.catalogs:
+            ref_path = Path(__file__).parent.parent / "vlmrun" / "hub" / ref
+            assert ref_path.exists()
+
+
+def test_ensure_schemas_loaded_decorator(registry):
+    """Test the ensure_schemas_loaded decorator"""
+    # Access registry before loading schemas
+    schema = registry["document.receipt"]
+    assert schema is not None
+
+    # Verify schemas were loaded automatically
+    assert len(registry.schemas) > 0
