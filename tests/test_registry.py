@@ -82,7 +82,6 @@ def test_schema_catalog_yaml_loading():
     assert isinstance(catalog.schemas, list)
     assert len(catalog.schemas) > 0
 
-    # Test schema references
     if catalog.catalogs:
         assert isinstance(catalog.catalogs, list)
         for ref in catalog.catalogs:
@@ -92,9 +91,7 @@ def test_schema_catalog_yaml_loading():
 
 def test_ensure_schemas_loaded_decorator(registry):
     """Test the ensure_schemas_loaded decorator"""
-    # Access registry before loading schemas
     schema = registry["document.receipt"]
     assert schema is not None
 
-    # Verify schemas were loaded automatically
     assert len(registry.schemas) > 0
