@@ -1,4 +1,5 @@
 annotated-types>=0.7.0
+loguru>=0.7.3
 Pillow>=11.0.0
 pydantic>=2.5,<3
 pydantic_core>=2.23.4
