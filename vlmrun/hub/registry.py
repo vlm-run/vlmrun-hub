@@ -42,27 +42,36 @@ class Registry:
         from vlmrun.hub.constants import VLMRUN_HUB_CATALOG_PATH, VLMRUN_HUB_PATH
 
         if not self._initialized:
-            catalog = SchemaCatalogYaml.from_yaml(VLMRUN_HUB_CATALOG_PATH)
-            for schema in catalog.schemas:
-                self.register(schema.domain, schema.schema_class)
-
-            contrib_path = VLMRUN_HUB_PATH / "schemas/contrib/catalog.yaml"
-            if contrib_path.exists():
-                contrib_catalog = SchemaCatalogYaml.from_yaml(contrib_path)
-                for schema in contrib_catalog.schemas:
+            try:
+                catalog = SchemaCatalogYaml.from_yaml(VLMRUN_HUB_CATALOG_PATH)
+                for schema in catalog.schemas:
                     self.register(schema.domain, schema.schema_class)
 
-            self._initialized = True
-            logger.debug(f"Loaded default and contrib schemas:\n{self}")
+                contrib_path = VLMRUN_HUB_PATH / "schemas/contrib/catalog.yaml"
+                if contrib_path.exists():
+                    try:
+                        contrib_catalog = SchemaCatalogYaml.from_yaml(contrib_path)
+                        for schema in contrib_catalog.schemas:
+                            self.register(schema.domain, schema.schema_class)
+                    except Exception as e:
+                        logger.error(f"Failed to load contrib schemas: {e}")
 
-        # Load additional schemas
+                self._initialized = True
+                logger.debug(f"Loaded default and contrib schemas:\n{self}")
+            except Exception as e:
+                logger.error(f"Failed to load default schemas: {e}")
+                raise
+
         if catalog_paths is not None:
             for path in catalog_paths:
-                if Path(path).exists():
-                    catalog = SchemaCatalogYaml.from_yaml(path)
-                    for schema in catalog.schemas:
-                        self.register(schema.domain, schema.schema_class)
-                    logger.debug(f"Loaded additional schemas from {path}")
+                path = Path(path)
+                if not path.exists():
+                    raise FileNotFoundError(f"Catalog file not found: {path}")
+
+                catalog = SchemaCatalogYaml.from_yaml(path)
+                for schema in catalog.schemas:
+                    self.register(schema.domain, schema.schema_class)
+                logger.debug(f"Loaded additional schemas from {path}")
 
     def register(self, name: str, schema: Type[BaseModel]) -> None:
         """Register a schema with the registry."""
@@ -80,7 +89,10 @@ class Registry:
 
     @ensure_schemas_loaded
     def __getitem__(self, name: str) -> Type[BaseModel]:
-        return self.schemas[name]
+        try:
+            return self.schemas[name]
+        except KeyError:
+            raise KeyError(f"Schema '{name}' not found. Available schemas: {', '.join(self.list_schemas())}")
 
     def __repr__(self) -> str:
         if not self._initialized:

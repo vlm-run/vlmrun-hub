@@ -2,6 +2,7 @@ from pathlib import Path
 
 import pytest
 from pydantic import BaseModel
+from ruamel.yaml.parser import ParserError
 
 from vlmrun.hub.registry import Registry, SchemaCatalogItem, SchemaCatalogYaml
 
@@ -95,3 +96,49 @@ def test_ensure_schemas_loaded_decorator(registry):
     assert schema is not None
 
     assert len(registry.schemas) > 0
+
+
+def test_registry_load_schemas_with_invalid_path(registry):
+    """Test loading schemas from non-existent path raises FileNotFoundError"""
+    with pytest.raises(FileNotFoundError, match="Catalog file not found"):
+        registry.load_schemas(catalog_paths=("nonexistent.yaml",))
+
+
+def test_registry_load_schemas_with_invalid_yaml(registry, tmp_path):
+    """Test loading schemas with invalid YAML content raises YAMLError"""
+    invalid_yaml = tmp_path / "invalid.yaml"
+    invalid_yaml.write_text("invalid: [\nyaml: content")
+
+    with pytest.raises(ParserError):
+        registry.load_schemas(catalog_paths=(invalid_yaml,))
+
+
+def test_registry_load_schemas_with_invalid_schema(registry, tmp_path):
+    """Test loading schemas with invalid schema definition raises ValueError"""
+    invalid_schema_yaml = """
+apiVersion: v1
+schemas:
+- domain: test.invalid
+  schema: nonexistent.module.Schema
+  prompt: Test prompt
+  description: Test description that is sufficiently detailed
+  metadata:
+    supported_inputs: ["document"]
+    tags: ["test"]
+"""
+    test_yaml = tmp_path / "test.yaml"
+    test_yaml.write_text(invalid_schema_yaml)
+
+    with pytest.raises(ValueError, match="Unable to import nonexistent.module.Schema"):
+        registry.load_schemas(catalog_paths=(test_yaml,))
+
+
+def test_registry_detailed_key_error(registry):
+    """Test that KeyError includes available schemas in message"""
+    with pytest.raises(KeyError) as exc_info:
+        _ = registry["non.existent.schema"]
+
+    error_msg = str(exc_info.value)
+    assert "Available schemas:" in error_msg
+    assert "document.receipt" in error_msg
+    assert "document.resume" in error_msg
