@@ -55,7 +55,6 @@ class Registry:
                         logger.error(f"Failed to load contrib schemas: {e}")
 
                 self._initialized = True
-                logger.debug(f"Loaded default and contrib schemas:\n{self}")
             except Exception as e:
                 logger.error(f"Failed to load default schemas: {e}")
                 raise
