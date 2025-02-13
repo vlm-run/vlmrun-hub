@@ -1,27 +1,13 @@
 import hashlib
 import importlib
 import json
-from functools import cached_property, wraps
+from functools import cached_property
 from pathlib import Path
-from typing import Callable, Dict, List, Literal, Optional, Tuple, Type, TypeVar, Union
+from typing import Dict, List, Literal, Optional, Tuple, Type, Union
 
 from loguru import logger
 from pydantic import BaseModel, Field, model_validator
 from pydantic_yaml import parse_yaml_raw_as
-
-T = TypeVar("T")
-
-
-def ensure_schemas_loaded(func: Callable[..., T]) -> Callable[..., T]:
-    """Decorator to ensure schemas are loaded before accessing registry."""
-
-    @wraps(func)
-    def wrapper(self: "Registry", *args, **kwargs) -> T:
-        if not self._initialized:
-            self.load_schemas()
-        return func(self, *args, **kwargs)
-
-    return wrapper
 
 
 class Registry:
@@ -34,9 +20,21 @@ class Registry:
         ['document.invoice', 'document.receipt', ...]
     """
 
-    def __init__(self):
-        self.schemas: Dict[str, Type[BaseModel]] = {}
-        self._initialized: bool = False
+    _instance = None
+
+    def __new__(cls):
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+            cls._instance._schemas = {}
+            cls._instance._initialized = False
+        return cls._instance
+
+    @property
+    def schemas(self) -> Dict[str, Type[BaseModel]]:
+        """Lazily load schemas when first accessed."""
+        if not self._initialized:
+            self.load_schemas()
+        return self._schemas
 
     def load_schemas(self, catalog_paths: Optional[Tuple[Union[str, Path]]] = None) -> None:
         from vlmrun.hub.constants import VLMRUN_HUB_CATALOG_PATH, VLMRUN_HUB_PATH
@@ -77,17 +75,14 @@ class Registry:
         """Register a schema with the registry."""
         if not issubclass(schema, BaseModel):
             raise ValueError(f"Schema {name} is not a subclass of BaseModel, type={type(schema)}")
-        self.schemas[name] = schema
+        self._schemas[name] = schema
 
-    @ensure_schemas_loaded
     def list_schemas(self) -> List[str]:
         return sorted(self.schemas.keys())
 
-    @ensure_schemas_loaded
     def __contains__(self, name: str) -> bool:
         return name in self.schemas
 
-    @ensure_schemas_loaded
     def __getitem__(self, name: str) -> Type[BaseModel]:
         try:
             return self.schemas[name]
@@ -95,8 +90,6 @@ class Registry:
             raise KeyError(f"Schema '{name}' not found. Available schemas: {', '.join(self.list_schemas())}")
 
     def __repr__(self) -> str:
-        if not self._initialized:
-            self.load_schemas()
         repr_str = f"Registry [schemas={len(self.schemas)}]"
         for name, schema in sorted(self.schemas.items()):
             repr_str += f"\n  {name} :: {schema.__name__}"
