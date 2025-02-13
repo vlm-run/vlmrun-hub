@@ -26,7 +26,7 @@ def test_vlmrun_invoice():
 
     json_data = {
         "file_id": invoice_url,
-        "image": encode_image(invoice_image, format="JPEG"),
+        "images": [encode_image(invoice_image, format="JPEG")],
         "json_schema": Invoice.model_json_schema(),
         "model": "vlm-1",
         "domain": domain,
