@@ -1,16 +1,12 @@
 import importlib
 import json
 import sys
-
 from functools import lru_cache
 from pathlib import Path
 from tempfile import TemporaryDirectory
-from typing import Dict, Type
-
-from datamodel_code_generator import DataModelType, InputFileType, generate
-
 from typing import Any, Dict, List, Tuple, Type, Union, get_args, get_origin
 
+from datamodel_code_generator import DataModelType, InputFileType, generate
 from pydantic import BaseModel, create_model
 from typing_extensions import TypeAlias
 
