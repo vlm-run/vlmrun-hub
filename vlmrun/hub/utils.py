@@ -1,3 +1,14 @@
+import importlib
+import json
+import sys
+
+from functools import lru_cache
+from pathlib import Path
+from tempfile import TemporaryDirectory
+from typing import Dict, Type
+
+from datamodel_code_generator import DataModelType, InputFileType, generate
+
 from typing import Any, Dict, List, Tuple, Type, Union, get_args, get_origin
 
 from pydantic import BaseModel, create_model
@@ -44,3 +55,50 @@ def patch_response_format(response_format: ResponseFormat) -> ResponseFormat:
         return create_model(f"{model.__name__}_patched", __base__=BaseModel, **new_fields)
 
     return patch_pydantic_model(response_format)
+
+
+def jsonschema_to_model(schema: Dict) -> Type[BaseModel]:
+    """Generate a Pydantic Model from a json schema.
+
+    Args:
+    schema: Source json schema to create Pydantic model from
+
+    Returns:
+    The newly created and loaded Pydantic class
+    """
+    class_name = schema.get("title", "Model")
+    json_schema = json.dumps(schema)
+    model = jsonschemastr_to_model(json_schema, class_name)
+    return model
+
+
+@lru_cache(maxsize=16)
+def jsonschemastr_to_model(json_schema: str, class_name: str) -> Type[BaseModel]:
+    """Generate a Pydantic Model from a json schema string.
+
+    Note (spillai): We use this to cache the generated models to avoid recompiling them.
+
+    Args:
+    schema: Source json schema to create Pydantic model from
+
+    Returns:
+    The newly created and loaded Pydantic class
+    """
+    # Ref: https://github.com/koxudaxi/datamodel-code-generator/issues/278
+    with TemporaryDirectory() as tmp_dirname:
+        tmp_dir = Path(tmp_dirname)
+        tmp_path = Path(tmp_dir / "tempmodel.py")
+        generate(
+            json_schema,
+            input_file_type=InputFileType.JsonSchema,
+            class_name=class_name,
+            output=tmp_path,
+            output_model_type=DataModelType.PydanticV2BaseModel,
+        )
+        spec = importlib.util.spec_from_file_location("models", str(tmp_path))
+        if spec and spec.loader:
+            module = importlib.util.module_from_spec(spec)
+            sys.modules[spec.name] = module
+            spec.loader.exec_module(module)
+            return getattr(module, class_name)
+        raise ImportError("Failed to import generated model")  # pragma: no cover

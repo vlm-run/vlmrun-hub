@@ -1,9 +1,11 @@
 from datetime import date, datetime, time, timedelta
 
+import pytest
 from loguru import logger
 from pydantic import BaseModel
 
-from vlmrun.hub.utils import patch_response_format
+from vlmrun.hub.registry import registry
+from vlmrun.hub.utils import jsonschema_to_model, patch_response_format
 
 
 def test_patch_response_format():
@@ -47,3 +49,28 @@ def test_patch_response_format_models():
         response_model: Type[BaseModel] = sample.response_model
         patched_model = patch_response_format(response_model)
         assert issubclass(patched_model, BaseModel)
+
+
+def test_jsonschema_to_model_with_registry_schemas():
+    """Test that jsonschema_to_model works with all schemas in the registry."""
+    registry.load_schemas()
+
+    for domain, schema_class in registry.schemas.items():
+        json_schema = schema_class.model_json_schema()
+
+        try:
+            generated_model = jsonschema_to_model(json_schema)
+
+            original_fields = set(schema_class.model_fields.keys())
+            generated_fields = set(generated_model.model_fields.keys())
+
+            assert original_fields == generated_fields, (
+                f"Field mismatch for {domain}:\n"
+                f"Original fields: {original_fields}\n"
+                f"Generated fields: {generated_fields}\n"
+                f"Missing: {original_fields - generated_fields}\n"
+                f"Extra: {generated_fields - original_fields}"
+            )
+
+        except Exception as e:
+            pytest.fail(f"Failed to process schema for {domain}: {str(e)}")
