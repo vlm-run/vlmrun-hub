@@ -101,7 +101,7 @@ registry = Registry()
 class SchemaCatalogMetadata(BaseModel):
     """Represents the metadata for a schema in the catalog."""
 
-    supported_inputs: Optional[List[Literal["image", "video", "document"]]] = Field(
+    supported_inputs: Optional[List[Literal["image", "audio", "video", "document"]]] = Field(
         None, description="List of supported input types"
     )
     tags: Optional[List[str]] = Field(None, description="List of tags")
@@ -122,7 +122,7 @@ class SchemaCatalogItem(BaseModel):
     def validate_supported_inputs(self):
         if self.metadata and self.metadata.supported_inputs:
             assert all(
-                input in ["image", "video", "document"] for input in self.metadata.supported_inputs
+                input in ["image", "audio", "video", "document"] for input in self.metadata.supported_inputs
             ), "Supported inputs must be valid"
         return self
 
