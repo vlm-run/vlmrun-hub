@@ -32,7 +32,7 @@ def test_catalog_yaml(catalog_path):
         assert category and name, "Both category and name must be non-empty"
 
         # Schema path validation
-        assert entry.schema.startswith("vlmrun.hub.schemas."), "Schema must be in vlmrun.hub.schemas package"
+        assert entry.schema_path.startswith("vlmrun.hub.schemas."), "Schema must be in vlmrun.hub.schemas package"
 
         # Version format validation (basic semver check)
         if entry.version:

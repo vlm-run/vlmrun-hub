@@ -69,7 +69,7 @@ def test_schema_catalog_item_validation():
         tags=["test"],
     )
     assert item.domain == "test.domain"
-    assert item.schema == "vlmrun.hub.schemas.document.Receipt"
+    assert item.schema_path == "vlmrun.hub.schemas.document.Receipt"
     assert len(item.prompt) >= 10
     assert len(item.description) >= 20
 

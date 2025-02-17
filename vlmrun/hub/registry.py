@@ -111,7 +111,7 @@ class SchemaCatalogItem(BaseModel):
     """Represents a single schema entry in the catalog."""
 
     domain: str = Field(..., description="Domain identifier for the schema")
-    schema: str = Field(..., description="Fully qualified path to the schema class")
+    schema_path: str = Field(..., alias="schema", description="Fully qualified path to the schema class")
     prompt: str = Field(..., description="Task-specific prompt for the schema")
     description: Optional[str] = Field(None, description="Detailed description of the schema's purpose")
     sample_data: Optional[Union[str, List[str]]] = Field(None, description="URL to sample data for testing")
@@ -135,11 +135,11 @@ class SchemaCatalogItem(BaseModel):
 
     @property
     def module_name(self) -> str:
-        return self.schema.rsplit(".", 1)[0]
+        return self.schema_path.rsplit(".", 1)[0]
 
     @property
     def class_name(self) -> str:
-        return self.schema.rsplit(".", 1)[1]
+        return self.schema_path.rsplit(".", 1)[1]
 
     @cached_property
     def schema_class(self) -> type[BaseModel]:
@@ -147,7 +147,7 @@ class SchemaCatalogItem(BaseModel):
             module = importlib.import_module(self.module_name)
             schema_class = getattr(module, self.class_name)
         except (ImportError, AttributeError) as e:
-            raise ValueError(f"Unable to import {self.schema}: {e}")
+            raise ValueError(f"Unable to import {self.schema_path}: {e}")
         return schema_class
 
     @cached_property
