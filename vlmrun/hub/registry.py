@@ -134,7 +134,7 @@ class SchemaCatalogItem(BaseModel):
         return self
 
     @property
-    def schem(self) -> str:
+    def module_name(self) -> str:
         return self.schema_path.rsplit(".", 1)[0]
 
     @property
@@ -144,7 +144,7 @@ class SchemaCatalogItem(BaseModel):
     @cached_property
     def schema_class(self) -> type[BaseModel]:
         try:
-            module = importlib.import_module(self.schem)
+            module = importlib.import_module(self.module_name)
             schema_class = getattr(module, self.class_name)
         except (ImportError, AttributeError) as e:
             raise ValueError(f"Unable to import {self.schema_path}: {e}")
