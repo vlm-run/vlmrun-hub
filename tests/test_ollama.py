@@ -4,6 +4,7 @@ from typing import Type
 
 import pytest
 import requests
+from conftest import BenchmarkResult, create_benchmark
 from dotenv import load_dotenv
 from loguru import logger
 from pydantic import BaseModel
@@ -27,24 +28,37 @@ def test_local_ollama():
     except requests.exceptions.ConnectionError:
         pytest.skip("Ollama server is not running")
 
+    results = []
+    model = "bsahane/Qwen2.5-VL-7B-Instruct:Q4_K_M_benxh"  # "llama3.2-vision:11b",
     for sample in VLMRUN_HUB_DATASET.values():
         response_model: Type[BaseModel] = sample.response_model
-        chat_response = chat(
-            model="llama3.2-vision:11b",
-            format=response_model.model_json_schema(),  # Pass in the schema for the response
-            messages=[
-                {
-                    "role": "user",
-                    "content": sample.prompt,
-                    "images": [
-                        encode_image(img, format="JPEG").split(",")[1]
-                        for img in [
-                            sample.image,
-                        ]
-                    ],
-                },
-            ],
-            options={"temperature": 0},  # Set temperature to 0 for more deterministic output
+        try:
+            chat_response = chat(
+                model=model,
+                format=response_model.model_json_schema(),  # Pass in the schema for the response
+                messages=[
+                    {
+                        "role": "user",
+                        "content": sample.prompt,
+                        "images": [encode_image(img, format="JPEG").split(",")[1] for img in sample.images],
+                    },
+                ],
+                options={"temperature": 0},  # Set temperature to 0 for more deterministic output
+            )
+            response: Type[BaseModel] = response_model.model_validate_json(chat_response.message.content)
+        except Exception as e:
+            response = None
+            logger.error(f"Error processing sample {sample.domain}: {e}")
+
+        results.append(
+            BenchmarkResult(
+                domain=sample.domain,
+                sample=sample.data,
+                response_model=sample.response_model.__name__,
+                response_json=response.model_dump_json(indent=2, exclude_none=False) if response else None,
+            )
         )
-        response: Type[BaseModel] = response_model.model_validate_json(chat_response.message.content)
-        logger.info(response.model_dump_json(indent=2))
+        if response:
+            logger.debug(response.model_dump_json(indent=2))
+
+    create_benchmark(results, model, suffix="ollama")

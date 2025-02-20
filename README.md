@@ -306,7 +306,9 @@ We periodically run popular VLMs on each of the examples & schemas in the [catal
 | OpenAI | gpt-4o-2024-11-20 | 2025-01-09 | [link](tests/benchmarks/2025-01-09-gpt-4o-2024-11-20-instructor-results.md) |
 | OpenAI | gpt-4o-mini-2024-07-18 | 2025-01-09 | [link](tests/benchmarks/2025-01-09-gpt-4o-mini-2024-07-18-instructor-results.md) |
 | Gemini | gemini-2.0-flash-exp | 2025-01-10 | [link](tests/benchmarks/2025-01-10-gemini-2.0-flash-exp-instructor-results.md) |
-| Llama 3.2 11B | llama3.2-vision:11b | 2025-01-10 | [link](tests/benchmarks/2025-01-10-llama3.2-vision:11b-instructor-results.md) |
+| Ollama | llama3.2-vision:11b | 2025-01-10 | [link](tests/benchmarks/2025-01-10-llama3.2-vision:11b-instructor-results.md) |
+| Ollama | Qwen2.5-VL-7B-Instruct:Q4_K_M_benxh | 2025-02-20 | [link](tests/benchmarks/2025-02-20-bsahane-Qwen2.5-VL-7B-Instruct:Q4_K_M_benxh-ollama-results.md) |
+| Ollama + Instructor | Qwen2.5-VL-7B-Instruct:Q4_K_M_benxh | 2025-02-20 | [link](tests/benchmarks/2025-02-20-bsahane-Qwen2.5-VL-7B-Instruct:Q4_K_M_benxh-instructor-results.md) |
 | Microsoft | phi-4 | 2025-01-10 | [link](tests/benchmarks/2025-01-11-phi4-instructor-results.md) |
 
 
