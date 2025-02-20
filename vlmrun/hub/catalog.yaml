@@ -113,3 +113,12 @@ schemas:
     metadata:
       supported_inputs: ["image", "document"]
       tags: ["identity", "travel", "document"]
+
+  - domain: retail.product-catalog
+    schema: vlmrun.hub.schemas.retail.product_catalog.ProductCatalog
+    prompt: You are a detail-oriented product catalog agent. Extract all the relevant fields in this image as accurately as possible.
+    description: "Gain a competitive edge with real-time analytics from product catalog, helping you track trending topics, public sentiment, and influential quotes that shape audience perspectives.."
+    sample_data: "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/retail.product-catalog/fashion_small.jpg"
+    metadata:
+      supported_inputs: ["image"]
+      tags: ["retail", "product-catalog"]
