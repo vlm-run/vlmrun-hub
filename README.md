@@ -91,6 +91,8 @@ If you have a new schema you want to add to the catalog, please refer to the [SC
 
 Let's say we want to extract invoice metadata from an [invoice image](https://storage.googleapis.com/vlm-data-public-prod/hub/examples/document.invoice/invoice_1.jpg). You can readily use our [`Invoice`](vlmrun/hub/schemas/document/invoice.py) schema we have defined under `vlmrun.hub.schemas.document.invoice` and use it with any VLM of your choosing.
 
+For a comprehensive walkthrough of available schemas and their usage, check out our [Schema Showcase Notebook](https://github.com/vlm-run/vlmrun-cookbook/blob/main/notebooks/01_schema_showcase.ipynb).
+
 
 ### 💾 Installation
 
@@ -263,9 +265,9 @@ completion = client.beta.chat.completions.parse(
 
 #### Locally with [Ollama](https://ollama.com)
 
-Note: For certain `vlmrun.common` utilities, you will need to install our main [Python SDK]([+vsdk](https://github.com/vlm-run/vlmrun-python-sdk) 
+Note: For certain `vlmrun.common` utilities, you will need to install our main [Python SDK]([+vsdk](https://github.com/vlm-run/vlmrun-python-sdk)
  via `pip install vlmrun`.
- 
+
 ```python
 from ollama import chat
 
@@ -337,7 +339,7 @@ vlmrun
 
 ### ✨ How to Contribute
 
-We’re building this hub for the community, and contributions are always welcome! Follow the [CONTRIBUTING](docs/CONTRIBUTING.md) and [SCHEMA-GUIDELINES.md](docs/SCHEMA-GUIDELINES.md) to get started.
+We're building this hub for the community, and contributions are always welcome! Follow the [CONTRIBUTING](docs/CONTRIBUTING.md) and [SCHEMA-GUIDELINES.md](docs/SCHEMA-GUIDELINES.md) to get started.
 
 
 ### 🔗  Quick Links
