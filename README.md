@@ -265,7 +265,7 @@ completion = client.beta.chat.completions.parse(
 
 #### Locally with [Ollama](https://ollama.com)
 
-Note: For certain `vlmrun.common` utilities, you will need to install our main [Python SDK]([+vsdk](https://github.com/vlm-run/vlmrun-python-sdk)
+Note: For certain `vlmrun.common` utilities, you will need to install our main [Python SDK](https://github.com/vlm-run/vlmrun-python-sdk)
  via `pip install vlmrun`.
 
 ```python
