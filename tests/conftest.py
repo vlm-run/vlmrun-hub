@@ -8,12 +8,26 @@ from loguru import logger
 
 def pytest_addoption(parser):
     parser.addoption("--domain", action="store", default="document.us-drivers-license", help="Domain to test")
+    parser.addoption("--provider", action="store", default="openai", help="Provider to use for testing")
+    parser.addoption("--model", action="store", default="gpt-4o-mini-2024-07-18", help="Model to use for testing")
 
 
 @pytest.fixture
 def domain_arg(request):
     """Domain fixture for testing"""
     return request.config.getoption("--domain")
+
+
+@pytest.fixture
+def provider_arg(request):
+    """Provider fixture for testing"""
+    return request.config.getoption("--provider")
+
+
+@pytest.fixture
+def model_arg(request):
+    """Model fixture for testing"""
+    return request.config.getoption("--model")
 
 
 BenchmarkResult = namedtuple("BenchmarkResult", ["domain", "sample", "response_model", "response_json"])

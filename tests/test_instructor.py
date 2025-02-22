@@ -88,9 +88,10 @@ PROVIDER_MODELS = [
 ]
 
 
-@pytest.mark.parametrize("provider_model", PROVIDER_MODELS[:1])
-def test_instructor_hub_sample(provider_model: tuple[str, str], domain_arg: str):
-    provider, model = provider_model
+def test_instructor_hub_sample(provider_arg: str, model_arg: str, domain_arg: str):
+    from rich import print
+
+    provider, model, domain = provider_arg, model_arg, domain_arg
 
     # Get the client (based on provider)
     try:
@@ -98,12 +99,12 @@ def test_instructor_hub_sample(provider_model: tuple[str, str], domain_arg: str)
     except Exception as e:
         pytest.skip(f"Error getting instructor client: {e}")
 
-    logger.debug(f"Testing provider={provider}, model={model}")
-    sample = VLMRUN_HUB_DATASET[domain_arg]
+    logger.debug(f"Testing provider={provider}, model={model}, domain={domain}")
+    sample = VLMRUN_HUB_DATASET[domain]
     logger.debug(f"Testing domain={sample.domain}, sample={sample}")
     logger.debug(f"sample.images={sample.images}")
     response = process_sample(instructor_client, sample, model=model)
-    logger.debug(response.model_dump_json(indent=2))
+    print(response.model_dump_json(indent=2))
     assert response is not None
 
 

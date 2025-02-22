@@ -1,6 +1,6 @@
 name: Schema Request
 description: Request a new schema or suggest updates to an existing schema
-title: "[schema] New schema for `<industry>/<use_case>`"
+title: "schema: New schema for `<industry>/<use_case>`"
 labels: [schema]
 
 body:

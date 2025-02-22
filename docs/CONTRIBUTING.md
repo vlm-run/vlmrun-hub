@@ -15,17 +15,26 @@ We welcome contributions to the VLM Run Hub! Whether you're reporting bugs, sugg
 
 3. **Create a Branch**: Create a new branch for your feature or bug fix.
 
-4. **Write Tests**: Ensure your code is well-tested. We use `pytest` for testing.
+4. **Write Tests**: Ensure your code is well-tested. We use `pytest` for testing. Use `make test` to run all the tests.
 
-5. **Submit a Pull Request**: Once your changes are ready, submit a pull request. Make sure to follow the [Schema Guidelines](./SCHEMA-GUIDELINES.md) if your contribution involves schema changes.
+5. **Submit a Pull Request**: Once your changes are ready, submit a pull request. Make sure to follow the [Schema Guidelines](./SCHEMA-GUIDELINES.md) if your contribution involves Pydantic schema changes.
 
 ## Schema Contributions
 
-For contributions involving schemas, please refer to the [Schema Guidelines](./SCHEMA-GUIDELINES.md) for detailed instructions on creating and submitting schemas.
+For contributions involving Pydantic schemas, please refer to the [Schema Guidelines](./SCHEMA-GUIDELINES.md) for detailed instructions on creating and submitting schemas.
 
 ## Review Process
 
 - **For Members**: Assign a reviewer to your pull request. Address any feedback and ensure all tests pass before merging.
 - **For Non-Members**: A project member will be assigned to review your pull request. Please address their feedback promptly.
 
-Thank you for contributing to the VLM Run Hub!
+## PR Checklist
+
+Before submitting your changes, ensure:
+
+- Make any relevant changes to the repository.
+- Run `make lint` to ensure your code is linted.
+- Add any relevant tests under `tests/`, and run `make test` to ensure all tests pass.
+- If you are contributing a new schema, follow the [Contributing Schemas](./CONTRIBUTING-SCHEMA.md) instead of the general contributing guidelines.
+
+Thank you for helping us maintain high standards for schema contributions!
