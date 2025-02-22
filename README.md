@@ -19,7 +19,6 @@
 
 Welcome to **VLM Run Hub**, a comprehensive repository of pre-defined [Pydantic](https://docs.pydantic.dev/latest/) schemas for extracting structured data from unstructured visual domains such as images, videos, and documents. Designed for [Vision Language Models (VLMs)](https://huggingface.co/blog/vlms) and optimized for real-world use cases, VLM Run Hub simplifies the integration of visual ETL into your workflows.
 
-
 <table>
 <tr>
 <td> <b>Image</b> </td>
@@ -68,16 +67,14 @@ While vision models like OpenAI’s [GPT-4o](https://openai.com/index/hello-gpt-
 
 The **Structured Outputs API** (popularized by [GPT-4o](https://openai.com/index/introducing-structured-outputs-in-the-api/), [Gemini](https://ai.google.dev/gemini-api/docs/structured-output)) addresses this by constraining LLMs to return data in precise, strongly-typed formats such as [Pydantic](https://docs.pydantic.dev/latest/) models. This eliminates complex parsing and validation, ensuring outputs conform to expected types and structures. These schemas can be nested and include complex types like lists and dictionaries, enabling seamless integration with existing systems while leveraging the full capabilities of the model.
 
-
 ### 🧰 Why use this hub of pre-defined Pydantic schemas?
 
 - 📚 **Easy to use:** [Pydantic](https://docs.pydantic.dev/latest/) is a well-understood and battle-tested data model for structured data.
-- 🔋 **Batteries included:**  Each schema in this repo has been validated across real-world industry use cases—from healthcare to finance to media—saving you weeks of development effort.
+- 🔋 **Batteries included:** Each schema in this repo has been validated across real-world industry use cases—from healthcare to finance to media—saving you weeks of development effort.
 - 🔍 **Automatic Data-validation:** Built-in [Pydantic validation](https://docs.pydantic.dev/latest/concepts/validators/) ensures your extracted data is clean, accurate, and reliable, reducing errors and simplifying downstream workflows.
 - 🔌 **Type-safety:** With [Pydantic’s type-safety](https://docs.pydantic.dev/latest/concepts/types/) and compatibility with tools like `mypy` and `pyright`, you can build composable, modular systems that are robust and maintainable.
 - 🧰 **Model-agnostic:** Use the same schema with multiple VLM providers, no need to rewrite prompts for different VLMs.
 - 🚀 **Optimized for Visual ETL:** Purpose-built for extracting structured data from images, videos, and documents, this repo bridges the gap between unstructured data and actionable insights.
-
 
 ### 📖 Schema Catalog
 
@@ -87,19 +84,18 @@ The VLM Run Hub maintains a comprehensive catalog of all available schemas in th
 - Other industry-specific schemas: [healthcare.medical-insurance-card](vlmrun/hub/schemas/healthcare/medical_insurance_card.py), [retail.ecommerce-product-caption](vlmrun/hub/schemas/retail/ecommerce_product_caption.py), [media.tv-news](vlmrun/hub/schemas/media/tv_news.py), [aerospace.remote-sensing](vlmrun/hub/schemas/aerospace/remote_sensing.py)
 
 If you have a new schema you want to add to the catalog, please refer to the [SCHEMA-GUIDELINES.md](docs/SCHEMA-GUIDELINES.md) for the full guidelines.
+
 ### 🚀 Getting Started
 
 Let's say we want to extract invoice metadata from an [invoice image](https://storage.googleapis.com/vlm-data-public-prod/hub/examples/document.invoice/invoice_1.jpg). You can readily use our [`Invoice`](vlmrun/hub/schemas/document/invoice.py) schema we have defined under `vlmrun.hub.schemas.document.invoice` and use it with any VLM of your choosing.
 
 For a comprehensive walkthrough of available schemas and their usage, check out our [Schema Showcase Notebook](https://github.com/vlm-run/vlmrun-cookbook/blob/main/notebooks/01_schema_showcase.ipynb).
 
-
 ### 💾 Installation
 
 ```python
 pip install vlmrun-hub
 ```
-
 
 #### With [Instructor](https://github.com/jxnl/instructor) / OpenAI
 
@@ -266,7 +262,7 @@ completion = client.beta.chat.completions.parse(
 #### Locally with [Ollama](https://ollama.com)
 
 Note: For certain `vlmrun.common` utilities, you will need to install our main [Python SDK](https://github.com/vlm-run/vlmrun-python-sdk)
- via `pip install vlmrun`.
+via `pip install vlmrun`.
 
 ```python
 from ollama import chat
@@ -306,11 +302,10 @@ We periodically run popular VLMs on each of the examples & schemas in the [catal
 | OpenAI | gpt-4o-2024-11-20 | 2025-01-09 | [link](tests/benchmarks/2025-01-09-gpt-4o-2024-11-20-instructor-results.md) |
 | OpenAI | gpt-4o-mini-2024-07-18 | 2025-01-09 | [link](tests/benchmarks/2025-01-09-gpt-4o-mini-2024-07-18-instructor-results.md) |
 | Gemini | gemini-2.0-flash-exp | 2025-01-10 | [link](tests/benchmarks/2025-01-10-gemini-2.0-flash-exp-instructor-results.md) |
-| Ollama | llama3.2-vision:11b | 2025-01-10 | [link](tests/benchmarks/2025-01-10-llama3.2-vision:11b-instructor-results.md) |
-| Ollama | Qwen2.5-VL-7B-Instruct:Q4_K_M_benxh | 2025-02-20 | [link](tests/benchmarks/2025-02-20-bsahane-Qwen2.5-VL-7B-Instruct:Q4_K_M_benxh-ollama-results.md) |
-| Ollama + Instructor | Qwen2.5-VL-7B-Instruct:Q4_K_M_benxh | 2025-02-20 | [link](tests/benchmarks/2025-02-20-bsahane-Qwen2.5-VL-7B-Instruct:Q4_K_M_benxh-instructor-results.md) |
+| Ollama | llama3.2-vision:11b | 2025-01-10 | [link](tests/benchmarks/2025-01-10-llama3.2-vision-11b-instructor-results.md) |
+| Ollama | Qwen2.5-VL-7B-Instruct:Q4_K_M_benxh | 2025-02-20 | [link](tests/benchmarks/2025-02-20-bsahane-Qwen2.5-VL-7B-Instruct-Q4_K_M_benxh-ollama-results.md) |
+| Ollama + Instructor | Qwen2.5-VL-7B-Instruct:Q4_K_M_benxh | 2025-02-20 | [link](tests/benchmarks/2025-02-20-bsahane-Qwen2.5-VL-7B-Instruct-Q4_K_M_benxh-instructor-results.md) |
 | Microsoft | phi-4 | 2025-01-10 | [link](tests/benchmarks/2025-01-11-phi4-instructor-results.md) |
-
 
 ### 📂 Directory Structure
 
@@ -343,8 +338,7 @@ vlmrun
 
 We're building this hub for the community, and contributions are always welcome! Follow the [CONTRIBUTING](docs/CONTRIBUTING.md) and [SCHEMA-GUIDELINES.md](docs/SCHEMA-GUIDELINES.md) to get started.
 
+### 🔗 Quick Links
 
-### 🔗  Quick Links
-
-* 💬 Send us an email at [support@vlm.run](mailto:support@vlm.run) or join our [Discord](https://discord.gg/4jgyECY4rq) for help.
-* 📣 Follow us on [Twitter](https://x.com/vlmrun), and [LinkedIn](https://www.linkedin.com/company/vlm-run) to keep up-to-date on our products.
+- 💬 Send us an email at [support@vlm.run](mailto:support@vlm.run) or join our [Discord](https://discord.gg/4jgyECY4rq) for help.
+- 📣 Follow us on [Twitter](https://x.com/vlmrun), and [LinkedIn](https://www.linkedin.com/company/vlm-run) to keep up-to-date on our products.
