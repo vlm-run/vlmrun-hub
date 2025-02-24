@@ -27,6 +27,7 @@ class Registry:
             cls._instance = super().__new__(cls)
             cls._instance._schemas = {}
             cls._instance._initialized = False
+            cls._instance._schema_metadata = {}  # Store metadata when registering schemas
         return cls._instance
 
     @property
@@ -36,21 +37,42 @@ class Registry:
             self.load_schemas()
         return self._schemas
 
+    def _extract_metadata(self, schema) -> dict:
+        return {
+            "description": schema.description,
+            "supported_inputs": schema.metadata.supported_inputs if schema.metadata else None,
+            "tags": schema.metadata.tags if schema.metadata else None,
+            "sample_data": ([schema.sample_data] if isinstance(schema.sample_data, str) else schema.sample_data),
+        }
+
+    def _load_catalog(self, path: Path) -> None:
+        catalog = SchemaCatalogYaml.from_yaml(path)
+        for schema in catalog.schemas:
+            metadata = self._extract_metadata(schema)
+            self.register(schema.domain, schema.schema_class, metadata)
+        logger.debug(f"Loaded schemas from {path}")
+
+    def register(self, name: str, schema: Type[BaseModel], metadata: Optional[dict] = None) -> None:
+        """Register a schema with the registry."""
+        if not issubclass(schema, BaseModel):
+            raise ValueError(f"Schema {name} is not a subclass of BaseModel, type={type(schema)}")
+        self._schemas[name] = schema
+        if metadata:
+            self._schema_metadata[name] = metadata
+
     def load_schemas(self, catalog_paths: Optional[Tuple[Union[str, Path]]] = None) -> None:
         from vlmrun.hub.constants import VLMRUN_HUB_CATALOG_PATH, VLMRUN_HUB_PATH
 
         if not self._initialized:
             try:
-                catalog = SchemaCatalogYaml.from_yaml(VLMRUN_HUB_CATALOG_PATH)
-                for schema in catalog.schemas:
-                    self.register(schema.domain, schema.schema_class)
+                # Load default catalog
+                self._load_catalog(VLMRUN_HUB_CATALOG_PATH)
 
+                # Load contrib catalog if exists
                 contrib_path = VLMRUN_HUB_PATH / "schemas/contrib/catalog.yaml"
                 if contrib_path.exists():
                     try:
-                        contrib_catalog = SchemaCatalogYaml.from_yaml(contrib_path)
-                        for schema in contrib_catalog.schemas:
-                            self.register(schema.domain, schema.schema_class)
+                        self._load_catalog(contrib_path)
                     except Exception as e:
                         logger.error(f"Failed to load contrib schemas: {e}")
 
@@ -59,22 +81,17 @@ class Registry:
                 logger.error(f"Failed to load default schemas: {e}")
                 raise
 
+        # Load additional catalogs if provided
         if catalog_paths is not None:
             for path in catalog_paths:
                 path = Path(path)
                 if not path.exists():
                     raise FileNotFoundError(f"Catalog file not found: {path}")
+                self._load_catalog(path)
 
-                catalog = SchemaCatalogYaml.from_yaml(path)
-                for schema in catalog.schemas:
-                    self.register(schema.domain, schema.schema_class)
-                logger.debug(f"Loaded additional schemas from {path}")
-
-    def register(self, name: str, schema: Type[BaseModel]) -> None:
-        """Register a schema with the registry."""
-        if not issubclass(schema, BaseModel):
-            raise ValueError(f"Schema {name} is not a subclass of BaseModel, type={type(schema)}")
-        self._schemas[name] = schema
+    def get_domain_info(self, domain: str) -> dict:
+        """Get metadata for a domain."""
+        return self._schema_metadata.get(domain, {})
 
     def list_schemas(self) -> List[str]:
         return sorted(self.schemas.keys())

@@ -51,7 +51,8 @@ dependencies = {file = ["requirements/requirements.txt"]}
     test = {file = ["requirements/requirements.test.txt"]}
     build = {file = ["requirements/requirements.build.txt"]}
     extra = {file = ["requirements/requirements.extra.txt"]}
-    all = {file = ["requirements/requirements.test.txt", "requirements/requirements.build.txt", "requirements/requirements.extra.txt"]}
+    server = {file = ["requirements/requirements.server.txt"]}
+    all = {file = ["requirements/requirements.test.txt", "requirements/requirements.build.txt", "requirements/requirements.extra.txt", "requirements/requirements.server.txt"]}
 
 [tool.setuptools.packages.find]
 where = ["."]
