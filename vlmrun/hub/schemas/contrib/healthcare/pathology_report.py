@@ -49,7 +49,7 @@ class SpecimenDiagnosis(BaseModel):
 class ImmunohistochemistryResults(BaseModel):
     marker_name: Optional[str] = Field(None, description="Name of IHC marker (e.g., ER, PR, CD20)")
     result: Optional[str] = Field(None, description="Interpretation (Positive, Negative, etc.)")
-    percentage: Optional[float] = Field(None, description="Approx. percentage of positive cells if known")
+    percentage: Optional[float] = Field(None, description="Approx. percentage of positive cells if known (value between 0.0 and 1.0)")
     intensity: Optional[str] = Field(None, description="Intensity of staining (e.g., 1+, 2+, 3+)")
     pattern: Optional[str] = Field(None, description="Staining pattern (nuclear, cytoplasmic, membranous)")
     control_validity: Optional[bool] = Field(None, description="Whether control stain was valid")

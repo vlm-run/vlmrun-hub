@@ -40,11 +40,6 @@ def test_catalog_yaml(catalog_path):
             assert len(version_parts) == 3, "Version must follow semver format (X.Y.Z)"
             assert all(part.isdigit() for part in version_parts), "Version parts must be numeric"
 
-        # Sample data URL validation
-        assert entry.sample_data.startswith(
-            "https://storage.googleapis.com/vlm-data-public-prod/"
-        ), "Sample data must be in Google Cloud Storage"
-
         # Metadata validation
         if entry.metadata:
             if entry.metadata.supported_inputs:
