@@ -21,3 +21,12 @@ schemas:
     metadata:
       supported_inputs: ["image", "video"]
       tags: ["media", "sports"]
+
+  - domain: healthcare.pathology-report
+    schema: vlmrun.hub.schemas.contrib.healthcare.pathology_report.PathologyReport
+    prompt: "You are a detail-oriented Pathology Analyst. Extract all the relevant pathology report information from the pathology report as accurately as possible."
+    description: "Pathology report extraction system that processes pathology reports to extract structured information including patient information, facility information, specimens, gross and microscopic examinations, immunohistochemistry results, molecular studies, integrated diagnosis, clinical notes, and other relevant pathology report details."
+    sample_data: "https://storage.googleapis.com/sample-hub-data/healthcare.pathology_report/sample_report_5.pdf"
+    metadata:
+      supported_inputs: ["image", "document"]
+      tags: ["healthcare", "laboratory", "pathology"]

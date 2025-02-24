@@ -75,15 +75,6 @@ Thank you for contributing to the VLM Run Hub! To maintain consistency and adher
       status: Literal["pending", "paid", "cancelled"] = Field(..., description="The status of the invoice, which can be either 'pending', 'paid', or 'cancelled'.")
    ```
 
-8. **Examples**: Include a `Config.schema_extra` with example data for each schema.
-
-   ```python
-   class CustomerInvoice(BaseModel):
-      ...
-
-   CustomerInvoice.model_json_schema(indent=2)
-   ```
-
 ### ✅ Schema Review Checklist
 
 Before submitting your schema:
@@ -91,7 +82,6 @@ Before submitting your schema:
 - [ ] **Field Types**: Ensure all fields are strongly-typed.
 - [ ] **Field Metadata**: Check that all fields include descriptions and constraints where applicable.
 - [ ] **Optional Fields**: Use `Optional[...]` to define optional fields.
-- [ ] **Examples**: Include clear, complete examples in Config.schema_extra.
 - [ ] **Validation**: Add custom validators for domain-specific rules.
 - [ ] **Reusability**: Use nested models for complex types and avoid redundancy.
 - [ ] **Tests**: Provide unit tests to validate the schema against valid and invalid data.
