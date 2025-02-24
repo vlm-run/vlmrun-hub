@@ -1,3 +1,5 @@
+fastapi>=0.115.8
+httpx>=0.28.0
 instructor>=1.7.0
 openai>=1.58.1
 pandas>=2.1.1
