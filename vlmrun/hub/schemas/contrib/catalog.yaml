@@ -30,3 +30,12 @@ schemas:
     metadata:
       supported_inputs: ["image", "document"]
       tags: ["healthcare", "laboratory", "pathology"]
+
+  - domain: real-estate.lease-agreement
+    schema: vlmrun.hub.schemas.contrib.real_estate.lease_agreement.LeaseAgreement
+    prompt: "You are a detail-oriented Lease Analyst. Extract all the relevant lease agreement information from the lease agreement as accurately as possible."
+    description: "Lease agreement extraction system that processes lease agreements to extract structured information including parties, property details, lease terms, renewal options, and other relevant lease agreement details."
+    sample_data: "https://storage.googleapis.com/sample-hub-data/real-estate.lease-agreement/sample_lease_doc_6.pdf"
+    metadata:
+      supported_inputs: ["document"]
+      tags: ["document", "real estate"]
