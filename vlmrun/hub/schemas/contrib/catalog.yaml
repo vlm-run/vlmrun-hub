@@ -30,3 +30,12 @@ schemas:
     metadata:
       supported_inputs: ["image", "document"]
       tags: ["healthcare", "laboratory", "pathology"]
+
+  - domain: document.aadhaar-card
+    schema: vlmrun.hub.schemas.contrib.document.aadhaar_card.AadhaarCard
+    prompt: "You are a detail-oriented identity document analyst. Extract all the relevant information from the Aadhaar card as accurately as possible. Determine whether you're seeing the front side (with photo, name, DOB, etc) or back side (with address, etc) and extract accordingly."
+    description: "Aadhaar card information extraction system that processes images of India's national identity document to extract structured information including personal details, address information, and security features."
+    sample_data: "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/document.aadhaar-card/aadhaar_card_sample.jpg"
+    metadata:
+      supported_inputs: ["image", "document"]
+      tags: ["identity", "document", "india"]
