@@ -3,7 +3,8 @@ from datetime import date
 from pydantic import BaseModel, Field
 
 class HealthInformation(BaseModel):
-    full_disclosure: bool = Field(
+    full_disclosure: Optional[bool] = Field(
+        default=None,
         description="Indicates if the full health record is disclosed."
     )
     excluded_information: Optional[List[str]] = Field(
@@ -14,18 +15,25 @@ class HealthInformation(BaseModel):
         default=None,
         description="Additional exclusions specified by the patient."
     )
-    disclosure_format: str = Field(
+    disclosure_format: Optional[str] = Field(
+        default=None,
         description="The preferred format for disclosing the health records."
     )
 
 
 class Recipient(BaseModel):
-    name: str = Field(description="Name of the recipient.")
+    name: Optional[str] = Field(
+        default=None,
+        description="Name of the recipient."
+    )
     organization: Optional[str] = Field(
         default=None,
         description="Organization name if applicable."
     )
-    address: str = Field(description="Recipient's address.")
+    address: Optional[str] = Field(
+        default=None,
+        description="Recipient's address."
+    )
 
 
 class AuthorizationDuration(BaseModel):
@@ -85,13 +93,16 @@ class LegalRepresentative(BaseModel):
 
 
 class Signature(BaseModel):
-    signed_by: str = Field(
+    signed_by: Optional[str] = Field(
+        default=None,
         description="Name of the individual signing the form."
     )
-    signature: str = Field(
-        description="Signature of the individual."
+    is_signed: Optional[bool] = Field(
+        default=None,
+        description="Whether the form has been signed."
     )
-    date_signed: date = Field(
+    date_signed: Optional[date] = Field(
+        default=None,
         description="Date the form was signed."
     )
     legal_representative: Optional[LegalRepresentative] = Field(
@@ -103,20 +114,24 @@ class Signature(BaseModel):
 class HIPAARelease(BaseModel):
     """HIPAA Release Form for authorizing disclosure of health information."""
     
-    patient_name: str = Field(
+    patient_name: Optional[str] = Field(
+        default=None,
         description="Full name of the individual authorizing the release."
     )
-    authorized_entity: str = Field(
+    authorized_entity: Optional[str] = Field(
+        default=None,
         description="Name of the entity or individual authorized to share information."
     )
-    health_information: HealthInformation = Field(
+    health_information: Optional[HealthInformation] = Field(
+        default=None,
         description="Details of the health records to be disclosed."
     )
     reason_for_disclosure: Optional[str] = Field(
         default=None,
         description="Reason for sharing the health information."
     )
-    recipient: Recipient = Field(
+    recipient: Optional[Recipient] = Field(
+        default=None,
         description="Details of the recipient authorized to receive health information."
     )
     authorization_duration: Optional[AuthorizationDuration] = Field(
@@ -127,6 +142,7 @@ class HIPAARelease(BaseModel):
         default=None,
         description="Details on how the authorization can be revoked."
     )
-    signature: Signature = Field(
+    signature: Optional[Signature] = Field(
+        default=None,
         description="Signature and authorization details."
     )
