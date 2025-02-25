@@ -31,8 +31,8 @@ schemas:
       supported_inputs: ["image", "document"]
       tags: ["healthcare", "laboratory", "pathology"]
 
-  - domain: document.aadhaar-card
-    schema: vlmrun.hub.schemas.contrib.document.aadhaar_card.AadhaarCard
+  - domain: document.in-aadhaar-card
+    schema: vlmrun.hub.schemas.contrib.document.india.aadhaar_card.AadhaarCard
     prompt: "You are a detail-oriented identity document analyst. Extract all the relevant information from the Aadhaar card as accurately as possible. Determine whether you're seeing the front side (with photo, name, DOB, etc) or back side (with address, etc) and extract accordingly."
     description: "Aadhaar card information extraction system that processes images of India's national identity document to extract structured information including personal details, address information, and security features."
     sample_data: "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/document.aadhaar-card/aadhaar_card_sample.jpg"
@@ -40,8 +40,8 @@ schemas:
       supported_inputs: ["image", "document"]
       tags: ["identity", "document", "india"]
 
-  - domain: document.pan-card
-    schema: vlmrun.hub.schemas.contrib.document.pan_card.PANCard
+  - domain: document.in-pan-card
+    schema: vlmrun.hub.schemas.contrib.document.india.pan_card.PANCard
     prompt: "You are a detail-oriented identity document analyst. Extract all the relevant information from the PAN card as accurately as possible. Focus on the PAN number, name, father's name, and date of birth. Also note if a photo, signature, and Income Tax Department logo are present."
     description: "PAN card information extraction system that processes images of India's tax identity document to extract structured information including PAN number, personal details, and security features."
     sample_data: "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/document.pan-card/pan_card_sample.jpg"
