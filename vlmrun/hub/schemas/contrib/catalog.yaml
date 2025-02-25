@@ -13,6 +13,15 @@ schemas:
       supported_inputs: ["image", "video"]
       tags: ["media", "sports"]
 
+  - domain: social.twitter-card
+    schema: vlmrun.hub.schemas.contrib.social.twitter_card.TwitterCard
+    prompt: "You are a detail-oriented social media analyst. Extract all the relevant information from the tweet card as accurately as possible."
+    description: "Twitter card data extraction system that processes tweet screenshots to extract structured information including tweet content, user details, engagement metrics, and quoted tweets."
+    sample_data: "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/social.twitter_card/tweet_openai.png"
+    metadata:
+      supported_inputs: ["image"]
+      tags: ["social", "media"]
+
   - domain: media.nba-game-state
     schema: vlmrun.hub.schemas.contrib.media.nba_game_state.NBAGameState
     prompt: "You are a detail-oriented NBA Game Analyst. Extract all the relevant game state information from the video feed or screenshot as accurately as possible."
