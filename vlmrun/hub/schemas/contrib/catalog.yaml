@@ -39,3 +39,12 @@ schemas:
     metadata:
       supported_inputs: ["image", "document"]
       tags: ["identity", "document", "india"]
+
+  - domain: document.pan-card
+    schema: vlmrun.hub.schemas.contrib.document.pan_card.PANCard
+    prompt: "You are a detail-oriented identity document analyst. Extract all the relevant information from the PAN card as accurately as possible. Focus on the PAN number, name, father's name, and date of birth. Also note if a photo, signature, and Income Tax Department logo are present."
+    description: "PAN card information extraction system that processes images of India's tax identity document to extract structured information including PAN number, personal details, and security features."
+    sample_data: "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/document.pan-card/pan_card_sample.jpg"
+    metadata:
+      supported_inputs: ["image", "document"]
+      tags: ["identity", "document", "india", "tax"]
