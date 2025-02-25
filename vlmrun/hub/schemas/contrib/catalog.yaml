@@ -48,3 +48,12 @@ schemas:
     metadata:
       supported_inputs: ["image", "document"]
       tags: ["identity", "document", "india", "tax"]
+
+  - domain: document.request-for-proposal
+    schema: vlmrun.hub.schemas.contrib.document.request_for_proposal.RFP
+    prompt: "You are a detail-oriented RFP(Request for Proposal) document analyst. Extract all the relevant information from the rfp document as accurately as possible."
+    description: "RFP document information extraction system that processes images of RFP documents to extract structured information including project details, requirements, and other relevant information."
+    sample_data: "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/document.rfp/RFP-Branding-and-Marketing-Project.pdf"
+    metadata:
+      supported_inputs: ["image", "document"]
+      tags: ["rfp", "document", "proposal"]
