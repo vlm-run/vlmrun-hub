@@ -13,6 +13,15 @@ schemas:
       supported_inputs: ["image", "video"]
       tags: ["media", "sports"]
 
+  - domain: social.twitter-card
+    schema: vlmrun.hub.schemas.contrib.social.twitter_card.TwitterCard
+    prompt: "You are a detail-oriented social media analyst. Extract all the relevant information from the tweet card as accurately as possible."
+    description: "Twitter card data extraction system that processes tweet screenshots to extract structured information including tweet content, user details, engagement metrics, and quoted tweets."
+    sample_data: "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/social.twitter_card/tweet_openai.png"
+    metadata:
+      supported_inputs: ["image"]
+      tags: ["social", "media"]
+
   - domain: media.nba-game-state
     schema: vlmrun.hub.schemas.contrib.media.nba_game_state.NBAGameState
     prompt: "You are a detail-oriented NBA Game Analyst. Extract all the relevant game state information from the video feed or screenshot as accurately as possible."
@@ -39,3 +48,39 @@ schemas:
     metadata:
       supported_inputs: ["document", "image"]
       tags: ["finance", "accounting", "financial-statements", "balance-sheet"]
+  
+  - domain: real-estate.lease-agreement
+    schema: vlmrun.hub.schemas.contrib.real_estate.lease_agreement.LeaseAgreement
+    prompt: "You are a detail-oriented Lease Analyst. Extract all the relevant lease agreement information from the lease agreement as accurately as possible."
+    description: "Lease agreement extraction system that processes lease agreements to extract structured information including parties, property details, lease terms, renewal options, and other relevant lease agreement details."
+    sample_data: "https://storage.googleapis.com/sample-hub-data/real-estate.lease-agreement/sample_lease_doc_6.pdf"
+    metadata:
+      supported_inputs: ["document"]
+      tags: ["document", "real estate"]
+  
+  - domain: document.in-aadhaar-card
+    schema: vlmrun.hub.schemas.contrib.document.india.aadhaar_card.AadhaarCard
+    prompt: "You are a detail-oriented identity document analyst. Extract all the relevant information from the Aadhaar card as accurately as possible. Determine whether you're seeing the front side (with photo, name, DOB, etc) or back side (with address, etc) and extract accordingly."
+    description: "Aadhaar card information extraction system that processes images of India's national identity document to extract structured information including personal details, address information, and security features."
+    sample_data: "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/document.aadhaar-card/aadhaar_card_sample.jpg"
+    metadata:
+      supported_inputs: ["image", "document"]
+      tags: ["identity", "document", "india"]
+
+  - domain: document.in-pan-card
+    schema: vlmrun.hub.schemas.contrib.document.india.pan_card.PANCard
+    prompt: "You are a detail-oriented identity document analyst. Extract all the relevant information from the PAN card as accurately as possible. Focus on the PAN number, name, father's name, and date of birth. Also note if a photo, signature, and Income Tax Department logo are present."
+    description: "PAN card information extraction system that processes images of India's tax identity document to extract structured information including PAN number, personal details, and security features."
+    sample_data: "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/document.pan-card/pan_card_sample.jpg"
+    metadata:
+      supported_inputs: ["image", "document"]
+      tags: ["identity", "document", "india", "tax"]
+
+  - domain: document.request-for-proposal
+    schema: vlmrun.hub.schemas.contrib.document.request_for_proposal.RFP
+    prompt: "You are a detail-oriented RFP(Request for Proposal) document analyst. Extract all the relevant information from the rfp document as accurately as possible."
+    description: "RFP document information extraction system that processes images of RFP documents to extract structured information including project details, requirements, and other relevant information."
+    sample_data: "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/document.rfp/RFP-Branding-and-Marketing-Project.pdf"
+    metadata:
+      supported_inputs: ["image", "document"]
+      tags: ["rfp", "document", "proposal"]
