@@ -84,6 +84,24 @@ schemas:
       supported_inputs: ["image", "document"]
       tags: ["healthcare", "work"]
 
+  - domain: healthcare.hipaa-release
+    schema: vlmrun.hub.schemas.healthcare.hipaa_release.HIPAARelease
+    prompt: "You are a detail-oriented healthcare document analyst. Extract all the relevant information from the HIPAA release form as accurately as possible."
+    description: "HIPAA release form data extraction system that processes release forms to extract structured information including patient details, authorized recipients, and release specifications."
+    sample_data: "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/healthcare.hipaa-release/HIPAA-Journal-sample-HIPAA-release-form-v1-filled.pdf"
+    metadata:
+      supported_inputs: ["image", "document"]
+      tags: ["healthcare", "hipaa", "medical"]
+
+  - domain: healthcare.prior-authorization
+    schema: vlmrun.hub.schemas.healthcare.prior_authorization.PriorAuthorization
+    prompt: "You are a detail-oriented healthcare document analyst. Extract all the relevant information from the prior authorization form as accurately as possible."
+    description: "Prior authorization form data extraction system that processes authorization requests to extract structured information including patient details, provider information, and requested services."
+    sample_data: "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/healthcare.prior-authorization/unitedhealthcare-prior-aurthorization-form-filled.pdf"
+    metadata:
+      supported_inputs: ["image", "document"]
+      tags: ["healthcare", "insurance", "medical"]
+
   # industry: retail
   - domain: retail.ecommerce-product-caption
     schema: vlmrun.hub.schemas.retail.ecommerce_product_caption.RetailEcommerceProductCaption
@@ -122,3 +140,12 @@ schemas:
     metadata:
       supported_inputs: ["image"]
       tags: ["retail", "product-catalog"]
+
+  - domain: healthcare.medicare-claim
+    schema: vlmrun.hub.schemas.healthcare.medicare_claim.MedicareClaim
+    prompt: "You are a detail-oriented healthcare document analyst. Extract all the relevant information from the Medicare claim form as accurately as possible."
+    description: "Medicare claim form data extraction system that processes claim forms to extract structured information including patient details, provider information, and requested services."
+    sample_data: "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/healthcare.medicare-claim/form-cms1500-filled.pdf"
+    metadata:
+      supported_inputs: ["image", "document"]
+      tags: ["healthcare", "insurance", "medical"]
