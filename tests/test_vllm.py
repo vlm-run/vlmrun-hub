@@ -27,7 +27,7 @@ def test_local_vllm():
         pytest.skip("vLLM server is not running")
 
     results = []
-    model = "HuggingFaceTB/SmolVLM-256M-Instruct"
+    model = "bsahane/Qwen2.5-VL-7B-Instruct:Q4_K_M_benxh"
 
     client = OpenAI(
         base_url=VLLM_BASE_URL,
