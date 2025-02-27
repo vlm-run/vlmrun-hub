@@ -13,13 +13,14 @@ Please refer to the [Schema Guidelines](./SCHEMA-GUIDELINES.md) for comprehensiv
 
 ## Adding a New Schema
 
-1. **Create a New Schema File**: Place your schema in `schemas/contrib/<industry>/<use_case>.py`, following the appropriate industry and use case structure defined in the [Schema Guidelines](./SCHEMA-GUIDELINES.md).
+1. **Define domain**: Create a new domain for your schema. Checkout the [Catalog](../vlmrun/hub/catalog.yaml) for existing domains. eg. `document.invoice`, `document.receipt`, `accounting.form-payslip`, `healthcare.pathology-report`, `real-estate.lease-agreement`. If it's the document is a form, second part of the domain should be `form-<form-name>`.
+2. **Create a New Schema File**: Place your schema in `schemas/contrib/<industry>/<use_case>.py`, following the appropriate industry and use case structure defined in the [Schema Guidelines](./SCHEMA-GUIDELINES.md).
 
-2. **Add Tests**: Include tests for your schema in `tests/test_schemas.py`.
+3. **Add Tests**: Include tests for your schema in `tests/test_schemas.py`.
 
-3. **Add to the contrib Catalog**: Add your schema to the [`vlmrun/hub/schemas/contrib/catalog.yaml`](../vlmrun/hub/schemas/contrib/catalog.yaml) file in the `schemas` section, and test it with `pytest -sv tests/test_instructor.py --domain="<domain_name>"`.
+4. **Add to the contrib Catalog**: Add your schema to the [`vlmrun/hub/schemas/contrib/catalog.yaml`](../vlmrun/hub/schemas/contrib/catalog.yaml) file in the `schemas` section, and test it with `pytest -sv tests/test_instructor.py --domain="<domain_name>"`.
 
-4. **Submit a Pull Request**: Once your schema is complete and tested, submit a pull request with the [`schema-request`](../.github/PULL_REQUEST_TEMPLATE/schema-request.yaml) template for review. You can take a look at a previous PR for reference.
+5. **Submit a Pull Request**: Once your schema is complete and tested, submit a pull request with the [`schema-request`](../.github/PULL_REQUEST_TEMPLATE/schema-request.yaml) template for review. You can take a look at a previous PR for reference.
 
 ## PR Checklist
 

@@ -54,17 +54,7 @@ schemas:
     metadata:
       supported_inputs: ["image", "document"]
       tags: ["energy"]
-
-  # accounting
-  - domain: accounting.form-playslip
-    schema: vlmrun.hub.schemas.accounting.form_playslip.Payslip
-    prompt: "You are a detail-oriented tax document analyst. Extract all the relevant information from the playslip as accurately as possible."
-    description: "Playslip data extraction system that processes playslip documents to extract structured information including account details, billing period, charges, and payment information."
-    sample_data: "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/accounting.form-playslip/ps-6.webp"
-    metadata:
-      supported_inputs: ["image", "document"]
-      tags: ["finance", "work"]
-
+      
   - domain: accounting.form-w2
     schema: vlmrun.hub.schemas.accounting.w2_form.W2Form
     prompt: "You are a detail-oriented tax document analyst. Extract all the relevant information from the W-2 form as accurately as possible."
