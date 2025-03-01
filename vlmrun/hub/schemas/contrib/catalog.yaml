@@ -84,3 +84,12 @@ schemas:
     metadata:
       supported_inputs: ["image", "document"]
       tags: ["rfp", "document", "proposal"]
+
+  - domain: document.insurance-claim
+    schema: vlmrun.hub.schemas.contrib.document.insurance_claim.InsuranceClaim
+    prompt: "You are a detail-oriented insurance claim analyst. Extract all the relevant information from the insurance claim as accurately as possible."
+    description: "Insurance claim information extraction system that processes images of insurance claims to extract structured information including claim details, policy information, and other relevant information."
+    sample_data: "https://storage.googleapis.com/sample-hub-data/document.insurance-claim/insurance_claim_2.pdf"
+    metadata:
+      supported_inputs: ["image", "document"]
+      tags: ["insurance", "claim", "document"]
