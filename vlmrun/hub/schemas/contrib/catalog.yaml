@@ -4,6 +4,15 @@ schemas:
   # image
   # video
   # industry: media
+  - domain: accounting.form-payslip
+    schema: vlmrun.hub.schemas.contrib.accounting.form_payslip.Payslip
+    prompt: "You are a detail-oriented tax document analyst. Extract all the relevant information from the payslip as accurately as possible."
+    description: "Payslip data extraction system that processes payslip documents to extract structured information including account details, billing period, charges, and payment information."
+    sample_data: "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/accounting.form-payslip/ps-6.webp"
+    metadata:
+      supported_inputs: ["image", "document"]
+      tags: ["finance", "work"]
+
   - domain: media.nfl-game-state
     schema: vlmrun.hub.schemas.contrib.media.nfl_game_state.NFLGameState
     prompt: "You are a detail-oriented NFL Game Analyst. Extract all the relevant game state information from the video feed or screenshot as accurately as possible."
