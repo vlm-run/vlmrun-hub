@@ -34,29 +34,3 @@ class BusinessCard(BaseModel):
     # Additional information
     social_media: Optional[dict] = Field(None, description="Dictionary of social media handles or URLs")
     additional_info: Optional[str] = Field(None, description="Any additional information present on the card")
-    
-    class Config:
-        schema_extra = {
-            "example": {
-                "name": "John Doe",
-                "job_title": "Software Engineer",
-                "company_name": "Tech Solutions Inc.",
-                "phone": "+1 (555) 123-4567",
-                "email": "john.doe@techsolutions.com",
-                "website": "www.techsolutions.com",
-                "address": {
-                    "street": "123 Main Street",
-                    "city": "San Francisco",
-                    "state": "CA",
-                    "postal_code": "94105",
-                    "country": "USA"
-                },
-                "has_logo": True,
-                "has_photo": False,
-                "social_media": {
-                    "linkedin": "linkedin.com/in/johndoe",
-                    "twitter": "@johndoe"
-                },
-                "additional_info": "Available for consulting"
-            }
-        }
