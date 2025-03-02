@@ -12,7 +12,7 @@ from vlmrun.hub.dataset import VLMRUN_HUB_DATASET, HubSample
 load_dotenv()
 
 
-def get_instructor_client(provider: Literal["openai", "gemini", "fireworks", "ollama"] = "openai"):
+def get_instructor_client(provider: Literal["openai", "gemini", "fireworks", "ollama"] | str = "openai"):
     import instructor
     from openai import OpenAI
 
