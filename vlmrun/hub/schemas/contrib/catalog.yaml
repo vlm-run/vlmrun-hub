@@ -4,6 +4,14 @@ schemas:
   # image
   # video
   # industry: media
+  - domain: food.nutrition-facts-label
+    schema: vlmrun.hub.schemas.contrib.food.nutrition_facts_label.NutritionFactsLabel
+    prompt: "You are a detail-oriented nutrition analyst. Extract all the relevant information from the nutrition facts label as accurately as possible."
+    description: "Nutrition facts label extraction system that processes images of nutrition labels to extract structured information including serving size, calories, nutrients, and daily values."
+    sample_data: "https://www.wymans.com/cdn/shop/products/dried-nutritionals_1000x1000.jpg"
+    metadata:
+      supported_inputs: ["image", "document"]
+      tags: ["food", "health"]
   - domain: accounting.form-payslip
     schema: vlmrun.hub.schemas.contrib.accounting.form_payslip.Payslip
     prompt: "You are a detail-oriented tax document analyst. Extract all the relevant information from the payslip as accurately as possible."
