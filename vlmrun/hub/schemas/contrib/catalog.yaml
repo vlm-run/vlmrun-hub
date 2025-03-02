@@ -93,3 +93,12 @@ schemas:
     metadata:
       supported_inputs: ["image", "document"]
       tags: ["insurance", "claim", "document"]
+
+  - domain: logistics.bill-of-lading
+    schema: vlmrun.hub.schemas.contrib.logistics.bill_of_lading.BillOfLading
+    prompt: "You are a detail-oriented logistics document analyst. Extract all the relevant information from the Bill of Lading as accurately as possible."
+    description: "Bill of Lading data extraction system that processes shipping documents to extract structured information including shipper/consignee details, vessel information, cargo details, and other relevant shipping information."
+    sample_data: "https://icecargo.com.au/wp-content/uploads/2022/11/sea-way-bill-of-lading-1-768x1087-1.jpg"
+    metadata:
+      supported_inputs: ["image", "document"]
+      tags: ["logistics", "supply-chain"]
