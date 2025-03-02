@@ -112,7 +112,7 @@ schemas:
       supported_inputs: ["image", "document"]
       tags: ["work", "identity"]
 
-- domain: logistics.bill-of-lading
+  - domain: logistics.bill-of-lading
     schema: vlmrun.hub.schemas.contrib.logistics.bill_of_lading.BillOfLading
     prompt: "You are a detail-oriented logistics document analyst. Extract all the relevant information from the Bill of Lading as accurately as possible."
     description: "Bill of Lading data extraction system that processes shipping documents to extract structured information including shipper/consignee details, vessel information, cargo details, and other relevant shipping information."
