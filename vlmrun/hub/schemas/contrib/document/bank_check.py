@@ -21,7 +21,7 @@ class BankInformation(BaseModel):
 
 class BankCheck(BaseModel):
     check_number: Optional[str] = Field(None, description="Check number, typically printed in the top right corner of the check")
-    date: Optional[date] = Field(None, description="Date written on the check")
+    payment_date: Optional[str] = Field(None, description="Date written on the check")
     payee: Optional[str] = Field(None, description="Name of the person or entity to whom the check is payable (Pay to the order of)")
     amount_numeric: Optional[float] = Field(None, description="Amount of the check in numeric form")
     amount_text: Optional[str] = Field(None, description="Amount of the check written out in words")
