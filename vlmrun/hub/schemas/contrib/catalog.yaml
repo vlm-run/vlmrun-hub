@@ -113,6 +113,15 @@ schemas:
       supported_inputs: ["image", "document"]
       tags: ["insurance", "claim", "document"]
 
+  - domain: document.business-card
+    schema: vlmrun.hub.schemas.contrib.document.business_card.BusinessCard
+    prompt: "You are a detail-oriented business card analyst. Extract all the relevant information from the business card as accurately as possible, including name, job title, company, contact information, and any other details present."
+    description: "Business card information extraction system that processes images of business cards to extract structured information including personal details, company information, and contact information."
+    sample_data: "https://cdnspecseu.bizay.com/24/2/923/2@COUCHE-RECIC@4_0@en@1.png"
+    metadata:
+      supported_inputs: ["image", "document"]
+      tags: ["work", "identity"]
+
   - domain: logistics.bill-of-lading
     schema: vlmrun.hub.schemas.contrib.logistics.bill_of_lading.BillOfLading
     prompt: "You are a detail-oriented logistics document analyst. Extract all the relevant information from the Bill of Lading as accurately as possible."
