@@ -1,5 +1,5 @@
 import os
-from typing import Literal
+from typing import Literal, Union
 
 import pytest
 from conftest import BenchmarkResult, create_benchmark
@@ -12,7 +12,7 @@ from vlmrun.hub.dataset import VLMRUN_HUB_DATASET, HubSample
 load_dotenv()
 
 
-def get_instructor_client(provider: Literal["openai", "gemini", "fireworks", "ollama"] | str = "openai"):
+def get_instructor_client(provider: Union[Literal["openai", "gemini", "fireworks", "ollama"], str] = "openai"):
     import instructor
     from openai import OpenAI
 
