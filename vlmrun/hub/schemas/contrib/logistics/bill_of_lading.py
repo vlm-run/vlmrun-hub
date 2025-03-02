@@ -12,10 +12,16 @@ class Address(BaseModel):
     country: Optional[str] = Field(None, description="Country")
 
 
+class Contact(BaseModel):
+    phone: Optional[str] = Field(None, description="Phone number")
+    email: Optional[str] = Field(None, description="Email address")
+    fax: Optional[str] = Field(None, description="Fax number")
+
+
 class Party(BaseModel):
     name: Optional[str] = Field(None, description="Name of the party")
     address: Optional[Address] = Field(None, description="Address of the party")
-    contact: Optional[str] = Field(None, description="Contact information (phone, email, etc.)")
+    contact: Optional[Contact] = Field(None, description="Contact information (phone, email, etc.)")
     reference: Optional[str] = Field(None, description="Reference number or identifier")
 
 
