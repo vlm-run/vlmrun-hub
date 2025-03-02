@@ -4,6 +4,16 @@ schemas:
   # image
   # video
   # industry: media
+
+  - domain: document.bank-check
+    schema: vlmrun.hub.schemas.contrib.document.bank_check.BankCheck
+    prompt: "You are a detail-oriented financial document analyst. Extract all the relevant information from the bank check as accurately as possible."
+    description: "Bank check data extraction system that processes check images to extract structured information including check number, date, payee, amount, bank information, and other relevant check details."
+    sample_data: "https://www.shutterstock.com/image-vector/bank-check-vector-template-filled-260nw-1461323885.jpg"
+    metadata:
+      supported_inputs: ["image", "document"]
+      tags: ["accounting", "banking", "finance"]
+
   - domain: food.nutrition-facts-label
     schema: vlmrun.hub.schemas.contrib.food.nutrition_facts_label.NutritionFactsLabel
     prompt: "You are a detail-oriented nutrition analyst. Extract all the relevant information from the nutrition facts label as accurately as possible."
@@ -12,6 +22,7 @@ schemas:
     metadata:
       supported_inputs: ["image", "document"]
       tags: ["food", "health"]
+
   - domain: accounting.form-payslip
     schema: vlmrun.hub.schemas.contrib.accounting.form_payslip.Payslip
     prompt: "You are a detail-oriented tax document analyst. Extract all the relevant information from the payslip as accurately as possible."
