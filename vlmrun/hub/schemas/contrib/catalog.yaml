@@ -12,6 +12,7 @@ schemas:
     metadata:
       supported_inputs: ["image", "document"]
       tags: ["food", "health"]
+
   - domain: accounting.form-payslip
     schema: vlmrun.hub.schemas.contrib.accounting.form_payslip.Payslip
     prompt: "You are a detail-oriented tax document analyst. Extract all the relevant information from the payslip as accurately as possible."
