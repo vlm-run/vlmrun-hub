@@ -8,7 +8,7 @@ schemas:
     schema: vlmrun.hub.schemas.contrib.document.bank_check.BankCheck
     prompt: "You are a detail-oriented financial document analyst. Extract all the relevant information from the bank check as accurately as possible."
     description: "Bank check data extraction system that processes check images to extract structured information including check number, date, payee, amount, bank information, and other relevant check details."
-    sample_data: "https://www.thebalancemoney.com/thmb/2rss_iwzTzMSpZN_TzaFMlzTV9c=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/AlteredSampleCheck-5a0b768922fa3a0036da74fb.png"
+    sample_data: "https://www.shutterstock.com/image-vector/bank-check-vector-template-filled-260nw-1461323885.jpg"
     metadata:
       supported_inputs: ["image", "document"]
       tags: ["accounting", "banking", "finance"]
