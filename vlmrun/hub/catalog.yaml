@@ -54,7 +54,7 @@ schemas:
     metadata:
       supported_inputs: ["image", "document"]
       tags: ["energy"]
-      
+
   - domain: accounting.form-w2
     schema: vlmrun.hub.schemas.accounting.w2_form.W2Form
     prompt: "You are a detail-oriented tax document analyst. Extract all the relevant information from the W-2 form as accurately as possible."
