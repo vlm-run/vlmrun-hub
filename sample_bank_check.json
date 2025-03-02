@@ -1,0 +1,33 @@
+{
+  "check_number": "1234",
+  "date": "2020-01-01",
+  "payee": "John Smith",
+  "amount_numeric": 100.00,
+  "amount_text": "One hundred and 00/100",
+  "bank_info": {
+    "name": "Your Bank",
+    "address": {
+      "street": "123 Main St",
+      "city": "Anytown",
+      "state": "CA",
+      "postal_code": "12345",
+      "country": "USA"
+    },
+    "routing_number": "123456789",
+    "account_number": "12345678"
+  },
+  "drawer_name": "Jane Doe",
+  "drawer_address": {
+    "street": "456 Oak St",
+    "city": "Anytown",
+    "state": "CA",
+    "postal_code": "12345",
+    "country": "USA"
+  },
+  "drawer_signature": true,
+  "memo": "Rent payment",
+  "micr_line": "123456789 12345678 1234",
+  "is_void": false,
+  "is_post_dated": false,
+  "currency": "USD"
+}
