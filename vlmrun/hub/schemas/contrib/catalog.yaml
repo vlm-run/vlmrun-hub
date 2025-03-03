@@ -68,6 +68,15 @@ schemas:
       supported_inputs: ["image", "document"]
       tags: ["healthcare", "laboratory", "pathology"]
 
+  - domain: finance.balance-sheet
+    schema: vlmrun.hub.schemas.contrib.finance.balance_sheet.BalanceSheet
+    prompt: "You are a detail-oriented Financial Analyst. Extract all the relevant balance sheet information from the document as accurately as possible."
+    description: "Balance sheet extraction system that processes financial documents to extract structured information including company information, assets, liabilities, shareholders' equity, and other relevant balance sheet details."
+    sample_data: "https://storage.googleapis.com/sample-hub-data/finance.balance-sheet/balance-sheet-apple.pdf"
+    metadata:
+      supported_inputs: ["document", "image"]
+      tags: ["finance", "accounting", "financial-statements", "balance-sheet"]
+  
   - domain: real-estate.lease-agreement
     schema: vlmrun.hub.schemas.contrib.real_estate.lease_agreement.LeaseAgreement
     prompt: "You are a detail-oriented Lease Analyst. Extract all the relevant lease agreement information from the lease agreement as accurately as possible."
