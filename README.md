@@ -4,7 +4,7 @@
 </p>
 <h2>VLM Run Hub</h2>
 <p align="center">
-<a href="https://vlm.run"><b>Website</b></a> |  <a href="https://app.vlm.run/"><b>Platform</b></a> | <a href="https://docs.vlm.run/"><b>Docs</b></a> | <a href="https://vlm.run/blog"><b>Blog</b></a> | <a href="https://discord.gg/CCY8cYNC"><b>Discord</b></a> | <a href="vlmrun/hub/catalog.yaml"><b>Catalog</b></a>
+<a href="https://vlm.run"><b>Website</b></a> |  <a href="https://app.vlm.run/"><b>Platform</b></a> | <a href="https://docs.vlm.run/"><b>Docs</b></a> | <a href="https://vlm.run/blog"><b>Blog</b></a> | <a href="https://discord.gg/4jgyECY4rq"><b>Discord</b></a> | <a href="vlmrun/hub/catalog.yaml"><b>Catalog</b></a>
 </p>
 <p align="center">
 <a href="https://pypi.org/project/vlmrun-hub/"><img alt="PyPI Version" src="https://badge.fury.io/py/vlmrun-hub.svg"></a>
