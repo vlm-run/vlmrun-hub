@@ -80,36 +80,78 @@ The **Structured Outputs API** (popularized by [GPT-4o](https://openai.com/index
 
 The VLM Run Hub maintains a comprehensive catalog of all available schemas in the [`vlmrun/hub/catalog.yaml`](vlmrun/hub/catalog.yaml) file. The catalog is automatically validated to ensure consistency and completeness of schema documentation. We refer the developer to the [catalog-spec.yaml](docs/catalog-spec.yaml) for the full YAML specification.
 
-| Category | Domain | Description |
-|----------|--------|-------------|
-| **Document Processing** | [document.bank-statement](vlmrun/hub/schemas/document/bank_statement.py) | Bank statement data extraction system that processes bank statements to extract structured financial transaction information including account details, balances, and transaction history. |
-| | [document.invoice](vlmrun/hub/schemas/document/invoice.py) | Comprehensive invoice data extraction system that processes invoice images to extract structured information including invoice metadata, customer details, line items, and financial totals. |
-| | [document.receipt](vlmrun/hub/schemas/document/receipt.py) | Receipt data extraction system that processes receipt images to extract structured information including transaction details, merchant information, and financial totals. |
-| | [document.resume](vlmrun/hub/schemas/document/resume.py) | Resume data extraction system that processes resume images to extract structured information including contact details, education, work experience, skills, and additional sections. |
-| | [document.us-drivers-license](vlmrun/hub/schemas/document/us_drivers_license.py) | Driver's license information extraction system that processes driver's license images to extract structured information including name, address, date of birth, and license details. |
-| | [document.utility-bill](vlmrun/hub/schemas/document/utility_bill.py) | Utility bill data extraction system that processes utility bill images to extract structured information including account details, billing period, charges, and payment information. |
-| | [document.us-passport](vlmrun/hub/schemas/contrib/document/us_passport.py) | US passport data extraction system that processes passport images to extract structured information including personal details, document identifiers, and biometric data. |
-| **Accounting & Finance** | [accounting.form-w2](vlmrun/hub/schemas/accounting/w2_form.py) | W-2 form data extraction system that processes Form W-2 (Wage and Tax Statement) to extract structured information including employee details, employer information, wages, and tax withholding data. |
-| **Healthcare** | [healthcare.medical-insurance-card](vlmrun/hub/schemas/healthcare/medical_insurance_card.py) | Medical insurance card information extraction system that processes insurance card images to extract comprehensive coverage details, member information, and provider data. |
-| | [healthcare.hipaa-release](vlmrun/hub/schemas/healthcare/hipaa_release.py) | HIPAA release form data extraction system that processes release forms to extract structured information including patient details, authorized recipients, and release specifications. |
-| **Retail** | [retail.ecommerce-product-caption](vlmrun/hub/schemas/retail/ecommerce_product_caption.py) | Product data extraction system that processes product images to extract structured information including visual description, product details, and delivery information. |
-| | [retail.product-catalog](vlmrun/hub/schemas/retail/product_catalog.py) | Product catalog analysis system that helps track trending topics, public sentiment, and influential quotes that shape audience perspectives. |
-| **Media** | [media.tv-news](vlmrun/hub/schemas/media/tv_news.py) | TV news data extraction system that processes news footage or screenshots to extract structured information such as headlines, anchors, and on-screen text. |
-| **Aerospace** | [aerospace.remote-sensing](vlmrun/hub/schemas/aerospace/remote_sensing.py) | Satellite image analysis system for identifying and categorizing geographical features, infrastructure, and environmental elements from aerial imagery. |
-| **Contributed Schemas** | [document.business-card](vlmrun/hub/schemas/contrib/document/business_card.py) | Business card information extraction system. |
-| | [document.india.aadhaar-card](vlmrun/hub/schemas/contrib/document/india/aadhaar_card.py) | Aadhaar card information extraction system for Indian identity documents. |
-| | [document.india.pan-card](vlmrun/hub/schemas/contrib/document/india/pan_card.py) | PAN card information extraction system for Indian tax identification documents. |
-| | [document.insurance-claim](vlmrun/hub/schemas/contrib/document/insurance_claim.py) | Insurance claim form data extraction system. |
-| | [document.request-for-proposal](vlmrun/hub/schemas/contrib/document/request_for_proposal.py) | Request for proposal (RFP) document extraction system. |
-| | [accounting.form-payslip](vlmrun/hub/schemas/contrib/accounting/form_payslip.py) | Payslip data extraction system. |
-| | [finance.balance-sheet](vlmrun/hub/schemas/contrib/finance/balance_sheet.py) | Balance sheet financial document extraction system. |
-| | [healthcare.pathology-report](vlmrun/hub/schemas/contrib/healthcare/pathology_report.py) | Pathology report medical document extraction system. |
-| | [food.nutrition-facts-label](vlmrun/hub/schemas/contrib/food/nutrition_facts_label.py) | Nutrition facts label information extraction system. |
-| | [logistics.bill-of-lading](vlmrun/hub/schemas/contrib/logistics/bill_of_lading.py) | Bill of lading shipping document extraction system. |
-| | [media.nba-game-state](vlmrun/hub/schemas/contrib/media/nba_game_state.py) | NBA game state information extraction from broadcasts. |
-| | [media.nfl-game-state](vlmrun/hub/schemas/contrib/media/nfl_game_state.py) | NFL game state information extraction from broadcasts. |
-| | [real-estate.lease-agreement](vlmrun/hub/schemas/contrib/real_estate/lease_agreement.py) | Lease agreement document extraction system. |
-| | [social.twitter-card](vlmrun/hub/schemas/contrib/social/twitter_card.py) | Twitter card information extraction system. |
+<table>
+  <tr>
+    <th>Category</th>
+    <th colspan="3">Domains</th>
+  </tr>
+  <tr>
+    <td><strong>Document Processing</strong></td>
+    <td><a href="vlmrun/hub/schemas/document/bank_statement.py">document.bank-statement</a></td>
+    <td><a href="vlmrun/hub/schemas/document/invoice.py">document.invoice</a></td>
+    <td><a href="vlmrun/hub/schemas/document/receipt.py">document.receipt</a></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td><a href="vlmrun/hub/schemas/document/resume.py">document.resume</a></td>
+    <td><a href="vlmrun/hub/schemas/document/us_drivers_license.py">document.us-drivers-license</a></td>
+    <td><a href="vlmrun/hub/schemas/document/utility_bill.py">document.utility-bill</a></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td><a href="vlmrun/hub/schemas/contrib/document/us_passport.py">document.us-passport</a></td>
+    <td><a href="vlmrun/hub/schemas/contrib/document/business_card.py">document.business-card</a></td>
+    <td><a href="vlmrun/hub/schemas/contrib/document/insurance_claim.py">document.insurance-claim</a></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td><a href="vlmrun/hub/schemas/contrib/document/bank_check.py">document.bank-check</a></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td><a href="vlmrun/hub/schemas/contrib/document/request_for_proposal.py">document.request-for-proposal</a></td>
+    <td><a href="vlmrun/hub/schemas/contrib/document/india/aadhaar_card.py">document.india.aadhaar-card</a></td>
+    <td><a href="vlmrun/hub/schemas/contrib/document/india/pan_card.py">document.india.pan-card</a></td>
+  </tr>
+  <tr>
+    <td><strong>Accounting & Finance</strong></td>
+    <td><a href="vlmrun/hub/schemas/accounting/w2_form.py">accounting.form-w2</a></td>
+    <td><a href="vlmrun/hub/schemas/contrib/accounting/form_payslip.py">accounting.form-payslip</a></td>
+    <td><a href="vlmrun/hub/schemas/contrib/finance/balance_sheet.py">finance.balance-sheet</a></td>
+  </tr>
+  <tr>
+    <td><strong>Healthcare</strong></td>
+    <td><a href="vlmrun/hub/schemas/healthcare/medical_insurance_card.py">healthcare.medical-insurance-card</a></td>
+    <td><a href="vlmrun/hub/schemas/healthcare/hipaa_release.py">healthcare.hipaa-release</a></td>
+    <td><a href="vlmrun/hub/schemas/contrib/healthcare/pathology_report.py">healthcare.pathology-report</a></td>
+  </tr>
+  <tr>
+    <td><strong>Retail</strong></td>
+    <td><a href="vlmrun/hub/schemas/retail/ecommerce_product_caption.py">retail.ecommerce-product-caption</a></td>
+    <td><a href="vlmrun/hub/schemas/retail/product_catalog.py">retail.product-catalog</a></td>
+    <td><a href="vlmrun/hub/schemas/contrib/food/nutrition_facts_label.py">food.nutrition-facts-label</a></td>
+  </tr>
+  <tr>
+    <td><strong>Media</strong></td>
+    <td><a href="vlmrun/hub/schemas/media/tv_news.py">media.tv-news</a></td>
+    <td><a href="vlmrun/hub/schemas/contrib/media/nba_game_state.py">media.nba-game-state</a></td>
+    <td><a href="vlmrun/hub/schemas/contrib/media/nfl_game_state.py">media.nfl-game-state</a></td>
+  </tr>
+  <tr>
+    <td><strong>Other Industries</strong></td>
+    <td><a href="vlmrun/hub/schemas/aerospace/remote_sensing.py">aerospace.remote-sensing</a></td>
+    <td><a href="vlmrun/hub/schemas/contrib/logistics/bill_of_lading.py">logistics.bill-of-lading</a></td>
+    <td><a href="vlmrun/hub/schemas/contrib/real_estate/lease_agreement.py">real-estate.lease-agreement</a></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td><a href="vlmrun/hub/schemas/contrib/social/twitter_card.py">social.twitter-card</a></td>
+    <td></td>
+    <td></td>
+  </tr>
+</table>
 
 If you have a new schema you want to add to the catalog, please refer to the [SCHEMA-GUIDELINES.md](docs/SCHEMA-GUIDELINES.md) for the full guidelines.
 
