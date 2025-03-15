@@ -86,67 +86,62 @@ The VLM Run Hub maintains a comprehensive catalog of all available schemas in th
     <th colspan="3">Domains</th>
   </tr>
   <tr>
-    <td><strong>Document Processing</strong></td>
+    <td rowspan="5"><strong>Document Processing</strong></td>
     <td><a href="vlmrun/hub/schemas/document/bank_statement.py">document.bank-statement</a></td>
     <td><a href="vlmrun/hub/schemas/document/invoice.py">document.invoice</a></td>
     <td><a href="vlmrun/hub/schemas/document/receipt.py">document.receipt</a></td>
   </tr>
   <tr>
-    <td></td>
     <td><a href="vlmrun/hub/schemas/document/resume.py">document.resume</a></td>
     <td><a href="vlmrun/hub/schemas/document/us_drivers_license.py">document.us-drivers-license</a></td>
     <td><a href="vlmrun/hub/schemas/document/utility_bill.py">document.utility-bill</a></td>
   </tr>
   <tr>
-    <td></td>
     <td><a href="vlmrun/hub/schemas/contrib/document/us_passport.py">document.us-passport</a></td>
     <td><a href="vlmrun/hub/schemas/contrib/document/business_card.py">document.business-card</a></td>
     <td><a href="vlmrun/hub/schemas/contrib/document/insurance_claim.py">document.insurance-claim</a></td>
   </tr>
   <tr>
-    <td></td>
     <td><a href="vlmrun/hub/schemas/contrib/document/bank_check.py">document.bank-check</a></td>
-    <td></td>
-    <td></td>
-  </tr>
-  <tr>
-    <td></td>
     <td><a href="vlmrun/hub/schemas/contrib/document/request_for_proposal.py">document.request-for-proposal</a></td>
     <td><a href="vlmrun/hub/schemas/contrib/document/india/aadhaar_card.py">document.india.aadhaar-card</a></td>
-    <td><a href="vlmrun/hub/schemas/contrib/document/india/pan_card.py">document.india.pan-card</a></td>
   </tr>
   <tr>
-    <td><strong>Accounting & Finance</strong></td>
+    <td><a href="vlmrun/hub/schemas/contrib/document/india/pan_card.py">document.india.pan-card</a></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td rowspan="1"><strong>Accounting & Finance</strong></td>
     <td><a href="vlmrun/hub/schemas/accounting/w2_form.py">accounting.form-w2</a></td>
     <td><a href="vlmrun/hub/schemas/contrib/accounting/form_payslip.py">accounting.form-payslip</a></td>
     <td><a href="vlmrun/hub/schemas/contrib/finance/balance_sheet.py">finance.balance-sheet</a></td>
   </tr>
   <tr>
-    <td><strong>Healthcare</strong></td>
+    <td rowspan="1"><strong>Healthcare</strong></td>
     <td><a href="vlmrun/hub/schemas/healthcare/medical_insurance_card.py">healthcare.medical-insurance-card</a></td>
     <td><a href="vlmrun/hub/schemas/healthcare/hipaa_release.py">healthcare.hipaa-release</a></td>
     <td><a href="vlmrun/hub/schemas/contrib/healthcare/pathology_report.py">healthcare.pathology-report</a></td>
   </tr>
   <tr>
-    <td><strong>Retail</strong></td>
+    <td rowspan="1"><strong>Retail</strong></td>
     <td><a href="vlmrun/hub/schemas/retail/ecommerce_product_caption.py">retail.ecommerce-product-caption</a></td>
     <td><a href="vlmrun/hub/schemas/retail/product_catalog.py">retail.product-catalog</a></td>
     <td><a href="vlmrun/hub/schemas/contrib/food/nutrition_facts_label.py">food.nutrition-facts-label</a></td>
   </tr>
   <tr>
-    <td><strong>Media</strong></td>
+    <td rowspan="1"><strong>Media</strong></td>
     <td><a href="vlmrun/hub/schemas/media/tv_news.py">media.tv-news</a></td>
     <td><a href="vlmrun/hub/schemas/contrib/media/nba_game_state.py">media.nba-game-state</a></td>
     <td><a href="vlmrun/hub/schemas/contrib/media/nfl_game_state.py">media.nfl-game-state</a></td>
   </tr>
   <tr>
-    <td><strong>Other Industries</strong></td>
+    <td rowspan="2"><strong>Other Industries</strong></td>
     <td><a href="vlmrun/hub/schemas/aerospace/remote_sensing.py">aerospace.remote-sensing</a></td>
     <td><a href="vlmrun/hub/schemas/contrib/logistics/bill_of_lading.py">logistics.bill-of-lading</a></td>
     <td><a href="vlmrun/hub/schemas/contrib/real_estate/lease_agreement.py">real-estate.lease-agreement</a></td>
   </tr>
   <tr>
-    <td></td>
     <td><a href="vlmrun/hub/schemas/contrib/social/twitter_card.py">social.twitter-card</a></td>
     <td></td>
     <td></td>
