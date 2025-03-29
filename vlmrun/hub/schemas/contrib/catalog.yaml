@@ -76,7 +76,7 @@ schemas:
     metadata:
       supported_inputs: ["document", "image"]
       tags: ["finance", "accounting", "financial-statements", "balance-sheet"]
-
+  
   - domain: real-estate.lease-agreement
     schema: vlmrun.hub.schemas.contrib.real_estate.lease_agreement.LeaseAgreement
     prompt: "You are a detail-oriented Lease Analyst. Extract all the relevant lease agreement information from the lease agreement as accurately as possible."
@@ -121,19 +121,6 @@ schemas:
     metadata:
       supported_inputs: ["image", "document"]
       tags: ["insurance", "claim", "document"]
-
-  - domain: document.us-number-plate
-    schema: vlmrun.hub.schemas.contrib.document.us_number_plate.USLicensePlate
-    prompt: "You are a number plate examiner. Extract all the relevant information
-             from the number plate image as accurately as possible.
-             Focus on the plate_number, state in particular and
-             any optional data that you might find in the image."
-    description: "US number plate examination system to extract structured information including plate number, state,
-                  and any supporting information."
-    sample_data: "https://i.ibb.co/bMtXHNdN/nc-license-plate.png"
-    metadata:
-      supported_inputs: ["image", "document"]
-      tags: ["plate-number", "document", "state"]
 
   - domain: document.business-card
     schema: vlmrun.hub.schemas.contrib.document.business_card.BusinessCard
