@@ -57,30 +57,30 @@ class BillOfLading(BaseModel):
     bill_number: Optional[str] = Field(None, description="Bill of Lading number")
     booking_number: Optional[str] = Field(None, description="Booking or reference number")
     issue_date: Optional[date] = Field(None, description="Date of issue of the Bill of Lading")
-    
+
     shipper: Optional[Party] = Field(None, description="Shipper or exporter information")
     consignee: Optional[Party] = Field(None, description="Consignee or importer information")
     notify_party: Optional[Party] = Field(None, description="Notify party information")
     forwarding_agent: Optional[Party] = Field(None, description="Forwarding agent information")
-    
+
     vessel_name: Optional[str] = Field(None, description="Name of the vessel")
     voyage_number: Optional[str] = Field(None, description="Voyage number")
     carrier: Optional[str] = Field(None, description="Carrier or shipping line")
-    
+
     port_of_loading: Optional[str] = Field(None, description="Port of loading")
     port_of_discharge: Optional[str] = Field(None, description="Port of discharge")
     place_of_receipt: Optional[str] = Field(None, description="Place of receipt")
     place_of_delivery: Optional[str] = Field(None, description="Place of delivery")
-    
+
     containers: Optional[List[Container]] = Field(None, description="List of containers")
     goods: Optional[Goods] = Field(None, description="Details of the goods being shipped")
-    
+
     freight_details: Optional[FreightDetails] = Field(None, description="Freight and payment details")
-    
+
     special_instructions: Optional[str] = Field(None, description="Special instructions or remarks")
-    
+
     number_of_original_bills: Optional[int] = Field(None, description="Number of original Bills of Lading issued")
-    
+
     signature_place: Optional[str] = Field(None, description="Place of signature")
     signature_date: Optional[date] = Field(None, description="Date of signature")
     signatory: Optional[str] = Field(None, description="Name or title of the signatory")
