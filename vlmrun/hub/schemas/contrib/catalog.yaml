@@ -139,3 +139,12 @@ schemas:
     metadata:
       supported_inputs: ["image", "document"]
       tags: ["logistics", "supply-chain"]
+
+  - domain: document.form-work-order
+    schema: vlmrun.hub.schemas.contrib.document.form_work_order.WorkOrder
+    prompt: "You are a detail-oriented work order analyst. Extract all the relevant information from this work order form, including company details, client information, service details, costs, and authorization information. Pay attention to whether this is an automotive, landscaping, or electrical work order and extract the appropriate specialized fields."
+    description: "Work order form schema for extracting structured information from various types of work orders (automotive, landscaping, electrical) including company information, client details, service requirements, costs, and authorization details."
+    sample_data: "https://raw.githubusercontent.com/ashrafulparan2/resource/refs/heads/main/wo1_page-0001.jpg"
+    metadata:
+      supported_inputs: ["image", "document"]
+      tags: ["document", "form", "work-order", "automotive", "landscaping", "electrical", "service"]
