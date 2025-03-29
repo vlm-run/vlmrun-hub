@@ -8,13 +8,13 @@ from pydantic import BaseModel, Field, EmailStr
 
 class CompanyInfo(BaseModel):
     """Company information header"""
-    name: str = Field(..., description="Name of the company")
-    address: str = Field(..., description="Street address of the company")
+    name: Optional[str] = Field(None, description="Name of the company")
+    address: Optional[str] = Field(None, description="Street address of the company")
     suite: Optional[str] = Field(None, description="Suite or unit number")
-    city: str = Field(..., description="City name")
-    state: str = Field(..., description="State abbreviation")
-    zip_code: str = Field(..., description="ZIP/Postal code")
-    phone: str = Field(..., description="Company phone number")
+    city: Optional[str] = Field(None, description="City name")
+    state: Optional[str] = Field(None, description="State abbreviation")
+    zip_code: Optional[str] = Field(None, description="ZIP/Postal code")
+    phone: Optional[str] = Field(None, description="Company phone number")
     email: Optional[str] = Field(None, description="Company email address")
 
 
@@ -82,21 +82,21 @@ class PriorityLevel(str, Enum):
 
 class VehicleInfo(BaseModel):
     """Vehicle information for automotive work orders"""
-    vin: str = Field(..., description="Vehicle Identification Number")
-    make_model: str = Field(..., description="Make and model of the vehicle")
+    vin: Optional[str] = Field(None, description="Vehicle Identification Number")
+    make_model: Optional[str] = Field(None, description="Make and model of the vehicle")
     year: Optional[int] = Field(None, description="Year of the vehicle")
     odometer: Optional[float] = Field(None, description="Current odometer reading")
-    license_number: str = Field(..., description="License plate number")
-    state: str = Field(..., description="State of registration")
+    license_number: Optional[str] = Field(None, description="License plate number")
+    state: Optional[str] = Field(None, description="State of registration")
     motor_number: Optional[str] = Field(None, description="Motor/Engine number")
 
 
 class LineItem(BaseModel):
     """Line item for materials, parts, or labor"""
-    description: str = Field(..., description="Description of the item or service")
-    quantity: Decimal = Field(..., description="Quantity of the item")
-    price_per_unit: Decimal = Field(..., description="Price per unit")
-    amount: Decimal = Field(..., description="Total amount (quantity * price_per_unit)")
+    description: Optional[str] = Field(None, description="Description of the item or service")
+    quantity: Optional[Decimal] = Field(None, description="Quantity of the item")
+    price_per_unit: Optional[Decimal] = Field(None, description="Price per unit")
+    amount: Optional[Decimal] = Field(None, description="Total amount (quantity * price_per_unit)")
     part_number: Optional[str] = Field(None, description="Part number if applicable")
 
 
@@ -104,21 +104,21 @@ class WorkOrder(BaseModel):
     """Unified schema for all types of work orders"""
     
     # Company Information
-    company_info: CompanyInfo = Field(..., description="Company information")
+    company_info: Optional[CompanyInfo] = Field(None, description="Company information")
     
     # Basic Information
-    order_number: str = Field(..., description="Work order number/identifier")
-    order_type: str = Field(..., description="Type of work order (Automotive/Landscaping/Electrical)")
+    order_number: Optional[str] = Field(None, description="Work order number/identifier")
+    order_type: Optional[str] = Field(None, description="Type of work order (Automotive/Landscaping/Electrical)")
     
     # Client Information
-    client_name: str = Field(..., description="Name of the client")
-    client_phone: str = Field(..., description="Client's phone number")
+    client_name: Optional[str] = Field(None, description="Name of the client")
+    client_phone: Optional[str] = Field(None, description="Client's phone number")
     client_email: Optional[str] = Field(None, description="Client's email address")
-    service_location: str = Field(..., description="Address where service will be performed")
+    service_location: Optional[str] = Field(None, description="Address where service will be performed")
     
     # Timing Information
-    order_date: datetime = Field(..., description="Date and time the order was created")
-    start_date: datetime = Field(..., description="Expected start date")
+    order_date: Optional[datetime] = Field(None, description="Date and time the order was created")
+    start_date: Optional[datetime] = Field(None, description="Expected start date")
     end_date: Optional[datetime] = Field(None, description="Expected end date")
     date_completed: Optional[datetime] = Field(None, description="Actual completion date")
     
@@ -126,25 +126,23 @@ class WorkOrder(BaseModel):
     vehicle_info: Optional[VehicleInfo] = Field(None, description="Vehicle information for automotive work orders")
     
     # Service Details
-    services_requested: List[ServiceType] = Field(..., description="List of services requested")
-    job_description: str = Field(..., description="Detailed description of work to be performed")
+    services_requested: Optional[List[ServiceType]] = Field(default_factory=list, description="List of services requested")
+    job_description: Optional[str] = Field(None, description="Detailed description of work to be performed")
     priority_level: Optional[PriorityLevel] = Field(None, description="Priority level of the work order")
     
     # Cost Information
-    materials: List[LineItem] = Field(default_factory=list, description="List of materials used")
-    labor_items: List[LineItem] = Field(default_factory=list, description="List of labor charges")
-    materials_total: Decimal = Field(..., description="Total cost of materials")
-    labor_total: Decimal = Field(..., description="Total cost of labor")
-    subtotal: Decimal = Field(..., description="Subtotal before tax")
-    tax_rate: Decimal = Field(..., description="Tax rate as a percentage")
-    tax_amount: Decimal = Field(..., description="Calculated tax amount")
-    total_amount: Decimal = Field(..., description="Final total amount")
+    materials: Optional[List[LineItem]] = Field(default_factory=list, description="List of materials used")
+    labor_items: Optional[List[LineItem]] = Field(default_factory=list, description="List of labor charges")
+    materials_total: Optional[Decimal] = Field(None, description="Total cost of materials")
+    labor_total: Optional[Decimal] = Field(None, description="Total cost of labor")
+    subtotal: Optional[Decimal] = Field(None, description="Subtotal before tax")
+    tax_rate: Optional[Decimal] = Field(None, description="Tax rate as a percentage")
+    tax_amount: Optional[Decimal] = Field(None, description="Calculated tax amount")
+    total_amount: Optional[Decimal] = Field(None, description="Final total amount")
     
     # Authorization and Completion
-    work_authorized_by: str = Field(..., description="Name of person who authorized the work")
-    authorization_date: datetime = Field(..., description="Date work was authorized")
-    work_completed_by: Optional[str] = Field(None, description="Name of person who completed the work")
-    work_approved_by: Optional[str] = Field(None, description="Name of person who approved the completed work")
+    work_authorized_by: Optional[str] = Field(None, description="Name of person who authorized the work")
+    authorization_date: Optional[datetime] = Field(None, description="Date work was authorized")
 
     class Config:
         """Pydantic model configuration with example data"""
