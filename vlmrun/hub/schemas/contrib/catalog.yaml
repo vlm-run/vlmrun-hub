@@ -148,3 +148,12 @@ schemas:
     metadata:
       supported_inputs: ["image", "document"]
       tags: ["document", "form", "work-order", "automotive", "landscaping", "electrical", "service"]
+
+  - domain: accounting.form-1040-tax-statement
+    schema: vlmrun.hub.schemas.contrib.accounting.form_1040_tax_statement.Form1040TaxStatement
+    prompt: "You are a detail-oriented tax document analyst specializing in IRS forms. Extract all the relevant information from this Form 1040 US Individual Income Tax Return as accurately as possible. Pay special attention to taxpayer information, filing status, income sources, adjustments, deductions, credits, tax calculations, and payment/refund details. Be precise with numerical values and handle both current and older versions of Form 1040."
+    description: "Form 1040 tax statement extraction system that processes US Individual Income Tax Return documents from various tax years to extract structured information including taxpayer and dependent details, filing status, income from all sources, adjustments, deductions, credits, tax calculations, payments, and refund/amount owed information."
+    sample_data: "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/accounting.form-1040-tax-statement/IRS_1040_1_01.pdf"
+    metadata:
+      supported_inputs: ["image", "document"]
+      tags: ["tax", "finance", "accounting", "irs", "form-1040"]
