@@ -97,9 +97,9 @@ class Driver(BaseModel):
     marital_status: Optional[MaritalStatus] = Field(None, description="Marital status of the driver")
     gender: Optional[Gender] = Field(None, description="Gender of the driver")
     date_of_birth: str = Field(..., description="Driver's date of birth (YYYY-MM-DD)")
-    date_licensed: str = Field(..., description="Date when driver was first licensed (YYYY-MM-DD)")
-    driver_license_number: str = Field(..., description="Driver's license number")
-    license_state: str = Field(..., description="State that issued the driver's license")
+    date_licensed: Optional[str] = Field(None, description="Date when driver was first licensed (YYYY-MM-DD)")
+    driver_license_number: Optional[str] = Field(None, description="Driver's license number")
+    license_state: Optional[str] = Field(None, description="State that issued the driver's license")
     social_security_number: Optional[str] = Field(None, description="Driver's social security number")
     occupation: Optional[str] = Field(None, description="Driver's current occupation")
     medical_conditions: Optional[List[str]] = Field(None, description="List of medical conditions that may affect driving")
@@ -110,9 +110,9 @@ class Driver(BaseModel):
 
 
 class Vehicle(BaseModel):
-    vin: str = Field(..., description="Vehicle Identification Number")
-    make_model: str = Field(..., description="Make and model of the vehicle")
-    year: str = Field(..., description="Year of manufacture")
+    vin: Optional[str] = Field(None, description="Vehicle Identification Number")
+    make_model: Optional[str] = Field(None, description="Make and model of the vehicle")
+    year: Optional[str] = Field(None, description="Year of manufacture")
     annual_mileage: Optional[int] = Field(None, description="Estimated annual mileage", ge=0)
     usage_type: Optional[UsageType] = Field(None, description="Primary usage of the vehicle")
     anti_theft_devices: Optional[List[str]] = Field(None, description="Anti-theft devices installed in the vehicle")

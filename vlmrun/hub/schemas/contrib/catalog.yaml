@@ -162,7 +162,7 @@ schemas:
     schema: vlmrun.hub.schemas.contrib.document.automobile_insurance.AutomobileInsurance
     prompt: "You are a detail-oriented automobile insurance document analyst. Extract all the relevant information from the automobile insurance document as accurately as possible."
     description: "Automobile insurance document information extraction system that processes automobile insurance documents to extract structured information including applicant details, co-applicant details, address, contact information, ownership status, drivers, vehicles, policy details, current insurance, commercial vehicle details, and declarations."
-    sample_data: "https://raw.githubusercontent.com/Sadmin23/Resourse/main/insurance-form-filled.pdf"
+    sample_data: "https://raw.githubusercontent.com/Sadmin23/Resourse/main/insurance-form-1.pdf"
     metadata:
       supported_inputs: ["image", "document"]
       tags: ["insurance", "automobile", "document"]
