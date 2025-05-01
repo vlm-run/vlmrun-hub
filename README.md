@@ -63,7 +63,7 @@ Welcome to **VLM Run Hub**, a comprehensive repository of pre-defined [Pydantic]
 
 ### 💡 Motivation
 
-While vision models like OpenAI’s [GPT-4o](https://openai.com/index/hello-gpt-4o/) and Anthropic’s [Claude Vision](https://www.anthropic.com/claude) excel in exploratory tasks like "chat with images," they often lack practicality for automation and integration, where **strongly-typed**, **validated outputs** are crucial.
+While vision models like OpenAI's [GPT-4o](https://openai.com/index/hello-gpt-4o/) and Anthropic's [Claude Vision](https://www.anthropic.com/claude) excel in exploratory tasks like "chat with images," they often lack practicality for automation and integration, where **strongly-typed**, **validated outputs** are crucial.
 
 The **Structured Outputs API** (popularized by [GPT-4o](https://openai.com/index/introducing-structured-outputs-in-the-api/), [Gemini](https://ai.google.dev/gemini-api/docs/structured-output)) addresses this by constraining LLMs to return data in precise, strongly-typed formats such as [Pydantic](https://docs.pydantic.dev/latest/) models. This eliminates complex parsing and validation, ensuring outputs conform to expected types and structures. These schemas can be nested and include complex types like lists and dictionaries, enabling seamless integration with existing systems while leveraging the full capabilities of the model.
 
@@ -72,7 +72,7 @@ The **Structured Outputs API** (popularized by [GPT-4o](https://openai.com/index
 - 📚 **Easy to use:** [Pydantic](https://docs.pydantic.dev/latest/) is a well-understood and battle-tested data model for structured data.
 - 🔋 **Batteries included:** Each schema in this repo has been validated across real-world industry use cases—from healthcare to finance to media—saving you weeks of development effort.
 - 🔍 **Automatic Data-validation:** Built-in [Pydantic validation](https://docs.pydantic.dev/latest/concepts/validators/) ensures your extracted data is clean, accurate, and reliable, reducing errors and simplifying downstream workflows.
-- 🔌 **Type-safety:** With [Pydantic’s type-safety](https://docs.pydantic.dev/latest/concepts/types/) and compatibility with tools like `mypy` and `pyright`, you can build composable, modular systems that are robust and maintainable.
+- 🔌 **Type-safety:** With [Pydantic's type-safety](https://docs.pydantic.dev/latest/concepts/types/) and compatibility with tools like `mypy` and `pyright`, you can build composable, modular systems that are robust and maintainable.
 - 🧰 **Model-agnostic:** Use the same schema with multiple VLM providers, no need to rewrite prompts for different VLMs.
 - 🚀 **Optimized for Visual ETL:** Purpose-built for extracting structured data from images, videos, and documents, this repo bridges the gap between unstructured data and actionable insights.
 
@@ -160,6 +160,29 @@ For a comprehensive walkthrough of available schemas and their usage, check out 
 
 ```python
 pip install vlmrun-hub
+```
+
+#### With [VLM Run Python SDK](https://github.com/vlm-run/vlmrun-python-sdk)
+
+```python
+import os
+from PIL import Image
+from vlmrun.client import VLMRun
+from vlmrun.client.types import PredictionResponse
+from vlmrun.common.utils import download_image
+
+VLMRUN_BASE_URL = os.getenv("VLMRUN_BASE_URL", "https://api.vlm.run/v1")
+VLMRUN_API_KEY = os.getenv("VLMRUN_API_KEY", None)
+
+client = VLMRun(base_url=VLMRUN_BASE_URL, api_key=VLMRUN_API_KEY)
+
+IMAGE_URL = "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/document.invoice/invoice_1.jpg"
+image: Image.Image = download_image(IMAGE_URL)
+
+response: PredictionResponse = client.image.generate(
+    images=[image],
+    domain="document.invoice",
+)
 ```
 
 #### With [Instructor](https://github.com/jxnl/instructor) / OpenAI
@@ -274,29 +297,6 @@ response = client.chat.completions.create(
 </table>
 
 </details>
-
-#### With [VLM Run](https://vlm.run)
-
-```python
-import requests
-
-from vlmrun.hub.schemas.document.invoice import Invoice
-
-
-IMAGE_URL = "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/document.invoice/invoice_1.jpg"
-
-json_data = {
-    "image": IMAGE_URL,
-    "model": "vlm-1",
-    "domain": "document.invoice",
-    "json_schema": Invoice.model_json_schema(),
-}
-response = requests.post(
-    f"https://api.vlm.run/v1/image/generate",
-    headers={"Authorization": f"Bearer <your-api-key>"},
-    json=json_data,
-)
-```
 
 #### With [OpenAI Structured Outputs API](https://platform.openai.com/docs/guides/structured-outputs)
 
