@@ -1,4 +1,3 @@
-from datetime import date
 from enum import Enum
 from typing import Optional
 
@@ -40,7 +39,7 @@ class USDriversLicense(BaseModel):
 
     address: Address = Field(..., description="Address of the license holder")
 
-    date_of_birth: date = Field(..., description="Date of birth")
+    date_of_birth: str = Field(..., description="Date of birth")
     gender: Gender = Field(..., description="Gender of the license holder")
 
     height: Optional[str] = Field(None, description="Height of the license holder in the format X'Y\" (e.g. 5'7\")")
@@ -48,8 +47,8 @@ class USDriversLicense(BaseModel):
     eye_color: Optional[str] = Field(None, description="Eye color code of the license holder")
     hair_color: Optional[str] = Field(None, description="Hair color code of the license holder")
 
-    issue_date: date = Field(..., description="Date the license was issued")
-    expiration_date: date = Field(..., description="Expiration date of the license")
+    issue_date: str = Field(..., description="Date the license was issued")
+    expiration_date: str = Field(..., description="Expiration date of the license")
 
     license_class: LicenseClass = Field(..., description="Class of the driver's license")
 
