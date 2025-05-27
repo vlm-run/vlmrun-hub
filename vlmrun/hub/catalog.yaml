@@ -93,6 +93,15 @@ schemas:
       supported_inputs: ["image", "document"]
       tags: ["healthcare", "hipaa", "medical"]
 
+  - domain: healthcare.prior-authorization
+    schema: vlmrun.hub.schemas.healthcare.prior_authorization.PriorAuthorization
+    prompt: "You are a detail-oriented healthcare document analyst. Extract all the relevant information from the prior authorization form as accurately as possible."
+    description: "Prior authorization form data extraction system that processes authorization requests to extract structured information including patient details, provider information, and requested services."
+    sample_data: "https://storage.googleapis.com/vlm-data-public-prod/hub/examples/healthcare.prior-authorization/unitedhealthcare-prior-aurthorization-form-filled.pdf"
+    metadata:
+      supported_inputs: ["image", "document"]
+      tags: ["healthcare", "insurance", "medical"]
+
   # industry: retail
   - domain: retail.ecommerce-product-caption
     schema: vlmrun.hub.schemas.retail.ecommerce_product_caption.RetailEcommerceProductCaption
