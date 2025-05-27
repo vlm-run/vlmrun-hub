@@ -131,6 +131,16 @@ schemas:
       supported_inputs: ["image", "document"]
       tags: ["work", "identity"]
 
+  - domain: document.reference-letter
+    schema: vlmrun.hub.schemas.contrib.document.reference_letter.ReferenceLetter
+    prompt: "You are a detail-oriented document analyst specializing in professional recommendations. Extract all relevant information from this reference letter, including the referee's details, candidate information, relationship context, skills assessment, achievements mentioned, recommendation strength, and any other significant elements. Pay attention to both explicit statements and implied assessments."
+    description: "Comprehensive reference letter extraction system that processes recommendation letters to extract detailed structured information including referee credentials, candidate qualities, relationship context, skills assessment, achievements, recommendation strength, and other relevant elements for thorough analysis."
+    sample_data: "https://storage.googleapis.com/sample-hub-data/document.reference-letter/reference_letter_1.pdf"
+    metadata:
+      supported_inputs: ["image", "document"]
+      tags:
+        ["document", "recommendation", "employment", "academic"]
+
   - domain: logistics.bill-of-lading
     schema: vlmrun.hub.schemas.contrib.logistics.bill_of_lading.BillOfLading
     prompt: "You are a detail-oriented logistics document analyst. Extract all the relevant information from the Bill of Lading as accurately as possible."
