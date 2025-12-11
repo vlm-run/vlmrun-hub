@@ -1,5 +1,5 @@
 annotated-types>=0.7.0
-datamodel-code-generator>=0.26.1,<=0.43.0
+datamodel-code-generator>=0.26.1,<=0.39.0
 loguru>=0.7.3
 Pillow>=10.2.0
 pydantic>=2.5,<3
