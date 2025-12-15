@@ -13,6 +13,34 @@ from typing_extensions import TypeAlias
 ResponseFormat: TypeAlias = Type[BaseModel]
 AnnotationType: TypeAlias = Union[Type, Any]
 
+# Regex patterns that use look-around constructs unsupported by pydantic-core's Rust regex engine
+UNSUPPORTED_LOOKAROUND_TOKENS = ("(?=", "(?!", "(?<=", "(?<!")
+
+
+def _strip_unsupported_patterns(node: Any) -> Any:
+    """Recursively strip regex patterns with unsupported look-around constructs from JSON schema."""
+    if isinstance(node, dict):
+        pattern = node.get("pattern")
+        if isinstance(pattern, str) and any(tok in pattern for tok in UNSUPPORTED_LOOKAROUND_TOKENS):
+            node = dict(node)  # copy so we don't mutate callers' dicts
+            node.pop("pattern", None)
+        for key, value in list(node.items()):
+            node[key] = _strip_unsupported_patterns(value)
+        return node
+    elif isinstance(node, list):
+        return [_strip_unsupported_patterns(item) for item in node]
+    return node
+
+
+def sanitize_json_schema_for_pydantic_core(schema: Dict[str, Any]) -> Dict[str, Any]:
+    """Sanitize JSON schema by removing regex patterns unsupported by pydantic-core.
+
+    pydantic-core uses a Rust regex engine that doesn't support look-around constructs
+    (look-ahead and look-behind). This function removes such patterns to allow model
+    generation to succeed.
+    """
+    return _strip_unsupported_patterns(schema)
+
 
 def patch_response_format(response_format: ResponseFormat) -> ResponseFormat:
     """Patch the OpenAI response format to handle Pydantic models, including nested models.
@@ -63,7 +91,9 @@ def jsonschema_to_model(schema: Dict) -> Type[BaseModel]:
     The newly created and loaded Pydantic class
     """
     class_name = schema.get("title", "Model")
-    json_schema = json.dumps(schema)
+    # Sanitize the schema to remove regex patterns unsupported by pydantic-core
+    sanitized_schema = sanitize_json_schema_for_pydantic_core(schema)
+    json_schema = json.dumps(sanitized_schema)
     model = jsonschemastr_to_model(json_schema, class_name)
     return model
 
