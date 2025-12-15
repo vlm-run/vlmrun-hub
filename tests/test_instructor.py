@@ -12,7 +12,7 @@ from vlmrun.hub.dataset import VLMRUN_HUB_DATASET, HubSample
 load_dotenv()
 
 
-def get_instructor_client(provider: Literal["openai", "gemini", "fireworks", "ollama"] = "openai"):
+def get_instructor_client(provider: Literal["openai", "gemini", "fireworks", "ollama", "vllm"] = "openai"):
     import instructor
     from openai import OpenAI
 
@@ -47,6 +47,12 @@ def get_instructor_client(provider: Literal["openai", "gemini", "fireworks", "ol
             base_url="http://localhost:11434/v1/",
         )
         client.models.list()  # check if ollama is running, otherwise raise an error
+    elif provider == "vllm":
+        client = OpenAI(
+            api_key="vllm",
+            base_url="http://localhost:8000/v1/",
+        )
+        client.models.list()  # check if vllm is running, otherwise raise an error
     else:
         raise ValueError(f"Invalid provider: {provider}")
 
@@ -88,6 +94,7 @@ PROVIDER_MODELS = [
     # ("fireworks", "accounts/fireworks/models/llama-v3p2-11b-vision-instruct"),
     # ("ollama", "llama3.2-vision:11b"),
     # ("ollama", "bsahane/Qwen2.5-VL-7B-Instruct:Q4_K_M_benxh"),
+    # ("vllm", "bsahane/Qwen2.5-VL-7B-Instruct:Q4_K_M_benxh"),
 ]
 
 
